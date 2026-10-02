@@ -19,7 +19,7 @@ const Hero = () => {
       video.currentTime = 3;
       video.playbackRate = 0.33; // Slow down the video by 3 times (1/3 speed)
     };
-    
+
     if (video.readyState >= 1) {
       video.currentTime = 3;
       video.playbackRate = 0.33; // Slow down the video by 3 times (1/3 speed)
@@ -68,24 +68,24 @@ const Hero = () => {
           */}
           <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left z-20">
 
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] mb-6"
               style={{ color: 'var(--text-primary)' }}
             >
-              {t("hero_title_line1")} <br className="hidden md:block" /> 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 dark:from-white dark:via-zinc-200 dark:to-zinc-400">
+              {t("hero_title_line1")} <br className="hidden md:block" />
+              <span className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] mb-6">
                 {t("hero_title_line2")}
               </span>
             </motion.h1>
 
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base md:text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-8" 
+              className="text-base md:text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-8"
               style={{ color: 'var(--text-secondary)' }}
             >
               {t("hero_description")}
@@ -95,7 +95,7 @@ const Hero = () => {
               CALL TO ACTION BUTTONS 
               A flex container to hold the primary (Get Started) and secondary (Explore Features) buttons side by side.
             */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -107,7 +107,7 @@ const Hero = () => {
                 >
                   {/* Shimmer Effect */}
                   <span className="absolute inset-0 w-full h-full bg-white/20 dark:bg-black/10 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
-                  
+
                   {t("cta_getStarted")}
                   <Rocket className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </button>
@@ -128,20 +128,20 @@ const Hero = () => {
             Holds the glowing bulb animation and the main looping hero video.
           */}
           <div className="w-full md:w-1/2 flex justify-center relative">
-            
+
             {/* 
               BACKGROUND GLOW EFFECT
               A decorative pulsing cyan blur behind the video that grows and shrinks infinitely.
             */}
-            <motion.div 
-              animate={{ 
+            <motion.div
+              animate={{
                 scale: [1, 1.3, 1],
                 opacity: [0.2, 0.6, 0.2]
               }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[20%] left-1/2 -translate-x-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-cyan-400/40 dark:bg-white/10 rounded-full blur-[70px] z-0 pointer-events-none" 
+              className="absolute top-[20%] left-1/2 -translate-x-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-cyan-400/40 dark:bg-white/10 rounded-full blur-[70px] z-0 pointer-events-none"
             />
-            
+
 
             {/* Main Hero Illustration */}
             <div className="relative z-10 w-full flex justify-center">
@@ -151,8 +151,8 @@ const Hero = () => {
                 <div className="p-4">
                   {/* Top bar */}
                   <div className="flex items-center gap-2 mb-4 px-2 py-1.5 rounded-lg" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                    <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-400"/><div className="w-2.5 h-2.5 rounded-full bg-yellow-400"/><div className="w-2.5 h-2.5 rounded-full bg-green-400"/></div>
-                    <div className="flex-1 h-4 rounded bg-white/10 mx-2"/>
+                    <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-400" /><div className="w-2.5 h-2.5 rounded-full bg-yellow-400" /><div className="w-2.5 h-2.5 rounded-full bg-green-400" /></div>
+                    <div className="flex-1 h-4 rounded bg-white/10 mx-2" />
                     <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-[8px] font-bold">V</div>
                   </div>
                   {/* Room cards */}
@@ -165,12 +165,12 @@ const Hero = () => {
                     ].map((room, i) => (
                       <div key={i} className="rounded-xl p-3 relative overflow-hidden"
                         style={{ background: room.active ? `linear-gradient(135deg, ${room.color}22, ${room.color}10)` : 'rgba(255,255,255,0.03)', border: `1px solid ${room.active ? room.color + '55' : 'rgba(255,255,255,0.08)'}` }}>
-                        {room.active && <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: room.color }}/>}
+                        {room.active && <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: room.color }} />}
                         <div className="text-[9px] font-semibold mb-2" style={{ color: room.active ? room.color : '#94a3b8' }}>{room.label}</div>
                         <div className="flex gap-1">
                           {Array.from({ length: room.users }).map((_, j) => (
                             <div key={j} className="w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-bold text-white"
-                              style={{ background: ['#3b82f6','#8b5cf6','#06b6d4','#22c55e'][j % 4] }}>
+                              style={{ background: ['#3b82f6', '#8b5cf6', '#06b6d4', '#22c55e'][j % 4] }}>
                               {String.fromCharCode(65 + j)}
                             </div>
                           ))}
@@ -180,7 +180,7 @@ const Hero = () => {
                   </div>
                   {/* Status bar */}
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"/>
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                     <span className="text-[9px]" style={{ color: '#94a3b8' }}>4 rooms active · 10 members online</span>
                   </div>
                 </div>

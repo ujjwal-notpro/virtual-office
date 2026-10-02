@@ -10,11 +10,11 @@ import {
 
 /* ── Social links with brand colors ── */
 const socials = [
-  { icon: Globe,          label: 'Facebook',    href: '#', color: '#1877f2' },
-  { icon: MessageCircle,  label: 'X / Twitter', href: '#', color: '#1DA1F2' },
-  { icon: Share2,         label: 'Instagram',   href: '#', color: '#e1306c' },
-  { icon: Rss,            label: 'LinkedIn',    href: '#', color: '#0a66c2' },
-  { icon: Tv2,            label: 'YouTube',     href: '#', color: '#ff0000' },
+  { icon: Globe, label: 'Facebook', href: '#', color: '#1877f2' },
+  { icon: MessageCircle, label: 'X / Twitter', href: '#', color: '#1DA1F2' },
+  { icon: Share2, label: 'Instagram', href: '#', color: '#e1306c' },
+  { icon: Rss, label: 'LinkedIn', href: '#', color: '#0a66c2' },
+  { icon: Tv2, label: 'YouTube', href: '#', color: '#ff0000' },
 ];
 
 const ColHeading = ({ children }) => (
@@ -84,20 +84,20 @@ const Footer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email) return setStatus(t("newsletter_errorEmpty"));
-    
+
     // Basic regex to check for valid email format (contains @ and .)
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setStatus(t("newsletter_errorInvalid"));
-    
+
     setStatus(`✓ ${t("newsletter_success")}`);
     setEmail('');
-    
+
     // Clear the success message after 3 seconds
     setTimeout(() => setStatus(''), 3000);
   };
 
   return (
     <footer
-    id="contact"
+      id="contact"
       className="w-full relative overflow-hidden"
       style={{ backgroundColor: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}
     >
@@ -142,7 +142,7 @@ const Footer = () => {
                 className="text-2xl font-black text-transparent bg-clip-text"
                 style={{ backgroundImage: 'linear-gradient(135deg, #3b82f6, #6366f1, #8b5cf6)' }}
               >
-                Syncaura
+                Flow Bit
               </span>
             </div>
 
@@ -153,9 +153,9 @@ const Footer = () => {
             {/* Contact info */}
             <div className="space-y-2">
               {[
-                { icon: Mail,    text: 'hello@FlowBit.io'    },
-                { icon: Phone,   text: '+1 (800) 123-4567'  },
-                { icon: MapPin,  text: 'San Francisco, CA'  },
+                { icon: Mail, text: 'hello@FlowBit.io' },
+                { icon: Phone, text: '+1 (800) 123-4567' },
+                { icon: MapPin, text: 'San Francisco, CA' },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-2.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
                   <Icon size={13} style={{ color: '#6366f1', flexShrink: 0 }} />
@@ -214,8 +214,8 @@ const Footer = () => {
                 { label: t("footer_blog") },
                 { label: t("footer_contact") }
               ].map(item => (
-                <NavLink 
-                  key={item.label} 
+                <NavLink
+                  key={item.label}
                   href={item.id ? `#${item.id}` : undefined}
                   onClick={item.id ? (e) => scrollToSection(e, item.id) : undefined}
                 >
@@ -237,8 +237,8 @@ const Footer = () => {
                 { label: t("footer_contact"), id: 'contact' },
                 { label: t("footer_social") }
               ].map(item => (
-                <NavLink 
-                  key={item.label} 
+                <NavLink
+                  key={item.label}
                   href={item.id ? `#${item.id}` : undefined}
                   onClick={item.id ? (e) => scrollToSection(e, item.id) : undefined}
                 >

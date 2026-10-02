@@ -123,15 +123,15 @@ const Navbar = () => {
 
           <button
             onClick={() => navigate("/sign-in")}
-            className="flex items-center gap-2 text-sm font-semibold transition-all hover:opacity-70 text-blue-600 dark:text-white"
+            className="flex items-center gap-2 text-sm font-semibold transition-all hover:opacity-70 bg-black rounded-xl px-3 py-3"
           >
-            <LogIn className="w-4 h-4" />
-            {t("nav_login")}
+            <LogIn className="w-4 h-4 text-white" />
+            <span className='text-white'>{t("nav_login")}</span>
           </button>
 
           <button
             onClick={() => navigate("/sign-up")}
-            className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl hover:-translate-y-0.5 transition-all duration-300 bg-blue-600 dark:bg-white text-white dark:text-black shadow-[0_4px_14px_0_rgba(51,102,255,0.39)] hover:shadow-[0_6px_20px_rgba(51,102,255,0.23)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.15)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.25)]"
+            className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl hover:-translate-y-0.5 transition-all duration-300 bg-blue-600 dark:bg-blue text-white dark:text-black shadow-[0_4px_14px_0_rgba(51,102,255,0.39)] hover:shadow-[0_6px_20px_rgba(51,102,255,0.23)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.15)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.25)]"
           >
             {t("start_free")}
             <ArrowRight className="w-4 h-4" />
