@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Sun, Moon, Home, Sparkles, CreditCard, Mail, LogIn, ArrowRight, Info, BookOpen } from 'lucide-react';
+import { Sun, Moon, Home, Sparkles, CreditCard, Mail, LogIn, ArrowRight, BookOpen } from 'lucide-react';
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDarkMode } from "../../hooks/useDarkMode";
@@ -9,7 +9,6 @@ const Navbar = () => {
   const { t } = useTranslation();
   const { theme, toggleTheme } = useDarkMode();
   const location = useLocation();
-  const isAboutActive = location.pathname === "/about-us";
   const isLearnMoreActive = location.pathname === "/learn-more";
   const [activeSection, setActiveSection] = useState('home');
   useEffect(() => {
@@ -43,7 +42,7 @@ const Navbar = () => {
       >
         <div className="gap-20 flex items-center">
           <div
-            className="text-2xl font-bold text-blue-600 dark:text-[#4FE6E6]"
+            className="text-2xl font-bold text-blue-600 dark:text-white dark:bg-black p-2 x-2 rounded-2xl"
           >
             Flow Bit
           </div>
@@ -60,9 +59,9 @@ const Navbar = () => {
             <a
               href="#home"
               onClick={(e) => scrollToSection(e, 'home')}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/5"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/10"
               style={{
-                backgroundColor: activeSection === 'home' ? 'rgba(51, 102, 255, 0.1)' : '',
+                backgroundColor: activeSection === 'home' ? (theme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(51, 102, 255, 0.1)') : '',
                 color: activeSection === 'home' ? 'var(--accent-color)' : 'var(--text-secondary)',
               }}
             >
@@ -73,9 +72,9 @@ const Navbar = () => {
             <a
               href="#features"
               onClick={(e) => scrollToSection(e, 'features')}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/5"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/10"
               style={{
-                backgroundColor: activeSection === 'features' ? 'rgba(51, 102, 255, 0.1)' : '',
+                backgroundColor: activeSection === 'features' ? (theme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(51, 102, 255, 0.1)') : '',
                 color: activeSection === 'features' ? 'var(--accent-color)' : 'var(--text-secondary)',
               }}
             >
@@ -86,9 +85,9 @@ const Navbar = () => {
             <a
               href="#contact"
               onClick={(e) => scrollToSection(e, 'contact')}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/5"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/10"
               style={{
-                backgroundColor: activeSection === 'contact' ? 'rgba(51, 102, 255, 0.1)' : '',
+                backgroundColor: activeSection === 'contact' ? (theme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(51, 102, 255, 0.1)') : '',
                 color: activeSection === 'contact' ? 'var(--accent-color)' : 'var(--text-secondary)',
               }}
             >
@@ -96,21 +95,10 @@ const Navbar = () => {
               {t("nav_contact")}
             </a>
             <Link
-              to="/about-us"
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/5"
-              style={{
-                backgroundColor: isAboutActive ? 'rgba(51, 102, 255, 0.1)' : '',
-                color: isAboutActive ? 'var(--accent-color)' : 'var(--text-secondary)',
-              }}
-            >
-              <Info className="w-4 h-4 transition-transform group-hover:scale-110" />
-              {t("nav_about")}
-            </Link>
-            <Link
               to="/learn-more"
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/5"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/10"
               style={{
-                backgroundColor: isLearnMoreActive ? 'rgba(51, 102, 255, 0.1)' : '',
+                backgroundColor: isLearnMoreActive ? (theme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(51, 102, 255, 0.1)') : '',
                 color: isLearnMoreActive ? 'var(--accent-color)' : 'var(--text-secondary)',
               }}
             >
@@ -135,7 +123,7 @@ const Navbar = () => {
 
           <button
             onClick={() => navigate("/sign-in")}
-            className="flex items-center gap-2 text-sm font-semibold transition-all hover:opacity-70 text-blue-600 dark:text-[#4FE6E6]"
+            className="flex items-center gap-2 text-sm font-semibold transition-all hover:opacity-70 text-blue-600 dark:text-white"
           >
             <LogIn className="w-4 h-4" />
             {t("nav_login")}
@@ -143,7 +131,7 @@ const Navbar = () => {
 
           <button
             onClick={() => navigate("/sign-up")}
-            className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl hover:-translate-y-0.5 transition-all duration-300 bg-blue-600 dark:bg-[#4FE6E6] text-white dark:text-gray-900 shadow-[0_4px_14px_0_rgba(51,102,255,0.39)] hover:shadow-[0_6px_20px_rgba(51,102,255,0.23)] dark:shadow-[0_4px_14px_0_rgba(79,230,230,0.39)] dark:hover:shadow-[0_6px_20px_rgba(79,230,230,0.23)]"
+            className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl hover:-translate-y-0.5 transition-all duration-300 bg-blue-600 dark:bg-white text-white dark:text-black shadow-[0_4px_14px_0_rgba(51,102,255,0.39)] hover:shadow-[0_6px_20px_rgba(51,102,255,0.23)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.15)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.25)]"
           >
             {t("start_free")}
             <ArrowRight className="w-4 h-4" />
@@ -155,13 +143,13 @@ const Navbar = () => {
       <div className="md:hidden">
         <div className="flex items-center justify-between px-6 py-5">
           {/* Logo */}
-          <div className="text-[23px] font-bold tracking-tight text-blue-600 dark:text-[#4FE6E6]">
+          <div className="text-[23px] font-bold tracking-tight text-blue-600 dark:text-white">
             Flow Bit
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => navigate("/sign-in")}
-              className="flex items-center gap-2 text-sm font-semibold whitespace-nowrap transition-all hover:opacity-70 text-blue-600 dark:text-[#4FE6E6]"
+              className="flex items-center gap-2 text-sm font-semibold whitespace-nowrap transition-all hover:opacity-70 text-blue-600 dark:text-white"
             >
               <LogIn className="w-4 h-4" />
               {t("nav_login")}
@@ -169,7 +157,7 @@ const Navbar = () => {
 
             <button
               onClick={() => navigate("/sign-up")}
-              className="px-4 py-1.5 text-sm font-semibold whitespace-nowrap rounded-[10px] bg-blue-600 dark:bg-[#4FE6E6] text-white dark:text-gray-900"
+              className="px-4 py-1.5 text-sm font-semibold whitespace-nowrap rounded-[10px] bg-blue-600 dark:bg-white text-white dark:text-black shadow-sm"
             >
               Start Free
             </button>
@@ -241,22 +229,6 @@ const Navbar = () => {
             >
               Contact
             </a>
-
-            {/* About Us */}
-            <Link
-              to="/about-us"
-              className="text-sm font-medium whitespace-nowrap border-b-2 pb-0.5 transition-all"
-              style={{
-                color: isAboutActive
-                  ? "var(--accent-color)"
-                  : "var(--text-secondary)",
-                borderColor: isAboutActive
-                  ? "var(--accent-color)"
-                  : "transparent",
-              }}
-            >
-              {t("nav_about")}
-            </Link>
 
             {/* Learn More */}
             <Link

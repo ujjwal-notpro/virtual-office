@@ -76,7 +76,7 @@ const Hero = () => {
               style={{ color: 'var(--text-primary)' }}
             >
               {t("hero_title_line1")} <br className="hidden md:block" /> 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 dark:from-white dark:via-zinc-200 dark:to-zinc-400">
                 {t("hero_title_line2")}
               </span>
             </motion.h1>
@@ -103,10 +103,10 @@ const Hero = () => {
             >
               <Link to="/sign-up" className="w-full sm:w-auto">
                 <button
-                  className="group relative flex items-center justify-center gap-2 px-8 py-3.5 w-full sm:w-auto text-sm font-bold text-white rounded-xl overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95 bg-blue-600 shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:shadow-[0_12px_30px_rgba(59,130,246,0.6)]"
+                  className="group relative flex items-center justify-center gap-2 px-8 py-3.5 w-full sm:w-auto text-sm font-bold text-white dark:text-black rounded-xl overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95 bg-blue-600 dark:bg-white shadow-[0_8px_20px_rgba(59,130,246,0.4)] dark:shadow-[0_8px_20px_rgba(255,255,255,0.15)]"
                 >
                   {/* Shimmer Effect */}
-                  <span className="absolute inset-0 w-full h-full bg-white/20 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
+                  <span className="absolute inset-0 w-full h-full bg-white/20 dark:bg-black/10 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
                   
                   {t("cta_getStarted")}
                   <Rocket className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
@@ -115,7 +115,7 @@ const Hero = () => {
 
               <button
                 onClick={scrollToFeatures}
-                className="group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-110 active:scale-95 border border-gray-200 bg-white hover:bg-gray-50 text-gray-800 shadow-sm hover:shadow-xl"
+                className="group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-110 active:scale-95 border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-800 dark:text-white shadow-sm hover:shadow-xl"
               >
                 {t("cta_learnMore")}
                 <Compass className="w-4 h-4 transition-transform group-hover:rotate-45" />
@@ -139,7 +139,7 @@ const Hero = () => {
                 opacity: [0.2, 0.6, 0.2]
               }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[20%] left-1/2 -translate-x-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-cyan-400/40 rounded-full blur-[70px] z-0 pointer-events-none" 
+              className="absolute top-[20%] left-1/2 -translate-x-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-cyan-400/40 dark:bg-white/10 rounded-full blur-[70px] z-0 pointer-events-none" 
             />
             
 
