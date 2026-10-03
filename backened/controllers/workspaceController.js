@@ -39,4 +39,4 @@ const getWorkspaces=async(req,res)=>{
     }
 };
 
-module.exports={createWorkspace };
+module.exports={createWorkspace,getWorkspaces };
