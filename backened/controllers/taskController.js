@@ -59,4 +59,13 @@ const updateTask=async(req,res)=>{
             message:"Task updated successfully",
             task:task
         });
-module.exports = {createTask,getTasks};
+        }catch(error){
+
+        res.status(500).json({
+            message:"Task update failed",
+            error:error.message
+        });
+    }
+};
+
+module.exports = {createTask,getTasks,updateTask};
