@@ -7,7 +7,7 @@ const roomSchema=new mongoose.Schema({
     },
     type:{
         type:String,
-        default:"general"
+        default:"general"//Baad me meeting,work,etc. kar sakte hain
     },
     workspace:{
         type:mongoose.Schema.Types.ObjectId,
