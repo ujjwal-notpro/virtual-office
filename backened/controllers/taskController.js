@@ -68,4 +68,15 @@ const updateTask=async(req,res)=>{
     }
 };
 
+const createTask=async(req,res)=>{
+    try{
+        const{
+            title,
+            description,
+            status,
+            assignedTo,
+            workspace
+        }=req.body;
+
+
 module.exports = {createTask,getTasks,updateTask};
