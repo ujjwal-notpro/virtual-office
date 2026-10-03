@@ -1,102 +1,58 @@
-# 🎙️ AI Meeting Notes Generator
+# AI Meeting Notes Generator
 
-AI-powered meeting summarizer jo audio record karke automatically transcript aur summary generate karta hai — **Hugging Face** models use karke (fully free!).
+This project transcribes meeting audio and generates AI summaries using Hugging Face models.
 
-## ✨ Features
+## Features
 
-- 🎤 **Live Audio Recording** — browser mein hi record karo (streamlit-mic-recorder)
-- 📁 **Upload Audio Files** — pre-recorded meetings bhi process kar sakte ho (.mp3 only)
-- 🗣️ **Speech-to-Text** — Whisper large-v3 model se accurate transcription
-- 📝 **AI Summarization** — BART model se structured meeting notes with:
-  - Executive Summary
-  - Key Discussion Points
-  - Decisions Made
-  - Action Items
-  - Meeting Statistics
-- 💾 **Export Options** — Audio, transcript (.txt), aur notes (.md) download karo
-- 📊 **Real-time Analytics** — Word count, character count, estimated duration
+- Live audio recording from browser
+- Upload MP3 files
+- Speech-to-text using Whisper AI
+- Automatic summarization using BART
+- Download transcript and notes
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-| Component | Technology |
-|-----------|-----------|
-| Frontend | Streamlit |
-| Speech-to-Text | Hugging Face Whisper (`openai/whisper-large-v3`) |
-| Summarization | Hugging Face BART (`facebook/bart-large-cnn`) |
-| Language | Python |
+- **Frontend**: Streamlit
+- **Speech-to-Text**: OpenAI Whisper (via Hugging Face)
+- **Summarization**: Facebook BART (via Hugging Face)
+- **Language**: Python
 
-## 📁 Project Structure (Sequence Order)
+## Setup
 
-```
-meeting-summarizer/
-│
-│── .env                         ← 🔑 Step 0: API token (secret, git-ignored)
-│── .gitignore                   ← 🚫 Git ignore rules
-│── requirements.txt             ← 📦 Step 1: Install dependencies
-│── README.md                    ← 📄 Documentation
-│
-│── src/                         ← 📂 Source code folder
-│   │── __init__.py              ← 📌 Step 2: Package init (exports everything)
-│   │── config.py                ← ⚙️ Step 3: Settings & API config
-│   │── transcriber.py           ← 🎤 Step 4: Speech-to-Text (Whisper)
-│   │── summarizer.py            ← 📝 Step 5: Text Summarization (BART)
-│   │── ui_components.py         ← 🎨 Step 6: Reusable UI widgets
-│
-│── app.py                       ← 🚀 Step 7: Main app (entry point)
-```
+1. Clone the repo
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Create `.env` file with your Hugging Face API token:
+   ```
+   HF_API_TOKEN=your_token_here
+   ```
+4. Run the app:
+   ```bash
+   streamlit run app.py
+   ```
 
-## 🔄 Code Flow (Sequence)
+## How It Works
+
+1. User records audio or uploads MP3 file
+2. Audio is sent to Whisper API for transcription
+3. Transcript is sent to BART API for summarization
+4. Results are displayed in the UI
+
+## Project Structure
 
 ```
-1. config.py        → Settings load (HF token, model URLs)
-2. transcriber.py   → Audio bytes → Whisper API → Text
-3. summarizer.py    → Text → BART API → Summary
-4. ui_components.py → UI widgets ready
-5. app.py           → Sab ko connect karke Streamlit app chalata hai
+src/
+├── config.py         # API configuration
+├── transcriber.py    # Speech-to-text module
+├── summarizer.py     # Summarization module
+└── ui_components.py  # UI helper functions
+
+app.py                # Main Streamlit app
+requirements.txt      # Dependencies
 ```
 
-## 🚀 Setup
+## Team
 
-### 1. Clone the repo
-```bash
-git clone <repo-url>
-cd meeting-summarizer
-```
-
-### 2. Virtual environment banao
-```bash
-python -m venv venv
-venv\Scripts\activate        # Windows
-# source venv/bin/activate   # Mac/Linux
-```
-
-### 3. Dependencies install karo
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Hugging Face token set karo
-1. [huggingface.co](https://huggingface.co) pe account banao
-2. Settings → Access Tokens → New Token
-3. `.env` file mein daalo:
-```
-HF_API_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-### 5. App chalao
-```bash
-streamlit run app.py
-```
-
-## 👥 Team
-
-| Role | Responsibility |
-|------|---------------|
-| ML Developer | AI Summarizer (Speech-to-Text + Summarization) |
-| Backend Developer (x2) | API, Database, Server |
-| Frontend Developer | Website UI |
-| UI/UX Designer | Design & User Experience |
-
-## 📄 License
-
-This project is for educational/college purposes.
+This is a group project for our college. I worked on the ML/AI part (transcription and summarization).
