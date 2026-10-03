@@ -3,40 +3,30 @@ from src.config import Config
 
 
 def transcribe_audio(audio_bytes):
-    """
-    Converts audio to text using Whisper AI model
-
-    Steps:
-    1. Takes audio bytes as input
-    2. Sends to Hugging Face Whisper API
-    3. Returns the transcribed text
-    """
-
-    # Prepare headers with API token
+    # prepare the headers
     headers = {
         "Authorization": f"Bearer {Config.HF_API_TOKEN}",
-        "Content-Type": "audio/mpeg"  # for MP3 files
+        "Content-Type": "audio/mpeg"
     }
 
-    # Send audio to Whisper API
+    # send request to whisper model
     response = requests.post(
         Config.WHISPER_MODEL_URL,
         headers=headers,
-        data=audio_bytes,
+        data=audio_bytes
     )
 
-    # Get response from API
     result = response.json()
 
-    # Check if transcription was successful
+    # check if we got text back
     if "text" in result:
-        return result["text"].strip()
+        text = result["text"]
+        return text.strip()
     elif "error" in result:
-        error_msg = result['error']
-        if "loading" in str(error_msg).lower():
-            raise Exception(
-                "Model is loading. Please wait 20-30 seconds and try again."
-            )
-        raise Exception(f"API error: {error_msg}")
+        error = result["error"]
+        if "loading" in str(error).lower():
+            raise Exception("Model is loading, wait 20-30 seconds and try again")
+        else:
+            raise Exception(f"API error: {error}")
     else:
         raise Exception(f"Unexpected response: {result}")
