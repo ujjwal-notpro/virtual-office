@@ -11,3 +11,14 @@ const createTask=async(req,res)=>{
             workspace:workspace,
             createdBy:req.user.userId
         });
+        res.status(201).json({
+            message:"Task created successfully",
+            task:task
+        });
+    }catch(error){
+        res.status(500).json({
+            message:"Task creation failed",
+            error:error.message
+        });
+    }
+};
