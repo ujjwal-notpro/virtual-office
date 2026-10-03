@@ -20,7 +20,7 @@ app.use("/api/users",userRoutes);
 app.use("/api/auth",authRoutes);//Jo request /api/auth se start hogi, usko authRoutes handle karega.
 app.use("/api/workspaces",workspaceRoutes);
 app.use("/api/rooms",roomRoutes);
-app.use("/api/tasks",taskRoutes);
+app.use("/api/tasks",taskRoutes);//se aane wali request taskRoutes ke paas jayegi.
 
 
 app.get("/",(req,res)=>{
