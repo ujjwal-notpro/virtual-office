@@ -13,6 +13,8 @@ const userRoutes=require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");//authRoutes.js wali file ko index.js me lekar aao
 
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);//Jo request /api/auth se start hogi, usko authRoutes handle karega.
+
 
 app.get("/",(req,res)=>{
     res.send("chatmeet is running");
