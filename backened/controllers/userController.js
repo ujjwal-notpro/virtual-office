@@ -1,5 +1,5 @@
 const User=require("../models/User");//controller ko usermodele mil rha hai
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");//bcryptjs password ko hash karne ke kaam aata hai.
 
 const createUser=async(req,res)=>{
     try{
