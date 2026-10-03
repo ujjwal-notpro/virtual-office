@@ -31,13 +31,18 @@ const createMeeting = async (req, res) => {
     }
 };
 
-const getMeetings=async(req,res)=>{
+const getMeetings=async(req,res)=>{//all meeting
     try{
         const{workspace}=req.query;
 
         const meetings=await Meeting.find({
             workspace:workspace
-        });
+        })
+        .populate("workspace")
+        .populate("participants")
+        .populate("createdBy");
+
+
         res.status(200).json({
             message:"Meetings fetched successfully",
             meetings:meetings
@@ -51,7 +56,7 @@ const getMeetings=async(req,res)=>{
     }
 };
 
-const getMeetingById = async(req,res)=>{
+const getMeetingById = async(req,res)=>{//single meeting ke liye
     try{
         const {id}=req.params;
         const meeting=await Meeting.findById(id);
