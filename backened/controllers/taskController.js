@@ -68,26 +68,17 @@ const updateTask=async(req,res)=>{
     }
 };
 
-const createTask=async(req,res)=>{
+const deleteTask=async(req,res)=>{
     try{
-        const{
-            title,
-            description,
-            status,
-            assignedTo,
-            workspace
-        }=req.body;
-        const task = await Task.create({
-            title: title,
-            description: description,
-            status: status,
-            assignedTo: assignedTo,
-            workspace: workspace,
-            createdBy: req.user.userId
-        });
-        res.status(201).json({
-            message:"Task created successfully",
-            task:task
+        const {id}=req.params;
+        const task=await Task.findByIdAndDelete(id);
+        if(!task){
+            return res.status(404).json({
+                message:"Task not found"
+            });
+        }
+        res.status(200).json({
+            message: "Task deleted successfully"
         });
 
 
