@@ -1,7 +1,7 @@
 const User=require("./models/User");//controller ko usermodele mil rha hai
 const createUser=async(req,res)=>{
     try{
-        const user=await User.create(req.body);
+        const user=await User.create(req.body);//jo bhi data aayahai req se usko mongodb ke acc save krna jaise email,name,pass aata hai
 
         res.status(201).json({
             message:"User created successfully",
@@ -11,7 +11,7 @@ const createUser=async(req,res)=>{
         res.status(201).json({
             message:"User created successfully",
             error:error.message
-        });    
+        });    //try ansd catch usekiya agr koi bhi error aaya crash hone ki bajaye message ye de de
     }
 };
 module.exports={createUser};
