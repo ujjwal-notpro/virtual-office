@@ -24,5 +24,23 @@ const createTask=async(req,res)=>{
     }
 };
 
-const getTasks = async (req, res) => {
+const getTasks = async (req, res)=>{
+     try{
+
+        const{workspace}=req.query;
+        const tasks=await Task.find({
+            workspace:workspace
+        });
+        res.status(200).json({
+            message:"Tasks fetched successfully",
+            tasks:tasks
+        });
+        }catch(error) {
+
+        res.status(500).json({
+            message: "Failed to fetch tasks",
+            error: error.message
+        });
+    }
+};
 module.exports = {createTask};
