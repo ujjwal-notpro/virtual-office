@@ -14,13 +14,15 @@ const authRoutes=require("./routes/authRoutes");//authRoutes.js wali file ko ind
 const workspaceRoutes=require("./routes/workspaceRoutes");
 const roomRoutes=require("./routes/roomRoutes");
 const taskRoutes=require("./routes/taskRoutes");//Task ka route file server ke andar import ho raha hai.
-
+const meetingRoutes=require("./routes/meetingRoutes");
 
 app.use("/api/users",userRoutes);
 app.use("/api/auth",authRoutes);//Jo request /api/auth se start hogi, usko authRoutes handle karega.
 app.use("/api/workspaces",workspaceRoutes);
 app.use("/api/rooms",roomRoutes);
 app.use("/api/tasks",taskRoutes);//se aane wali request taskRoutes ke paas jayegi.
+app.use("/api/meetings",meetingRoutes);
+
 
 
 app.get("/",(req,res)=>{
