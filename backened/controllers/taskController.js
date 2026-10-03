@@ -46,8 +46,8 @@ const getTasks = async (req, res)=>{
 
 const updateTask=async(req,res)=>{
     try{
-        const{id}= req.params;
-        const {status}=req.body;
+        const{id}= req.params;//URL se task ki ID lega.
+        const {status}=req.body;//Body se naya status lega.
 
         const task=await Task.findByIdAndUpdate(id,{status:status },{new:true});
         if(!task){
