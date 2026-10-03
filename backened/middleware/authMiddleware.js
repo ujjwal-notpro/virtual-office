@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const authMiddleware=(req,res,next)=>{//e wahi package hai jo humne login ke liye install kiya tha.
+const authMiddleware=(req,res,next)=>{//ye wahi package hai jo humne login ke liye install kiya tha.
     try {
         const authHeader=req.headers.authorization;
         if(!authHeader){
