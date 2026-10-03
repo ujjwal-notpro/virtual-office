@@ -10,7 +10,7 @@ const createTask=async(req,res)=>{
             status:status,
             assignedTo:assignedTo,
             workspace:workspace,
-            createdBy:req.user.userId
+            createdBy:req.user.userId //JWT se currently logg-in user ki ID automatically creator mein save ho jayegi
         });
         res.status(201).json({
             message:"Task created successfully",
