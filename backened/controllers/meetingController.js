@@ -72,4 +72,4 @@ const getMeetingById = async(req,res)=>{
     }
 };
 
-module.exports = {createMeeting,getMeetings};
+module.exports = {createMeeting,getMeetings,getMeetingById};
