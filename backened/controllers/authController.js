@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const jwt = require("jsonwebtoken");//
+const jwt = require("jsonwebtoken");//jwt.sign ek JWT token create karta hai.
 const bcrypt = require("bcryptjs");
 
 const loginUser = async (req,res)=>{
@@ -22,6 +22,9 @@ const loginUser = async (req,res)=>{
                 message: "Invalid password"
             });
         }
+        const token = jwt.sign(
+            {userId: user._id,role:user.role},process.env.JWT_SECRET,{expiresIn:"1d"}
+        );
         res.status(200).json({
             message: "Login successful",
             user: user
