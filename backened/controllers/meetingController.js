@@ -13,7 +13,7 @@ const createMeeting = async (req, res) => {
             description:description,
             date:date,
             workspace:workspace,
-            createdBy:req.user.userId,
+            createdBy:req.user.userId,//login token se current user ki ID lega, isliye hume body me
             participants:participants
         });
 
