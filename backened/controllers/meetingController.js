@@ -52,5 +52,24 @@ const getMeetings=async(req,res)=>{
 };
 
 const getMeetingById = async(req,res)=>{
-    
+    try{
+        const {id}=req.params;
+        const meeting=await Meeting.findById(id);
+        if(!meeting){
+            return res.status(404).json({
+                message:"Meeting not found"
+            });
+        }
+        res.status(200).json({
+            message:"Meeting fetched successfully",
+            meeting:meeting
+        });
+        }catch(error){
+        res.status(500).json({
+            message:"Failed to fetch meeting",
+            error:error.message
+        });
+    }
+};
+
 module.exports = {createMeeting,getMeetings};
