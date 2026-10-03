@@ -1,0 +1,42 @@
+const Workspace=require("../models/Workspace");//Controller ko Workspace model chahiye taaki MongoDB me data save kar saku
+const createWorkspace=async(req,res)=>{
+
+    try{
+        const{name,description}=req.body;
+        const workspace=await Workspace.create({
+            name:name,
+            description:description,
+            owner:req.user.userId,//Owner kaun hai //authMiddleware ne JWT verify karne ke baad:
+            members:[req.user.userId]//create karne wala user automatically us workspace ka first member ban jayega
+        });
+        res.status(201).json({
+            message:"Workspace created successfully",
+            workspace:workspace
+        });
+        }catch(error){
+            res.status(500).json({
+            message:"Workspace creation failed",
+            error: error.message
+        });
+    }
+};
+
+const getWorkspaces=async(req,res)=>{
+    try{
+        const workspaces=await Workspace.find({
+            members:req.user.userId
+        });
+        res.status(200).json({
+            message:"Workspaces fetched successfully",
+            workspaces:workspaces
+        });
+    }   catch(error) {
+
+        res.status(500).json({
+            message:"Failed to fetch workspaces",
+            error:error.message
+        });
+    }
+};
+
+module.exports={createWorkspace,getWorkspaces };
