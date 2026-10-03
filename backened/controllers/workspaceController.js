@@ -20,3 +20,4 @@ const createWorkspace=async(req,res)=>{
         });
     }
 };
+module.exports={createWorkspace };
