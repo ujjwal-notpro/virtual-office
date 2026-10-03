@@ -13,3 +13,10 @@ const createWorkspace=async(req,res)=>{
             message:"Workspace created successfully",
             workspace:workspace
         });
+        }catch(error){
+            res.status(500).json({
+            message:"Workspace creation failed",
+            error: error.message
+        });
+    }
+};
