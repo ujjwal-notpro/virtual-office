@@ -36,11 +36,10 @@ const getTasks = async (req, res)=>{
             tasks:tasks
         });
         }catch(error) {
-
         res.status(500).json({
-            message: "Failed to fetch tasks",
-            error: error.message
+            message:"Failed to fetch tasks",
+            error:error.message
         });
     }
 };
-module.exports = {createTask};
+module.exports = {createTask,getTasks};
