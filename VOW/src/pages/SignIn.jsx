@@ -33,7 +33,7 @@ const SignIn = () => {
     // Simulate login flow
     setTimeout(() => {
       setIsLoading(false);
-      navigate('/');
+      navigate('/dashboard');
     }, 800);
   };
 

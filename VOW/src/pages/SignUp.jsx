@@ -40,7 +40,7 @@ const SignUp = () => {
     // Simulate sign-up registration
     setTimeout(() => {
       setIsLoading(false);
-      navigate('/');
+      navigate('/dashboard');
     }, 800);
   };
 

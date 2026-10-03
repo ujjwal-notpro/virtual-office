@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp';
 import SignOut from './pages/SignOut';
 import ResetPassword from './pages/ResetPassword';
 import LearnMore from './pages/LearnMore';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -27,6 +28,12 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
+
+        {/* Dashboard Routes */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/chat" element={<Dashboard />} />
+        <Route path="/profile" element={<Dashboard />} />
+        <Route path="/settings" element={<Dashboard />} />
 
         {/* Informational routes */}
         <Route path="/learn-more" element={<LearnMore />} />
