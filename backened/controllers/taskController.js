@@ -1,7 +1,8 @@
 const Task=require("../models/Task");
 const createTask=async(req,res)=>{
     try{
-        const{title,description,status,assignedTo,workspace}=req.body;
+        const{title,description,status,assignedTo,workspace}=req.body;//frontend se task ki information le rahe hain hm
+        
 
         const task=await Task.create({
             title:title,
