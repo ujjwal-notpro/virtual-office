@@ -50,4 +50,13 @@ const updateTask=async(req,res)=>{
         const {status}=req.body;
 
         const task=await Task.findByIdAndUpdate(id,{status:status },{new:true});
+        if(!task){
+            return res.status(404).json({
+                message:"Task not found"
+            });
+        }
+        res.status(200).json({
+            message:"Task updated successfully",
+            task:task
+        });
 module.exports = {createTask,getTasks};
