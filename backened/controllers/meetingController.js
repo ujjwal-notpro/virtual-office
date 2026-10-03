@@ -50,4 +50,7 @@ const getMeetings=async(req,res)=>{
         });
     }
 };
+
+const getMeetingById = async(req,res)=>{
+    
 module.exports = {createMeeting,getMeetings};
