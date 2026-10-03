@@ -6,7 +6,7 @@ const createWorkspace=async(req,res)=>{
         const workspace=await Workspace.create({
             name:name,
             description:description,
-            owner:req.user.userId,//Owner kaun hai
+            owner:req.user.userId,//Owner kaun hai //authMiddleware ne JWT verify karne ke baad:
             members:[req.user.userId]
         });
         res.status(201).json({
