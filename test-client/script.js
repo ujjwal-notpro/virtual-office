@@ -1,6 +1,7 @@
 const socket = io("http://localhost:8000");
 
 let otherUserId = null;
+
 socket.on("user-joined", (data) => {
     console.log("A user joined: ", data.socketId);
     otherUserId = data.socketId;
@@ -8,6 +9,29 @@ socket.on("user-joined", (data) => {
 
 const localVideo = document.getElementById("localVideo");
 const peerConnection = new RTCPeerConnection();
+
+peerConnection.ontrack = (event) => {
+    console.log("Remote track received");
+    remoteVideo.srcObject = event.streams[0];
+};
+
+peerConnection.onicecandidate = (event) => {
+    if (event.candidate && otherUserId) {
+        socket.emit("ice-candidate", {
+            target: otherUserId,
+            candidate: event.candidate
+        });
+        console.log("ICE candidate sent");
+    }
+};
+
+socket.on("ice-candidate", async (data) => {
+    console.log("ICE candidate received from:", data.sender);
+
+    await peerConnection.addIceCandidate(data.candidate);
+
+    console.log("ICE candidate added");
+});
 
 
 async function startCamera() {
@@ -55,6 +79,37 @@ socket.on("user-joined", async (data) => {
     otherUserId = data.socketId;
     await createOffer();
 });
+
+
+socket.on("offer", async (data) => {
+
+    console.log("Offer received from:", data.sender);
+
+    otherUserId = data.sender;
+    await peerConnection.setRemoteDescription(data.offer);
+    
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setLocalDescription(answer);
+
+    console.log("Answer created:", answer);
+
+        socket.emit("answer", {
+        target: otherUserId,
+        answer: answer
+    });
+})
+
+socket.on("answer", async (data) => {
+
+    console.log("Answer received from:", data.sender);
+
+    await peerConnection.setRemoteDescription(data.answer);
+
+    console.log("Remote description set");
+});
+
+
+
 
 socket.on("user-left", (data) => {
     console.log("A user left:", data.socketId);
