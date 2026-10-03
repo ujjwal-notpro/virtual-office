@@ -9,3 +9,7 @@ const createWorkspace=async(req,res)=>{
             owner:req.user.userId,
             members:[req.user.userId]
         });
+        res.status(201).json({
+            message:"Workspace created successfully",
+            workspace:workspace
+        });
