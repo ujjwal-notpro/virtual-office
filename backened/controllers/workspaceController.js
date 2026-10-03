@@ -6,7 +6,7 @@ const createWorkspace=async(req,res)=>{
         const workspace=await Workspace.create({
             name:name,
             description:description,
-            owner:req.user.userId,
+            owner:req.user.userId,//Owner kaun hai
             members:[req.user.userId]
         });
         res.status(201).json({
