@@ -1,0 +1,48 @@
+                                      virtual-office/
+│
+├── backend/
+│   │
+│   ├── config/
+│   │   └── db.js
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── workspaceController.js
+│   │   ├── taskController.js
+│   │   ├── meetingController.js
+│   │   └── messageController.js
+│   │
+│   ├── middlewares/
+│   │   └── authMiddleware.js
+│   │
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Workspace.js
+│   │   ├── Room.js
+│   │   ├── Task.js
+│   │   ├── Meeting.js
+│   │   └── Message.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── workspaceRoutes.js
+│   │   ├── taskRoutes.js
+│   │   ├── meetingRoutes.js
+│   │   └── messageRoutes.js
+│   │
+│   ├── sockets/
+│   │   └── socket.js
+│   │
+│   ├── .env
+│   ├── .gitignore
+│   ├── package.json
+│   ├── package-lock.json
+│   └── server.js
+│
+├── frontend/
+│
+├── ml/
+│
+├── docs/
+│
+└── README.md
