@@ -1,0 +1,1 @@
+cors allows frontend to communicate with backend
