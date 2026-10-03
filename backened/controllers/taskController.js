@@ -24,6 +24,7 @@ const createTask=async(req,res)=>{
     }
 };
 
+
 const getTasks = async (req, res)=>{
      try{
 
@@ -42,4 +43,9 @@ const getTasks = async (req, res)=>{
         });
     }
 };
+
+const updateTask=async(req,res)=>{
+    try{
+        const{id}= req.params;
+        const {status}=req.body;
 module.exports = {createTask,getTasks};
