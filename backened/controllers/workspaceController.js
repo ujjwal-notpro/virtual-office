@@ -7,7 +7,7 @@ const createWorkspace=async(req,res)=>{
             name:name,
             description:description,
             owner:req.user.userId,//Owner kaun hai //authMiddleware ne JWT verify karne ke baad:
-            members:[req.user.userId]
+            members:[req.user.userId]//create karne wala user automatically us workspace ka first member ban jayega
         });
         res.status(201).json({
             message:"Workspace created successfully",
