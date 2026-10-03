@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");//bcryptjs password ko hash karne ke kaam aat
 
 const createUser=async(req,res)=>{
     try{
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);//bcrypt.hash(...)---ye $2b$10$...form mein krdeta hai
 
         const user = await User.create({
         name:req.body.name,
