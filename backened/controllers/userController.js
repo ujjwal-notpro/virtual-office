@@ -11,8 +11,7 @@ const createUser=async(req,res)=>{
         password:hashedPassword,
         role:req.body.role
         });
-        //const user=await User.create(req.body);//jo bhi data aayahai req se usko mongodb ke acc save krna jaise email,name,pass aata hai
-
+        
         res.status(201).json({
             message:"User created successfully",
             user:user
