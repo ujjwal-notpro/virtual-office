@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const jwt = require("jsonwebtoken");//jwt.sign ek JWT token create karta hai.
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const loginUser = async (req,res)=>{
@@ -22,8 +22,9 @@ const loginUser = async (req,res)=>{
                 message: "Invalid password"
             });
         }
-        const token = jwt.sign(
-            {userId: user._id,role:user.role},process.env.JWT_SECRET,{expiresIn:"1d"}
+        const token = jwt.sign(//jwt.sign ek JWT token create karta hai.
+            {userId: user._id,role:user.role},//Token ke andar hum basic information rakh rahe hain:
+            process.env.JWT_SECRET,{expiresIn:"1d"}//Ye .env se secret key leta hai.
         );
         res.status(200).json({
             message: "Login successful",
