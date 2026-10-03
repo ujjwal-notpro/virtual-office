@@ -48,4 +48,6 @@ const updateTask=async(req,res)=>{
     try{
         const{id}= req.params;
         const {status}=req.body;
+
+        const task=await Task.findByIdAndUpdate(id,{status:status },{new:true});
 module.exports = {createTask,getTasks};
