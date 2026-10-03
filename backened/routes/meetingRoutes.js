@@ -5,8 +5,6 @@ const authMiddleware=require("../middleware/authMiddleware");
 const router=express.Router();
 
 router.post("/",authMiddleware,createMeeting);//crete meeting
+router.get("/",authMiddleware,getMeetings);//get meeting
 
-
-router.get("/", authMiddleware, getMeetings);
-
-module.exports = router;
+module.exports=router;
