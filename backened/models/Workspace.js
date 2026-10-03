@@ -21,3 +21,4 @@ const workspaceSchema=new mongoose.Schema({
         default:Date.now
     }
 });
+module.exports=mongoose.model("Workspace", workspaceSchema);
