@@ -20,3 +20,4 @@ const createRoom = async(req,res) => {
         });
     }
 };
+module.exports = {createRoom};
