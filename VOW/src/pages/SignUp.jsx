@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import { Mail, User, Lock, ArrowRight } from 'lucide-react';
+import { Mail, User, Lock, ArrowRight, Phone } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import AuthInput from '../components/auth/AuthInput';
 import SocialAuth from '../components/auth/SocialAuth';
+import { registerUser } from '../services/api';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     identifier: '',
     fullName: '',
+    phone: '',
     password: '',
     agreeToTerms: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -25,7 +28,7 @@ const SignUp = () => {
     if (errorMessage) setErrorMessage('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.identifier || !formData.fullName || !formData.password) {
       setErrorMessage('Please fill in all fields');
@@ -37,11 +40,27 @@ const SignUp = () => {
     }
 
     setIsLoading(true);
-    // Simulate sign-up registration
-    setTimeout(() => {
+    setErrorMessage('');
+
+    try {
+      await registerUser({
+        name: formData.fullName,
+        email: formData.identifier,
+        phone: formData.phone,
+        password: formData.password,
+        role: 'employee',
+      });
+
+      setSuccessMessage('Account created! Redirecting to Sign In...');
+      setTimeout(() => {
+        navigate('/sign-in');
+      }, 1500);
+    } catch (error) {
+      const msg = error.response?.data?.message || error.response?.data?.error || 'Registration failed. Please try again.';
+      setErrorMessage(msg);
+    } finally {
       setIsLoading(false);
-      navigate('/dashboard');
-    }, 800);
+    }
   };
 
   return (
@@ -57,12 +76,18 @@ const SignUp = () => {
           </div>
         )}
 
-        {/* Identifier Field */}
+        {successMessage && (
+          <div className="p-3 text-xs font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl border border-emerald-200 dark:border-emerald-900/50 flex items-center justify-between animate-fadeIn">
+            <span>{successMessage}</span>
+          </div>
+        )}
+
+        {/* Email Field */}
         <AuthInput
           id="identifier"
           name="identifier"
           type="text"
-          placeholder="Phone/Email Id"
+          placeholder="Email Id"
           icon={Mail}
           value={formData.identifier}
           onChange={handleChange}
@@ -81,6 +106,18 @@ const SignUp = () => {
           onChange={handleChange}
           required
           autoComplete="name"
+        />
+
+        {/* Phone Field (Optional) */}
+        <AuthInput
+          id="phone"
+          name="phone"
+          type="tel"
+          placeholder="Phone Number (optional, for SMS OTP)"
+          icon={Phone}
+          value={formData.phone}
+          onChange={handleChange}
+          autoComplete="tel"
         />
 
         {/* Password Field */}
@@ -166,4 +203,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-

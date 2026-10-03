@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { LogOut, ArrowRight, Home, CheckCircle2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
+import { clearAuth } from '../services/api';
+import { disconnectSocket } from '../services/socket';
 
 const SignOut = () => {
   const navigate = useNavigate();
@@ -11,6 +13,10 @@ const SignOut = () => {
   const handleConfirmSignOut = () => {
     setIsLoading(true);
     setTimeout(() => {
+      // Clear JWT token and user data from localStorage
+      clearAuth();
+      // Disconnect from realtime-backend socket
+      disconnectSocket();
       setIsLoading(false);
       setIsLoggedOut(true);
     }, 600);
