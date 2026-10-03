@@ -1,4 +1,6 @@
 const User=require("../models/User");//controller ko usermodele mil rha hai
+const bcrypt = require("bcryptjs");
+
 const createUser=async(req,res)=>{
     try{
         const user=await User.create(req.body);//jo bhi data aayahai req se usko mongodb ke acc save krna jaise email,name,pass aata hai
