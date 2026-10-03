@@ -4,6 +4,8 @@ dns.setServers(['8.8.8.8','8.8.4.4']);//apne blocked dns ko choodkr direct googl
 const express =require("express");
 const app=express();
 
+app.use(express.json());
+
 const PORT=3000;
 require("./config/db");//folder ke nadr jo dbs hai ukso laod krega so that mongodb se communicate kr paye
 
