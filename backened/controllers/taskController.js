@@ -80,7 +80,15 @@ const deleteTask=async(req,res)=>{
         res.status(200).json({
             message: "Task deleted successfully"
         });
+        }catch(error){
+        res.status(500).json({
+            message:"Task deletion failed",
+            error:error.message
+        });
+    }
+};
 
 
 
-module.exports = {createTask,getTasks,updateTask};
+
+module.exports = {createTask,getTasks,updateTask,deleteTask};
