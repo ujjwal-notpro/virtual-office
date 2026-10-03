@@ -1,7 +1,7 @@
 const express =require("express");
 const app=express();
 
-const PORT=4800;
+const PORT=3000;
 require("./config/db");//folder ke nadr jo dbs hai ukso laod krega so that mongodb se communicate kr paye
 
 app.get("/",(req,res)=>{
