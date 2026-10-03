@@ -12,10 +12,12 @@ require("./config/db");//folder ke nadr jo dbs hai ukso laod krega so that mongo
 const userRoutes=require("./routes/userRoutes");
 const authRoutes=require("./routes/authRoutes");//authRoutes.js wali file ko index.js me lekar aao
 const workspaceRoutes=require("./routes/workspaceRoutes");
+const roomRoutes=require("./routes/roomRoutes");
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);//Jo request /api/auth se start hogi, usko authRoutes handle karega.
 app.use("/api/workspaces",workspaceRoutes);
+app.use("/api/rooms", roomRoutes);
 
 
 app.get("/",(req,res)=>{
