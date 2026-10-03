@@ -77,6 +77,19 @@ const createTask=async(req,res)=>{
             assignedTo,
             workspace
         }=req.body;
+        const task = await Task.create({
+            title: title,
+            description: description,
+            status: status,
+            assignedTo: assignedTo,
+            workspace: workspace,
+            createdBy: req.user.userId
+        });
+        res.status(201).json({
+            message:"Task created successfully",
+            task:task
+        });
+
 
 
 module.exports = {createTask,getTasks,updateTask};
