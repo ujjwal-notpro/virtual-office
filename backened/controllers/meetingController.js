@@ -30,3 +30,24 @@ const createMeeting = async (req, res) => {
         });
     }
 };
+
+const getMeetings=async(req,res)=>{
+    try{
+        const{workspace}=req.query;
+
+        const meetings=await Meeting.find({
+            workspace:workspace
+        });
+        res.status(200).json({
+            message:"Meetings fetched successfully",
+            meetings:meetings
+        });
+
+    }catch(error){
+        res.status(500).json({
+            message:"Failed to fetch meetings",
+            error:error.message
+        });
+    }
+};
+module.exports = {createMeeting,getMeetings};
