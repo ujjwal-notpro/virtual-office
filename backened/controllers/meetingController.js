@@ -60,9 +60,9 @@ const getMeetingById = async(req,res)=>{//single meeting ke liye
     try{
         const {id}=req.params;
         const meeting=await Meeting.findById(id)
-        .populate("workspace")
+        .populate("workspace")//Meeting kis workspace ki hai, uski details laayega.
         .populate("participants")//Participant ki User details laane ki koshish karega.
-        .populate("createdBy");
+        .populate("createdBy");//Meeting kis user ne banayi, uski details laayega.
 
         if(!meeting){
             return res.status(404).json({
