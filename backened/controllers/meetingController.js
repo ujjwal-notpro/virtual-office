@@ -59,7 +59,11 @@ const getMeetings=async(req,res)=>{//all meeting
 const getMeetingById = async(req,res)=>{//single meeting ke liye
     try{
         const {id}=req.params;
-        const meeting=await Meeting.findById(id);
+        const meeting=await Meeting.findById(id)
+        .populate("workspace")
+        .populate("participants")//Participant ki User details laane ki koshish karega.
+        .populate("createdBy");
+
         if(!meeting){
             return res.status(404).json({
                 message:"Meeting not found"
