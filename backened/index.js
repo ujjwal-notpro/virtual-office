@@ -9,6 +9,9 @@ app.use(express.json());
 const PORT=3000;
 require("./config/db");//folder ke nadr jo dbs hai ukso laod krega so that mongodb se communicate kr paye
 
+const userRoutes=require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
+
 app.get("/",(req,res)=>{
     res.send("chatmeet is running");
 })
