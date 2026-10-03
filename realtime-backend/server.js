@@ -3,6 +3,9 @@ const http = require("http");
 const {Server} = require("socket.io");
 const cors = require("cors");
 require("dotenv").config();
+const setupRoomHandlers = require("./socket/rooms");
+const setupSignalingHandlers = require("./socket/signaling");
+
 
 const app=express();
 const server=http.createServer(app);
@@ -27,6 +30,9 @@ app.get("/", (req,res) => {
 io.on("connection", (socket) => {
     console.log("A user connected:", socket.id);
 
+    setupRoomHandlers(io, socket);
+    setupSignalingHandlers(io, socket);
+    
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id);
     });
