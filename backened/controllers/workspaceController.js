@@ -1,4 +1,4 @@
-const Workspace=require("../models/Workspace");
+const Workspace=require("../models/Workspace");//Controller ko Workspace model chahiye taaki MongoDB me data save kar saku
 const createWorkspace=async(req,res)=>{
 
     try{
