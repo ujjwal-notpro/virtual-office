@@ -4,17 +4,17 @@ import dashboardPreview from "../../assets/Imageto.PNG";
 import { Zap, CheckCircle2, Layers, MessageSquare, BarChart3, Users, Clock, ShieldCheck } from 'lucide-react';
 
 const stats = [
-  { val: '10+',   label: 'Modules',  icon: Layers,     color: '#3b82f6' },
-  { val: '99.9%', label: 'Uptime',   icon: ShieldCheck, color: '#22c55e' },
-  { val: '50K+',  label: 'Users',    icon: Users,      color: '#8b5cf6' },
-  { val: '<2min', label: 'Setup',    icon: Clock,      color: '#f59e0b' },
+  { val: '10+', label: 'Modules', icon: Layers, color: '#3b82f6' },
+  { val: '99.9%', label: 'Uptime', icon: ShieldCheck, color: '#22c55e' },
+  { val: '50K+', label: 'Users', icon: Users, color: '#8b5cf6' },
+  { val: '<2min', label: 'Setup', icon: Clock, color: '#f59e0b' },
 ];
 
 const featureList = [
-  { icon: Layers,        color: '#3b82f6', text: 'Unified project & task management' },
-  { icon: MessageSquare, color: '#8b5cf6', text: 'Real-time team chat & threads'     },
-  { icon: BarChart3,     color: '#06b6d4', text: 'Live performance dashboards'       },
-  { icon: ShieldCheck,   color: '#22c55e', text: 'Enterprise-grade security & uptime'},
+  { icon: Layers, color: '#3b82f6', text: 'Unified project & task management' },
+  { icon: MessageSquare, color: '#8b5cf6', text: 'Real-time team chat & threads' },
+  { icon: BarChart3, color: '#06b6d4', text: 'Live performance dashboards' },
+  { icon: ShieldCheck, color: '#22c55e', text: 'Enterprise-grade security & uptime' },
 ];
 
 const FeatureShowcase = () => {
@@ -55,7 +55,7 @@ const FeatureShowcase = () => {
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase"
             style={{
-              background: 'linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.15))',
+              background: 'linear-gradient(135deg, rgba(112, 233, 233, 0.15), rgba(23, 158, 158, 0.15))',
               border: '1px solid rgba(139,92,246,0.3)',
               color: '#a78bfa',
             }}
@@ -75,7 +75,7 @@ const FeatureShowcase = () => {
             Work Smarter.{' '}
             <span
               className="text-transparent bg-clip-text"
-              style={{ backgroundImage: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%)' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, #aac2e9ff 0%, #74d4c8ff 50%, #6dcadfff 100%)' }}
             >
               Collaborate Faster.
             </span>
@@ -138,7 +138,7 @@ const FeatureShowcase = () => {
                   From Start to Success —{' '}
                   <span
                     className="text-transparent bg-clip-text"
-                    style={{ backgroundImage: 'linear-gradient(135deg, #3b82f6, #6366f1)' }}
+                    style={{ backgroundImage: 'linear-gradient(135deg, #b8e6daff, #288374ff)' }}
                   >
                     All in One Workspace
                   </span>
@@ -166,8 +166,7 @@ const FeatureShowcase = () => {
                     className="relative flex items-center gap-3.5 p-4 rounded-2xl overflow-hidden group cursor-default"
                     style={{
                       background: `linear-gradient(135deg, ${color}12, ${color}06)`,
-                      border: `1px solid ${color}28`,
-                      boxShadow: `0 4px 20px ${color}15`,
+                      border: `1px solid ${color}15`,
                       transition: 'all 0.25s ease',
                     }}
                   >
@@ -260,7 +259,7 @@ const FeatureShowcase = () => {
                 {/* Outer glow ring — adapts per theme */}
                 <div
                   className="absolute -inset-4 rounded-3xl blur-2xl opacity-30 pointer-events-none dark-glow light-glow"
-                  style={{ background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)' }}
+                  style={{ background: 'linear-gradient(135deg, #3b82f6, #c3b5e2ff)' }}
                 />
 
                 {/* Image frame */}
@@ -274,7 +273,7 @@ const FeatureShowcase = () => {
                 >
                   {/* Elegant Theme-Aware Image Frame */}
                   <div className="rounded-xl overflow-hidden relative group">
-                    
+
                     {/* Dark/Light mode base background to ensure contrast if image is transparent */}
                     <div className="absolute inset-0 bg-[var(--card-bg)] transition-colors duration-300"></div>
 
@@ -285,7 +284,7 @@ const FeatureShowcase = () => {
                       decoding="async"
                       className="relative z-10 w-full h-auto block transform group-hover:scale-[1.02] transition-transform duration-500 ease-out"
                     />
-                    
+
                     {/* Subtle shine overlay — adapts to theme via CSS variables */}
                     <div
                       className="absolute inset-0 pointer-events-none z-20"
@@ -294,7 +293,7 @@ const FeatureShowcase = () => {
                         mixBlendMode: 'overlay'
                       }}
                     />
-                    
+
                     {/* Glassmorphic border ring inside the frame */}
                     <div className="absolute inset-0 z-30 pointer-events-none rounded-xl border border-white/20 dark:border-white/10" />
                   </div>
@@ -304,34 +303,37 @@ const FeatureShowcase = () => {
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -top-4 -right-4 flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold shadow-xl"
+                  className="absolute -top-3 -right-2 sm:-top-5 sm:-right-5 z-50 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold shadow-2xl pointer-events-auto"
                   style={{
-                    background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                    background: 'linear-gradient(135deg, #e4c5e4ff, #e464e1ff)',
                     color: '#fff',
-                    boxShadow: '0 8px 24px rgba(34,197,94,0.4)',
+                    boxShadow: '0 10px 25px -3px rgba(228, 100, 225, 0.5), 0 4px 10px rgba(0,0,0,0.2)',
+                    zIndex: 50,
+                    transform: 'translateZ(40px)',
                   }}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                  Live & Syncing
+                  <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                  <span>Live & Syncing</span>
                 </motion.div>
 
                 {/* Floating badge — bottom left */}
                 <motion.div
-                  animate={{ y: [0, 8, 0] }}
+                  animate={{ y: [4, 5, 4] }}
                   transition={{ duration: 3.5, delay: 0.5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -bottom-4 -left-4 flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl shadow-xl"
+                  className="absolute -bottom-3 left-2 sm:-bottom-5 left-4 z-50 flex items-center gap-3 px-4 py-2.5 rounded-2xl shadow-2xl pointer-events-auto"
                   style={{
                     background: 'var(--card-bg)',
-                    border: '1px solid rgba(99,102,241,0.3)',
-                    boxShadow: '0 8px 32px rgba(99,102,241,0.2)',
+                    border: '1.5px solid rgba(99,102,241,0.4)',
+                    boxShadow: '0 16px 36px -4px rgba(0,0,0,0.3), 0 0 20px rgba(99,102,241,0.25)',
+                    zIndex: 50,
+                    transform: 'translateZ(40px)',
                   }}
                 >
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>
-                    <BarChart3 size={13} className="text-white" />
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-md" style={{ background: 'linear-gradient(135deg, #424472ff, #030009ff)' }}>
+                    <BarChart3 size={15} className="text-white" />
                   </div>
                   <div>
-                    <p className="text-xs font-black" style={{ color: 'var(--text-primary)' }}>+24% ↑</p>
-                    <p className="text-[10px]" style={{ color: 'var(--text-secondary)', opacity: 0.65 }}>Productivity</p>
+                    <p className="text-[10px] font-semibold" style={{ color: 'var(--text-secondary)' }}>Productivity</p>
                   </div>
                 </motion.div>
               </motion.div>

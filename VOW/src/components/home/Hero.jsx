@@ -1,46 +1,12 @@
-import React, { useRef, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
 import { Rocket, Compass } from 'lucide-react';
 import { useTranslation } from "react-i18next";
-
+import homeImg from '../../assets/home.PNG';
 
 const Hero = () => {
   const { t } = useTranslation();
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Start video from 3 seconds once metadata is loaded
-    const handleLoadedMetadata = () => {
-      video.currentTime = 3;
-      video.playbackRate = 0.33; // Slow down the video by 3 times (1/3 speed)
-    };
-
-    if (video.readyState >= 1) {
-      video.currentTime = 3;
-      video.playbackRate = 0.33; // Slow down the video by 3 times (1/3 speed)
-    } else {
-      video.addEventListener('loadedmetadata', handleLoadedMetadata);
-    }
-
-    // Standard forward loop, jumping back to 3 seconds when ended
-    const handleEnded = () => {
-      video.currentTime = 3;
-      video.play().catch(e => console.log("Playback prevented", e));
-    };
-
-    video.addEventListener('ended', handleEnded);
-
-    return () => {
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      video.removeEventListener('ended', handleEnded);
-    };
-  }, []);
-  // const navigate = useNavigate();
 
   const scrollToFeatures = (e) => {
     e.preventDefault();
@@ -57,8 +23,6 @@ const Hero = () => {
       style={{ backgroundColor: 'var(--bg-primary)' }}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-
-        {/* 🔥 FIX: proper flex layout instead of grid */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-10">
 
           {/* 
@@ -103,7 +67,7 @@ const Hero = () => {
             >
               <Link to="/sign-up" className="w-full sm:w-auto">
                 <button
-                  className="group relative flex items-center justify-center gap-2 px-8 py-3.5 w-full sm:w-auto text-sm font-bold text-white dark:text-black rounded-xl overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95 bg-blue-600 dark:bg-white shadow-[0_8px_20px_rgba(59,130,246,0.4)] dark:shadow-[0_8px_20px_rgba(255,255,255,0.15)]"
+                  className="group relative flex items-center justify-center gap-2 px-8 py-3.5 w-full sm:w-auto text-sm font-bold text-white dark:text-black rounded-xl overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95 bg-blue-600 dark:bg-white shadow-[0_8px_20px_rgba(59,130,246,0.4)] dark:shadow-[0_8px_20px_rgba(255,255,255,0.15)] cursor-pointer"
                 >
                   {/* Shimmer Effect */}
                   <span className="absolute inset-0 w-full h-full bg-white/20 dark:bg-black/10 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
@@ -115,7 +79,7 @@ const Hero = () => {
 
               <button
                 onClick={scrollToFeatures}
-                className="group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-110 active:scale-95 border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-800 dark:text-white shadow-sm hover:shadow-xl"
+                className="group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-110 active:scale-95 border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-800 dark:text-white shadow-sm hover:shadow-xl cursor-pointer"
               >
                 {t("cta_learnMore")}
                 <Compass className="w-4 h-4 transition-transform group-hover:rotate-45" />
@@ -125,69 +89,40 @@ const Hero = () => {
 
           {/* 
             RIGHT COLUMN: MEDIA & ANIMATION
-            Holds the glowing bulb animation and the main looping hero video.
+            Holds the glowing aura and the main home illustration image.
           */}
           <div className="w-full md:w-1/2 flex justify-center relative">
 
             {/* 
               BACKGROUND GLOW EFFECT
-              A decorative pulsing cyan blur behind the video that grows and shrinks infinitely.
+              A decorative pulsing cyan blur behind the image.
             */}
             <motion.div
               animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.2, 0.6, 0.2]
+                scale: [1, 1.25, 1],
+                opacity: [0.25, 0.55, 0.25]
               }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[20%] left-1/2 -translate-x-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-cyan-400/40 dark:bg-white/10 rounded-full blur-[70px] z-0 pointer-events-none"
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-[15%] left-1/2 -translate-x-1/2 w-64 h-64 sm:w-80 sm:h-80 bg-blue-500/30 dark:bg-blue-600/20 rounded-full blur-[80px] z-0 pointer-events-none"
             />
 
-
-            {/* Main Hero Illustration */}
-            <div className="relative z-10 w-full flex justify-center">
-              <div className="w-full max-w-sm sm:max-w-md md:max-w-xl rounded-2xl overflow-hidden drop-shadow-2xl"
-                style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', border: '1px solid rgba(99,102,241,0.3)', minHeight: '320px' }}>
-                {/* Animated virtual office mockup */}
-                <div className="p-4">
-                  {/* Top bar */}
-                  <div className="flex items-center gap-2 mb-4 px-2 py-1.5 rounded-lg" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                    <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-400" /><div className="w-2.5 h-2.5 rounded-full bg-yellow-400" /><div className="w-2.5 h-2.5 rounded-full bg-green-400" /></div>
-                    <div className="flex-1 h-4 rounded bg-white/10 mx-2" />
-                    <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-[8px] font-bold">V</div>
-                  </div>
-                  {/* Room cards */}
-                  <div className="grid grid-cols-2 gap-2 mb-2">
-                    {[
-                      { label: 'Conf Room A', color: '#3b82f6', users: 3, active: true },
-                      { label: 'Creative Studio', color: '#8b5cf6', users: 2, active: false },
-                      { label: 'Break Room', color: '#06b6d4', users: 1, active: false },
-                      { label: 'Dev Lounge', color: '#22c55e', users: 4, active: false },
-                    ].map((room, i) => (
-                      <div key={i} className="rounded-xl p-3 relative overflow-hidden"
-                        style={{ background: room.active ? `linear-gradient(135deg, ${room.color}22, ${room.color}10)` : 'rgba(255,255,255,0.03)', border: `1px solid ${room.active ? room.color + '55' : 'rgba(255,255,255,0.08)'}` }}>
-                        {room.active && <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: room.color }} />}
-                        <div className="text-[9px] font-semibold mb-2" style={{ color: room.active ? room.color : '#94a3b8' }}>{room.label}</div>
-                        <div className="flex gap-1">
-                          {Array.from({ length: room.users }).map((_, j) => (
-                            <div key={j} className="w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-bold text-white"
-                              style={{ background: ['#3b82f6', '#8b5cf6', '#06b6d4', '#22c55e'][j % 4] }}>
-                              {String.fromCharCode(65 + j)}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  {/* Status bar */}
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                    <span className="text-[9px]" style={{ color: '#94a3b8' }}>4 rooms active · 10 members online</span>
-                  </div>
-                </div>
+            {/* Main Hero Illustration (home.PNG) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              className="relative z-10 w-full flex justify-center"
+            >
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden p-2 sm:p-2.5 bg-gradient-to-tr from-blue-500/20 via-indigo-500/10 to-transparent dark:from-white/10 dark:via-zinc-800/40 dark:to-transparent border border-slate-200/80 dark:border-zinc-800 shadow-[0_20px_60px_-15px_rgba(59,130,246,0.25)] dark:shadow-[0_25px_65px_-15px_rgba(0,0,0,0.8)] backdrop-blur-sm group">
+                <img
+                  src={homeImg}
+                  alt="Flow Bit Virtual Office Dashboard"
+                  loading="eager"
+                  className="w-full h-auto max-h-[480px] object-contain rounded-xl sm:rounded-2xl transition-transform duration-500 group-hover:scale-[1.02]"
+                />
               </div>
-            </div>
+            </motion.div>
           </div>
-
 
         </div>
       </div>
@@ -196,3 +131,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

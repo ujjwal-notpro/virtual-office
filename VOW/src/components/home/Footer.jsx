@@ -134,13 +134,13 @@ const Footer = () => {
             <div className="flex items-center gap-2">
               <div
                 className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #3b82f6, #6366f1)' }}
+                style={{ background: 'linear-gradient(135deg, #090909ff, #090909ff)' }}
               >
                 <Zap size={18} className="text-white" />
               </div>
               <span
                 className="text-2xl font-black text-transparent bg-clip-text"
-                style={{ backgroundImage: 'linear-gradient(135deg, #3b82f6, #6366f1, #8b5cf6)' }}
+                style={{ backgroundImage: 'linear-gradient(135deg, #020409ff, #01010aff, #0b0101ff)' }}
               >
                 Flow Bit
               </span>
@@ -167,12 +167,12 @@ const Footer = () => {
             {/* Newsletter */}
             <div className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>
-                {t("newsletter_title")}
+                {t("connect with us")}
               </p>
               <form onSubmit={handleSubmit} className="flex gap-2">
                 <input
                   type="email"
-                  placeholder={t("footer_emailPlaceholder")}
+                  placeholder={t("add your email here")}
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   className="flex-1 h-10 px-4 rounded-xl text-sm focus:outline-none"
@@ -187,7 +187,7 @@ const Footer = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97 }}
                   className="h-10 w-10 flex items-center justify-center rounded-xl text-white flex-shrink-0"
-                  style={{ background: 'linear-gradient(135deg, #3b82f6, #6366f1)', boxShadow: '0 4px 16px rgba(99,102,241,0.4)' }}
+                  style={{ background: 'black' }}
                 >
                   <Send size={15} />
                 </motion.button>
@@ -197,28 +197,21 @@ const Footer = () => {
                   {status}
                 </p>
               )}
-              <p className="text-[11px]" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
-                {t("newsletter_disclaimer")}
-              </p>
             </div>
           </div>
 
           {/* ── Product ── */}
           <div>
-            <ColHeading>{t("footer_product")}</ColHeading>
+            <ColHeading>{t("product")}</ColHeading>
             <ul className="space-y-3">
               {[
-                { label: t("footer_features"), id: 'features' },
-                { label: t("footer_security") },
-                { label: t("footer_roadmap") },
-                { label: t("footer_blog") },
-                { label: t("footer_contact") }
-              ].map(item => (
-                <NavLink
-                  key={item.label}
-                  href={item.id ? `#${item.id}` : undefined}
-                  onClick={item.id ? (e) => scrollToSection(e, item.id) : undefined}
-                >
+                { label: t("features") },
+                { label: t("security") },
+                { label: t("roadmap") },
+                { label: t("blog") },
+                { label: t("contact") }
+              ].map((item) => (
+                <NavLink key={item.label} to="#">
                   {item.label}
                 </NavLink>
               ))}
@@ -227,21 +220,17 @@ const Footer = () => {
 
           {/* ── Company ── */}
           <div>
-            <ColHeading>{t("footer_company")}</ColHeading>
+            <ColHeading>{t("company")}</ColHeading>
             <ul className="space-y-3">
-              <NavLink to="/about-us">{t("footer_about")}</NavLink>
+              <NavLink to="/about-us">{t("about")}</NavLink>
               <NavLink to="/learn-more">Learn More</NavLink>
               {[
-                { label: t("footer_blog") },
-                { label: t("footer_careers") },
-                { label: t("footer_contact"), id: 'contact' },
-                { label: t("footer_social") }
-              ].map(item => (
-                <NavLink
-                  key={item.label}
-                  href={item.id ? `#${item.id}` : undefined}
-                  onClick={item.id ? (e) => scrollToSection(e, item.id) : undefined}
-                >
+                { label: t("blog") },
+                { label: t("careers") },
+                { label: t("contact") },
+                { label: t("social") }
+              ].map((item) => (
+                <NavLink key={item.label} to="#">
                   {item.label}
                 </NavLink>
               ))}
@@ -291,12 +280,12 @@ const Footer = () => {
           <p className="text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
             © 2026{' '}
             <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>FlowBit, Inc.</span>
-            {' '}{t("footer_copyright")}
+            {' '}{t("copyright")}
           </p>
 
           {/* Legal links */}
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
-            {[t("footer_privacyPolicy"), t("footer_termsOfService"), t("footer_cookiesSettings"), t("footer_accessibility")].map((link, i, arr) => (
+            {[t("privacyPolicy"), t("termsOfService"), t("cookieSettings"), t("accessibility")].map((link, i, arr) => (
               <React.Fragment key={link}>
                 <span className="hover:text-indigo-400 cursor-pointer transition-colors">{link}</span>
                 {i < arr.length - 1 && <span className="opacity-30">·</span>}
