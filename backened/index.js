@@ -10,7 +10,7 @@ const PORT=3000;
 require("./config/db");//folder ke nadr jo dbs hai ukso laod krega so that mongodb se communicate kr paye
 
 const userRoutes=require("./routes/userRoutes");
-const authRoutes = require("./routes/authRoutes");
+const authRoutes = require("./routes/authRoutes");//authRoutes.js wali file ko index.js me lekar aao
 
 app.use("/api/users", userRoutes);
 
