@@ -42,7 +42,7 @@ const Navbar = () => {
       >
         <div className="gap-20 flex items-center">
           <div
-            className="text-2xl font-bold text-blue-600 dark:text-white dark:bg-black p-2 x-2 rounded-2xl"
+            className="text-2xl font-bold text-white dark:text-black bg-black p-2 x-2 rounded-2xl dark:bg-white p-2 x-2 rounded-2xl"
           >
             Flow Bit
           </div>
@@ -131,7 +131,7 @@ const Navbar = () => {
 
           <button
             onClick={() => navigate("/sign-up")}
-            className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl hover:-translate-y-0.5 transition-all duration-300 bg-blue-600 dark:bg-blue text-white dark:text-black shadow-[0_4px_14px_0_rgba(51,102,255,0.39)] hover:shadow-[0_6px_20px_rgba(51,102,255,0.23)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.15)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.25)]"
+            className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl hover:-translate-y-0.5 transition-all duration-300 bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black shadow-[0_4px_14px_0_rgba(0,0,0,0.2)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.15)] cursor-pointer"
           >
             {t("start_free")}
             <ArrowRight className="w-4 h-4" />
@@ -143,23 +143,16 @@ const Navbar = () => {
       <div className="md:hidden">
         <div className="flex items-center justify-between px-6 py-5">
           {/* Logo */}
-          <div className="text-[23px] font-bold tracking-tight text-blue-600 dark:text-white">
+          <div className="text-[23px] font-bold tracking-tight text-black dark:text-white">
             Flow Bit
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => navigate("/sign-in")}
-              className="flex items-center gap-2 text-sm font-semibold whitespace-nowrap transition-all hover:opacity-70 text-blue-600 dark:text-white"
+              className="flex items-center gap-2 text-sm font-semibold whitespace-nowrap transition-all hover:opacity-70 text-black dark:text-white"
             >
               <LogIn className="w-4 h-4" />
               {t("nav_login")}
-            </button>
-
-            <button
-              onClick={() => navigate("/sign-up")}
-              className="px-4 py-1.5 text-sm font-semibold whitespace-nowrap rounded-[10px] bg-blue-600 dark:bg-white text-white dark:text-black shadow-sm"
-            >
-              Start Free
             </button>
           </div>
 

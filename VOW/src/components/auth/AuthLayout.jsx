@@ -18,11 +18,11 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/' }
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 md:p-8 bg-[#f8fafc] dark:bg-black text-slate-900 dark:text-zinc-100 transition-colors duration-300 relative overflow-hidden selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 md:p-8 bg-[#f8fafc] dark:bg-black text-slate-900 dark:text-zinc-100 transition-colors duration-300 relative overflow-hidden selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
       {/* Background Decorative Blur Gradients */}
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-sky-400/25 dark:bg-blue-600/10 rounded-full blur-[100px] pointer-events-none transition-all duration-500" />
-      <div className="absolute top-1/4 -right-32 w-96 h-96 bg-indigo-300/25 dark:bg-purple-600/10 rounded-full blur-[100px] pointer-events-none transition-all duration-500" />
-      <div className="absolute -bottom-32 -left-20 w-96 h-96 bg-blue-300/20 dark:bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none transition-all duration-500" />
+      <div className="absolute -top-32 -left-32 w-96 h-96 bg-slate-300/30 dark:bg-blue-600/10 rounded-full blur-[100px] pointer-events-none transition-all duration-500" />
+      <div className="absolute top-1/4 -right-32 w-96 h-96 bg-zinc-300/30 dark:bg-purple-600/10 rounded-full blur-[100px] pointer-events-none transition-all duration-500" />
+      <div className="absolute -bottom-32 -left-20 w-96 h-96 bg-slate-300/20 dark:bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none transition-all duration-500" />
 
       {/* Subtle grid pattern for light & dark */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:32px_32px] opacity-40 dark:opacity-20 pointer-events-none" />
@@ -31,12 +31,12 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/' }
       <header className="absolute top-0 left-0 right-0 max-w-5xl mx-auto px-6 py-5 flex items-center justify-between pointer-events-auto z-20">
         <Link
           to="/"
-          className="group flex items-center gap-2.5 font-bold tracking-tight text-xl text-slate-900 dark:text-white transition-opacity hover:opacity-90"
+          className="group flex items-center gap-2.5 font-bold tracking-tight text-xl text-black dark:text-white transition-opacity hover:opacity-90"
         >
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-cyan-400 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+          <div className="w-8 h-8 rounded-xl bg-black dark:bg-white flex items-center justify-center text-white dark:text-black shadow-md group-hover:scale-105 transition-transform duration-200">
             <Sparkles className="w-4 h-4" />
           </div>
-          <span className="font-extrabold bg-gradient-to-r from-slate-950 via-blue-900 to-slate-900 dark:from-white dark:via-zinc-200 dark:to-zinc-400 bg-clip-text text-transparent">
+          <span className="font-extrabold text-black dark:text-white">
             Flow Bit
           </span>
         </Link>

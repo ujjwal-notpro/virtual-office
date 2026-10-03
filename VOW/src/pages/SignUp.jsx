@@ -104,18 +104,18 @@ const SignUp = () => {
             name="agreeToTerms"
             checked={formData.agreeToTerms}
             onChange={handleChange}
-            className="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-zinc-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-0 cursor-pointer accent-blue-600 dark:accent-white"
+            className="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-zinc-700 text-black focus:ring-black focus:ring-offset-0 cursor-pointer accent-black dark:accent-white"
           />
           <label
             htmlFor="agreeToTerms"
             className="text-[12px] leading-relaxed text-slate-600 dark:text-zinc-400 cursor-pointer select-none"
           >
             I Have Read And Agree To{' '}
-            <span className="font-semibold text-slate-900 dark:text-white underline hover:text-blue-600 dark:hover:text-blue-400">
+            <span className="font-semibold text-black dark:text-white underline hover:text-zinc-600 dark:hover:text-zinc-300">
               User Agreement
             </span>{' '}
             &{' '}
-            <span className="font-semibold text-slate-900 dark:text-white underline hover:text-blue-600 dark:hover:text-blue-400">
+            <span className="font-semibold text-black dark:text-white underline hover:text-zinc-600 dark:hover:text-zinc-300">
               Privacy Policy
             </span>
           </label>
@@ -126,7 +126,7 @@ const SignUp = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 dark:from-white dark:to-zinc-100 dark:hover:from-zinc-100 dark:hover:to-zinc-200 text-white dark:text-black font-semibold text-[15px] shadow-[0_4px_16px_rgba(37,99,235,0.3)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.15)] active:scale-[0.99] transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+            className="w-full py-3.5 px-6 rounded-2xl bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black font-semibold text-[15px] shadow-[0_4px_16px_rgba(0,0,0,0.25)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.15)] active:scale-[0.99] transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
           >
             {isLoading ? (
               <div className="w-5 h-5 border-2 border-white/30 dark:border-black/30 border-t-white dark:border-t-black rounded-full animate-spin" />
@@ -155,7 +155,7 @@ const SignUp = () => {
           Joined us before?{' '}
           <Link
             to="/sign-in"
-            className="text-blue-600 dark:text-white font-bold hover:underline ml-1"
+            className="text-black dark:text-white font-bold hover:underline ml-1"
           >
             Sign In
           </Link>

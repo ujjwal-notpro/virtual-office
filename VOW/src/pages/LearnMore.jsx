@@ -47,32 +47,32 @@ export default function LearnMore() {
 
   const features = [
     {
-      icon: <Layers className="w-6 h-6 text-blue-600 dark:text-white" />,
+      icon: <Layers className="w-6 h-6 text-black dark:text-white" />,
       title: 'Project & Task Management',
       description: 'Organize files, tasks, and roadmaps. Use our card-based Kanban boards to assign items, configure progress states, and ensure project deadlines are met.'
     },
     {
-      icon: <Video className="w-6 h-6 text-blue-600 dark:text-white" />,
+      icon: <Video className="w-6 h-6 text-black dark:text-white" />,
       title: 'HD Video Meetings',
       description: 'Start or join secure virtual meetings instantly from your browser. Includes real-time screen sharing, in-call chat, and live collaborative meeting notes.'
     },
     {
-      icon: <MessageSquare className="w-6 h-6 text-blue-600 dark:text-white" />,
+      icon: <MessageSquare className="w-6 h-6 text-black dark:text-white" />,
       title: 'Real-Time Team Chat',
       description: 'Unify conversations with project-based chat channels, threads, direct messages, file sharing, and custom emoji reactions to streamline feedback.'
     },
     {
-      icon: <FileText className="w-6 h-6 text-blue-600 dark:text-white" />,
+      icon: <FileText className="w-6 h-6 text-black dark:text-white" />,
       title: 'Centralized Documentation',
       description: 'Create and edit documents in our collaborative editor. Build a team wiki, organize folders, and link files directly to specific tasks or projects.'
     },
     {
-      icon: <Calendar className="w-6 h-6 text-blue-600 dark:text-white" />,
+      icon: <Calendar className="w-6 h-6 text-black dark:text-white" />,
       title: 'Attendance & Notice System',
       description: 'Keep the team updated with official announcements via the Notice Board. Manage time-off requests, check-ins, and leave status seamlessly.'
     },
     {
-      icon: <Terminal className="w-6 h-6 text-blue-600 dark:text-white" />,
+      icon: <Terminal className="w-6 h-6 text-black dark:text-white" />,
       title: 'Role-Based Dashboards',
       description: 'Separate interfaces customized for Admins (organizational overview), Co-Admins (operational management), and Users (task-focused view).'
     }
@@ -214,7 +214,7 @@ export default function LearnMore() {
                     }}
                   >
                     <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center bg-blue-100 dark:bg-zinc-800 text-blue-600 dark:text-white transition-transform duration-300"
+                      className="w-12 h-12 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-zinc-800 text-black dark:text-white transition-transform duration-300"
                       style={{
                         transform: isHovered ? 'scale(1.1) translateY(-2px)' : 'scale(1)'
                       }}

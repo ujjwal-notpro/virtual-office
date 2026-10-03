@@ -44,7 +44,7 @@ const SignOut = () => {
           <div className="pt-2 flex flex-col gap-3">
             <Link
               to="/sign-in"
-              className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 dark:from-white dark:to-zinc-100 dark:hover:from-zinc-100 dark:hover:to-zinc-200 text-white dark:text-black font-semibold text-[15px] shadow-[0_4px_16px_rgba(37,99,235,0.3)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.15)] active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+              className="w-full py-3.5 px-6 rounded-2xl bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black font-semibold text-[15px] shadow-[0_4px_16px_rgba(0,0,0,0.25)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.15)] active:scale-[0.99] transition-all flex items-center justify-center gap-2"
             >
               <span>Sign In Again</span>
               <ArrowRight className="w-4 h-4" />

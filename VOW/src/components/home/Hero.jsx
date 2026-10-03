@@ -67,7 +67,7 @@ const Hero = () => {
             >
               <Link to="/sign-up" className="w-full sm:w-auto">
                 <button
-                  className="group relative flex items-center justify-center gap-2 px-8 py-3.5 w-full sm:w-auto text-sm font-bold text-white dark:text-black rounded-xl overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95 bg-blue-600 dark:bg-white shadow-[0_8px_20px_rgba(59,130,246,0.4)] dark:shadow-[0_8px_20px_rgba(255,255,255,0.15)] cursor-pointer"
+                  className="group relative flex items-center justify-center gap-2 px-8 py-3.5 w-full sm:w-auto text-sm font-bold text-white dark:text-black rounded-xl overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95 bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 shadow-[0_8px_20px_rgba(0,0,0,0.25)] dark:shadow-[0_8px_20px_rgba(255,255,255,0.15)] cursor-pointer"
                 >
                   {/* Shimmer Effect */}
                   <span className="absolute inset-0 w-full h-full bg-white/20 dark:bg-black/10 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />

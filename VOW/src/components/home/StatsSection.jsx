@@ -230,8 +230,8 @@ const StatsSection = () => {
         <div className="flex flex-col sm:flex-row items-center justify-start gap-4 mb-12 pt-2 md:mb-16 pl-2">
           {/* Learn More Button */}
           <Link to="/learn-more" className="inline-block">
-            <button className="group relative flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-110 active:scale-95 bg-blue-600 text-white shadow-[0_4px_14px_rgba(59,130,246,0.4)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.6)] overflow-hidden">
-              <span className="absolute inset-0 w-full h-full bg-white/20 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
+            <button className="group relative flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-110 active:scale-95 bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black shadow-[0_4px_14px_rgba(0,0,0,0.2)] dark:shadow-[0_4px_14px_rgba(255,255,255,0.15)] overflow-hidden cursor-pointer">
+              <span className="absolute inset-0 w-full h-full bg-white/20 dark:bg-black/10 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
               <BookOpen className="w-4 h-4 transition-transform group-hover:-translate-y-1" />
               Learn More
             </button>

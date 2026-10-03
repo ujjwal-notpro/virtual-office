@@ -13,16 +13,16 @@
   --nav-bg: rgba(255, 255, 255, 0.85);
   --input-bg: #f1f5f9;
   --shadow-color: rgba(0, 0, 0, 0.08);
-  --accent-color: #2563eb;
+  --accent-color: #000000;
 
   /* Legacy vite template vars kept for compat */
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
   --border: #e5e4e7;
-  --accent: #3b82f6;
-  --accent-bg: rgba(59, 130, 246, 0.1);
-  --accent-border: rgba(59, 130, 246, 0.5);
+  --accent: #000000;
+  --accent-bg: rgba(0, 0, 0, 0.06);
+  --accent-border: rgba(0, 0, 0, 0.3);
 }
 
 /* ── CSS Variables – Dark Mode (Pure Black Theme) ── */
