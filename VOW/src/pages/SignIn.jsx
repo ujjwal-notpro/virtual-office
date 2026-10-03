@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import AuthInput from '../components/auth/AuthInput';
@@ -38,11 +38,15 @@ const SignIn = () => {
   };
 
   return (
-    <AuthLayout title="Sign In" backTo="/">
+    <AuthLayout
+      title="Sign In"
+      subtitle="Welcome back! Please sign in to continue."
+      backTo="/"
+    >
       <form onSubmit={handleSubmit} className="space-y-4">
         {errorMessage && (
-          <div className="p-3 text-xs font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 rounded-xl border border-red-200 dark:border-red-900/50">
-            {errorMessage}
+          <div className="p-3 text-xs font-semibold text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950/40 rounded-2xl border border-red-200 dark:border-red-900/50 flex items-center justify-between animate-fadeIn">
+            <span>{errorMessage}</span>
           </div>
         )}
 
@@ -73,10 +77,10 @@ const SignIn = () => {
         />
 
         {/* Forgotten Password Link */}
-        <div className="flex justify-end pt-1">
+        <div className="flex justify-end pt-0.5">
           <Link
             to="/reset-password"
-            className="text-[13px] font-semibold text-blue-600 dark:text-zinc-300 hover:underline"
+            className="text-[13px] font-medium text-blue-600 dark:text-zinc-300 hover:text-blue-700 dark:hover:text-white transition-colors hover:underline"
           >
             Forgotten Password?
           </Link>
@@ -87,20 +91,23 @@ const SignIn = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black font-semibold text-[15px] shadow-[0_4px_14px_0_rgba(37,99,235,0.39)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.15)] active:scale-[0.99] transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
+            className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 dark:from-white dark:to-zinc-100 dark:hover:from-zinc-100 dark:hover:to-zinc-200 text-white dark:text-black font-semibold text-[15px] shadow-[0_4px_16px_rgba(37,99,235,0.3)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.15)] active:scale-[0.99] transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
           >
             {isLoading ? (
               <div className="w-5 h-5 border-2 border-white/30 dark:border-black/30 border-t-white dark:border-t-black rounded-full animate-spin" />
             ) : (
-              'Sign In'
+              <>
+                <span>Sign In</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </>
             )}
           </button>
         </div>
 
         {/* Divider */}
-        <div className="relative flex items-center justify-center py-2">
-          <div className="w-full border-t border-gray-200 dark:border-zinc-800" />
-          <span className="absolute px-3 bg-white dark:bg-[#101010] text-xs font-medium text-gray-400 dark:text-zinc-500 tracking-wider">
+        <div className="relative flex items-center justify-center py-2.5">
+          <div className="w-full border-t border-slate-200/90 dark:border-zinc-800" />
+          <span className="absolute px-3 bg-white dark:bg-[#0f0f12] text-[11px] font-bold text-slate-400 dark:text-zinc-500 tracking-wider uppercase">
             OR
           </span>
         </div>
@@ -109,11 +116,11 @@ const SignIn = () => {
         <SocialAuth />
 
         {/* Bottom Switch Link */}
-        <div className="text-center pt-2 text-[13px] text-gray-600 dark:text-zinc-400 font-medium">
+        <div className="text-center pt-2 text-[13px] text-slate-600 dark:text-zinc-400 font-medium">
           New to Flow Bit?{' '}
           <Link
             to="/sign-up"
-            className="text-blue-600 dark:text-white font-bold hover:underline"
+            className="text-blue-600 dark:text-white font-bold hover:underline ml-1"
           >
             Register
           </Link>
@@ -124,3 +131,4 @@ const SignIn = () => {
 };
 
 export default SignIn;
+

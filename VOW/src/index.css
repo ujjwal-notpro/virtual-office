@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ── CSS Variables – Light Mode ── */
 :root {
   --bg-primary: #ffffff;

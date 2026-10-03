@@ -2,15 +2,15 @@ import React from 'react';
 
 const SocialAuth = () => {
   return (
-    <div className="flex items-center justify-center gap-5 my-2">
+    <div className="flex items-center justify-center gap-4 my-2">
       {/* X (formerly Twitter) */}
       <button
         type="button"
         aria-label="Sign in with X"
         onClick={() => {}}
-        className="w-11 h-11 rounded-full bg-black text-white dark:bg-zinc-900 dark:border dark:border-zinc-800 dark:text-white flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+        className="w-11 h-11 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:border dark:border-zinc-800 dark:text-white flex items-center justify-center shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
       >
-        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+        <svg className="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
       </button>
@@ -20,7 +20,7 @@ const SocialAuth = () => {
         type="button"
         aria-label="Sign in with Facebook"
         onClick={() => {}}
-        className="w-11 h-11 rounded-full bg-[#1877F2] text-white flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+        className="w-11 h-11 rounded-2xl bg-[#1877F2] hover:bg-[#166fe5] text-white flex items-center justify-center shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
       >
         <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -32,7 +32,7 @@ const SocialAuth = () => {
         type="button"
         aria-label="Sign in with Google"
         onClick={() => {}}
-        className="w-11 h-11 rounded-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+        className="w-11 h-11 rounded-2xl bg-white hover:bg-slate-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-slate-200/90 dark:border-zinc-800 flex items-center justify-center shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24">
           <path
@@ -58,3 +58,4 @@ const SocialAuth = () => {
 };
 
 export default SocialAuth;
+

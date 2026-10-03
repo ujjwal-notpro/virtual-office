@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import SignOut from './pages/SignOut';
 import ResetPassword from './pages/ResetPassword';
 import LearnMore from './pages/LearnMore';
 
@@ -19,6 +20,10 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/register" element={<SignUp />} />
 
+        <Route path="/sign-out" element={<SignOut />} />
+        <Route path="/signout" element={<SignOut />} />
+        <Route path="/logout" element={<SignOut />} />
+
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
@@ -31,3 +36,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, CheckCircle2 } from 'lucide-react';
+import { Lock, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import AuthInput from '../components/auth/AuthInput';
@@ -44,37 +44,42 @@ const ResetPassword = () => {
       setIsSuccess(true);
       setTimeout(() => {
         navigate('/sign-in');
-      }, 2000);
+      }, 2200);
     }, 700);
   };
 
   return (
-    <AuthLayout title="Reset Password" backTo="/sign-in">
+    <AuthLayout
+      title="Reset Password"
+      subtitle={isSuccess ? undefined : 'Enter and confirm your new password below.'}
+      backTo="/sign-in"
+    >
       {isSuccess ? (
         <div className="py-6 text-center space-y-4">
-          <div className="w-16 h-16 mx-auto bg-green-100 dark:bg-green-950/50 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center animate-bounce">
+          <div className="w-16 h-16 mx-auto bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/20 animate-bounce">
             <CheckCircle2 className="w-9 h-9" />
           </div>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
             Password Reset Successful!
           </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-slate-600 dark:text-zinc-400">
             Your password has been updated. Redirecting to Sign In...
           </p>
-          <div className="pt-2">
+          <div className="pt-3">
             <Link
               to="/sign-in"
-              className="inline-block py-2.5 px-6 rounded-xl bg-blue-600 text-white font-semibold text-sm hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 py-3 px-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 dark:from-white dark:to-zinc-100 dark:hover:from-zinc-100 dark:hover:to-zinc-200 text-white dark:text-black font-semibold text-sm shadow-md transition-all"
             >
-              Go to Sign In
+              <span>Go to Sign In</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
           {errorMessage && (
-            <div className="p-3 text-xs font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 rounded-xl border border-red-200 dark:border-red-900/50">
-              {errorMessage}
+            <div className="p-3 text-xs font-semibold text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950/40 rounded-2xl border border-red-200 dark:border-red-900/50 flex items-center justify-between animate-fadeIn">
+              <span>{errorMessage}</span>
             </div>
           )}
 
@@ -109,22 +114,25 @@ const ResetPassword = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black font-semibold text-[15px] shadow-[0_4px_14px_0_rgba(37,99,235,0.39)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.15)] active:scale-[0.99] transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
+              className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 dark:from-white dark:to-zinc-100 dark:hover:from-zinc-100 dark:hover:to-zinc-200 text-white dark:text-black font-semibold text-[15px] shadow-[0_4px_16px_rgba(37,99,235,0.3)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.15)] active:scale-[0.99] transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
             >
               {isLoading ? (
                 <div className="w-5 h-5 border-2 border-white/30 dark:border-black/30 border-t-white dark:border-t-black rounded-full animate-spin" />
               ) : (
-                'Submit'
+                <>
+                  <span>Reset Password</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </>
               )}
             </button>
           </div>
 
           {/* Back to Sign In Link */}
-          <div className="text-center pt-3 text-[13px] text-gray-600 dark:text-zinc-400 font-medium">
+          <div className="text-center pt-3 text-[13px] text-slate-600 dark:text-zinc-400 font-medium">
             Remember your password?{' '}
             <Link
               to="/sign-in"
-              className="text-blue-600 dark:text-white font-bold hover:underline"
+              className="text-blue-600 dark:text-white font-bold hover:underline ml-1"
             >
               Sign In
             </Link>
@@ -136,3 +144,4 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
+

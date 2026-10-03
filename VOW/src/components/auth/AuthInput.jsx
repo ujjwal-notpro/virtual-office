@@ -16,11 +16,11 @@ const AuthInput = ({
   const isPassword = type === 'password';
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full group">
       <div className="relative flex items-center">
         {Icon && (
-          <div className="absolute left-4.5 text-gray-400 dark:text-zinc-500 pointer-events-none flex items-center justify-center">
-            <Icon className="w-5 h-5 stroke-[1.75]" />
+          <div className="absolute left-4 text-slate-400 dark:text-zinc-500 group-focus-within:text-blue-600 dark:group-focus-within:text-zinc-200 pointer-events-none flex items-center justify-center transition-colors duration-200">
+            <Icon className="w-5 h-5 stroke-[1.8]" />
           </div>
         )}
 
@@ -34,23 +34,23 @@ const AuthInput = ({
           required={required}
           autoComplete={autoComplete}
           className={`w-full py-3.5 ${
-            Icon ? 'pl-12' : 'pl-5'
+            Icon ? 'pl-11' : 'pl-4.5'
           } ${
-            isPassword ? 'pr-12' : 'pr-5'
-          } bg-white dark:bg-black text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-zinc-500 text-[15px] font-medium rounded-2xl border border-gray-200 dark:border-zinc-800 shadow-[0_2px_10px_rgba(0,0,0,0.02)] focus:outline-none focus:border-blue-500 dark:focus:border-zinc-300 focus:ring-4 focus:ring-blue-500/10 dark:focus:ring-white/10 transition-all duration-200`}
+            isPassword ? 'pr-11' : 'pr-4.5'
+          } bg-slate-50/90 dark:bg-black/80 hover:bg-slate-50 dark:hover:bg-zinc-950 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 text-[14.5px] font-medium rounded-2xl border border-slate-200/90 dark:border-zinc-800 shadow-[0_1px_3px_rgba(0,0,0,0.02)] focus:outline-none focus:bg-white dark:focus:bg-black focus:border-blue-500 dark:focus:border-zinc-300 focus:ring-4 focus:ring-blue-500/10 dark:focus:ring-white/10 transition-all duration-200`}
         />
 
         {isPassword && (
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 text-gray-400 dark:text-zinc-500 hover:text-gray-700 dark:hover:text-zinc-300 transition-colors p-1 cursor-pointer"
+            className="absolute right-3.5 p-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 transition-colors cursor-pointer rounded-lg hover:bg-slate-200/60 dark:hover:bg-zinc-800"
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? (
-              <EyeOff className="w-5 h-5 stroke-[1.75]" />
+              <EyeOff className="w-4.5 h-4.5 stroke-[1.8]" />
             ) : (
-              <Eye className="w-5 h-5 stroke-[1.75]" />
+              <Eye className="w-4.5 h-4.5 stroke-[1.8]" />
             )}
           </button>
         )}
@@ -60,3 +60,4 @@ const AuthInput = ({
 };
 
 export default AuthInput;
+
