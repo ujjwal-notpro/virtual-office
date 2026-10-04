@@ -63,7 +63,7 @@ app.use("/api/meetings",meetingRoutes);
 
 
 app.get("/",(req,res)=>{
-    res.send("chatmeet is running");
+    res.send("Flow Bit is running");
 })
 
 server.listen(PORT,()=>{
