@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Base URL of the REST backend
-const API_BASE_URL = 'http://localhost:3000/api';
+// Base URL of the REST backend (uses environment variable if deployed on Vercel)
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,

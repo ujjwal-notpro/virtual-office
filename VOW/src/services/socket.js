@@ -1,8 +1,8 @@
 import { io } from 'socket.io-client';
 import { getStoredToken } from './api';
 
-// Realtime backend URL
-const REALTIME_URL = 'http://localhost:8000';
+// Realtime backend URL (uses environment variable if deployed on Vercel)
+const REALTIME_URL = import.meta.env.VITE_REALTIME_URL || 'http://localhost:8000';
 
 let socket = null;
 
