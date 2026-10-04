@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mail, Lock, ArrowRight, ShieldCheck, Smartphone, MailCheck, RotateCcw } from 'lucide-react';
+import { Mail, Lock, ArrowRight, ShieldCheck, MailCheck, RotateCcw } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import AuthInput from '../components/auth/AuthInput';
@@ -275,22 +275,6 @@ const SignIn = () => {
             <div className="text-left">
               <p className="text-[14px] font-semibold text-slate-900 dark:text-white">Send to Email</p>
               <p className="text-[12px] text-slate-500 dark:text-zinc-500 mt-0.5">OTP will be sent to your registered email</p>
-            </div>
-            <ArrowRight className="w-4 h-4 text-slate-400 dark:text-zinc-600 ml-auto group-hover:translate-x-0.5 group-hover:text-black dark:group-hover:text-white transition-all" />
-          </button>
-
-          {/* SMS Option */}
-          <button
-            onClick={() => handleSendOTP('sms')}
-            disabled={isLoading}
-            className="w-full p-4 rounded-2xl border border-slate-200/90 dark:border-zinc-800 bg-slate-50/90 dark:bg-black/80 hover:bg-slate-100 dark:hover:bg-zinc-900 hover:border-black dark:hover:border-zinc-500 transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-4 group"
-          >
-            <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/50 flex items-center justify-center shrink-0">
-              <Smartphone className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            </div>
-            <div className="text-left">
-              <p className="text-[14px] font-semibold text-slate-900 dark:text-white">Send to Phone</p>
-              <p className="text-[12px] text-slate-500 dark:text-zinc-500 mt-0.5">OTP will be sent via SMS to your phone number</p>
             </div>
             <ArrowRight className="w-4 h-4 text-slate-400 dark:text-zinc-600 ml-auto group-hover:translate-x-0.5 group-hover:text-black dark:group-hover:text-white transition-all" />
           </button>
