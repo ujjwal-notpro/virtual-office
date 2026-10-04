@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useMotionValue, useTransform, animate, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { Users, TrendingUp, BookOpen, ArrowRight } from 'lucide-react';
 import img3 from "../../assets/3-Photoroom.png";
 import img5 from "../../assets/5-Photoroom.png";
@@ -18,44 +18,8 @@ const trustImages = [img3, img5, img6, img9, img10, img12, img13, img14, img15, 
 
 const StatsSection = () => {
   const sectionRef = useRef(null); // Reference to track when this section scrolls into view
-  const usersRef = useRef(null); // Reference for the "2M+" counter
-  const satisfactionRef = useRef(null); // Reference for the "98%" counter
-
   // Triggers animations only once when the component enters 30% of the viewport
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-
-  useEffect(() => {
-    if (!isInView) return; // Wait until visible
-
-    // Animate the users count from 0 to 2,000,000 over 2.5 seconds
-    const controlsUsers = animate(0, 2000000, {
-      duration: 2.5,
-      ease: "easeOut",
-      onUpdate: (val) => {
-        if (usersRef.current) {
-          const num = Math.floor(val);
-          // Format with commas, or show 2M+ when it hits the max
-          usersRef.current.textContent = num >= 2000000 ? "2M+" : new Intl.NumberFormat('en-US').format(num);
-        }
-      }
-    });
-
-    // Animate the satisfaction percentage from 0 to 98
-    const controlsSat = animate(0, 98, {
-      duration: 2.5,
-      ease: "easeOut",
-      onUpdate: (val) => {
-        if (satisfactionRef.current) {
-          satisfactionRef.current.textContent = Math.floor(val) + "%";
-        }
-      }
-    });
-
-    return () => {
-      controlsUsers.stop();
-      controlsSat.stop();
-    };
-  }, [isInView]);
 
   return (
     <section ref={sectionRef} className="w-full py-8 md:py-16" style={{ backgroundColor: 'var(--bg-primary)' }}>
@@ -164,7 +128,6 @@ const StatsSection = () => {
                     <Users className="w-6 h-6 text-indigo-500" strokeWidth={2.5} />
                   </div>
                   <h3
-                    ref={usersRef}
                     className="text-[40px] md:text-5xl lg:text-6xl font-black mb-2 tracking-tighter"
                     style={{
                       background: "linear-gradient(to right, #6366f1, #a855f7)",
@@ -173,7 +136,7 @@ const StatsSection = () => {
                       filter: "drop-shadow(0px 4px 10px rgba(99,102,241,0.2))"
                     }}
                   >
-                    0
+                    2M+
                   </h3>
                   <div className="h-[2px] w-10 bg-indigo-500/40 mb-3 rounded-full" />
                   <p className="text-sm md:text-base font-medium" style={{ color: 'var(--text-secondary)' }}>
@@ -201,7 +164,6 @@ const StatsSection = () => {
                     <TrendingUp className="w-6 h-6 text-teal-500" strokeWidth={2.5} />
                   </div>
                   <h3
-                    ref={satisfactionRef}
                     className="text-[40px] md:text-5xl lg:text-6xl font-black mb-2 tracking-tighter"
                     style={{
                       background: "linear-gradient(to right, #14b8a6, #3b82f6)",
@@ -210,7 +172,7 @@ const StatsSection = () => {
                       filter: "drop-shadow(0px 4px 10px rgba(20,184,166,0.2))"
                     }}
                   >
-                    0%
+                    98%
                   </h3>
                   <div className="h-[2px] w-10 bg-teal-500/40 mb-3 rounded-full" />
                   <p className="text-sm md:text-base font-medium" style={{ color: 'var(--text-secondary)' }}>

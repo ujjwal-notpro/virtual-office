@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Sun, Moon, Home, CreditCard, Mail, LogIn, ArrowRight, BookOpen } from 'lucide-react';
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useDarkMode } from "../../hooks/useDarkMode";
+import brandLogo from '../../assets/image.png';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -39,10 +40,9 @@ const Navbar = () => {
         style={{ borderColor: 'var(--border-color)' }}
       >
         <div className="gap-20 flex items-center">
-          <div
-            className="text-2xl font-bold text-black dark:text-white "
-          >
-            Flow Bit
+          <div className="flex items-center gap-2.5 text-2xl font-bold text-black dark:text-white">
+            <img src={brandLogo} alt="Flow Bit logo" className="w-8 h-8 object-contain" />
+            <span>Flow Bit</span>
           </div>
 
           <nav
@@ -128,8 +128,9 @@ const Navbar = () => {
       <div className="md:hidden">
         <div className="flex items-center justify-between px-6 py-5">
           {/* Logo */}
-          <div className="text-[23px] font-bold tracking-tight text-black dark:text-white">
-            Flow Bit
+          <div className="flex items-center gap-2 text-[23px] font-bold tracking-tight text-black dark:text-white">
+            <img src={brandLogo} alt="Flow Bit logo" className="w-8 h-8 object-contain" />
+            <span>Flow Bit</span>
           </div>
           <div className="flex items-center gap-2">
             <button

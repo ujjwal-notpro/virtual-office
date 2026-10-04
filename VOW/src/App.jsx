@@ -5,7 +5,7 @@ import SignUp from './pages/SignUp';
 import SignOut from './pages/SignOut';
 import ResetPassword from './pages/ResetPassword';
 import LearnMore from './pages/LearnMore';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/dashboard/DashboardPage';
 
 function App() {
   return (

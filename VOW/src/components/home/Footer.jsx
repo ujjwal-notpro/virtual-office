@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import brandLogo from '../../assets/image.png';
 import {
-  Send, Zap, ArrowRight,
+  Send, ArrowRight,
   MapPin, Mail, Phone,
 } from 'lucide-react';
 
@@ -143,15 +144,9 @@ const Footer = () => {
           <div className="space-y-6">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #090909ff, #090909ff)' }}
-              >
-                <Zap size={18} className="text-white" />
-              </div>
+              <img src={brandLogo} alt="Flow Bit logo" className="w-9 h-9 object-contain" />
               <span
-                className="text-2xl font-black text-transparent bg-clip-text"
-                style={{ backgroundImage: 'linear-gradient(135deg, #020409ff, #01010aff, #0b0101ff)' }}
+                className="flex items-center gap-2.5 text-2xl font-bold text-black dark:text-white"
               >
                 Flow Bit
               </span>
