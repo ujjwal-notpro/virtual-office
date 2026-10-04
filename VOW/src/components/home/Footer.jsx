@@ -2,18 +2,17 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Globe, Share2, Tv2, Rss,
-  MessageCircle, Send, Zap, ArrowRight,
+  Send, Zap, ArrowRight,
   MapPin, Mail, Phone,
 } from 'lucide-react';
 
 /* ── Social links with brand colors ── */
 const socials = [
-  { icon: Globe, label: 'Facebook', href: '#', color: '#1877f2' },
-  { icon: MessageCircle, label: 'Twitter', href: '#', color: '#1DA1F2' },
-  { icon: Share2, label: 'Instagram', href: '#', color: '#e1306c' },
-  { icon: Rss, label: 'LinkedIn', href: '#', color: '#0a66c2' },
-  { icon: Tv2, label: 'YouTube', href: '#', color: '#ff0000' },
+  { label: 'Facebook', href: '#', color: '#1877f2', logo: 'https://www.google.com/s2/favicons?domain=facebook.com&sz=64' },
+  { label: 'Twitter', href: '#', color: '#1DA1F2', logo: 'https://www.google.com/s2/favicons?domain=x.com&sz=64' },
+  { label: 'Instagram', href: '#', color: '#e1306c', logo: 'https://www.google.com/s2/favicons?domain=instagram.com&sz=64' },
+  { label: 'LinkedIn', href: '#', color: '#0a66c2', logo: 'https://www.google.com/s2/favicons?domain=linkedin.com&sz=64' },
+  { label: 'YouTube', href: '#', color: '#ff0000', logo: 'https://www.google.com/s2/favicons?domain=youtube.com&sz=64' },
 ];
 
 const footerText = {
@@ -253,7 +252,7 @@ const Footer = () => {
           <div>
             <ColHeading>{t("footer_followUs")}</ColHeading>
             <div className="space-y-3">
-              {socials.map(({ icon: Icon, label, href, color }) => (
+              {socials.map(({ label, href, color, logo }) => (
                 <motion.a
                   key={label}
                   href={href}
@@ -269,7 +268,7 @@ const Footer = () => {
                       boxShadow: `0 2px 8px ${color}15`,
                     }}
                   >
-                    <Icon size={15} style={{ color }} />
+                    <img src={logo} alt={`${label} logo`} className="w-4 h-4 object-contain" />
                   </div>
                   <span
                     className="text-sm font-medium group-hover:text-indigo-400 transition-colors"
