@@ -1,15 +1,27 @@
 import { io } from 'socket.io-client';
 import { getStoredToken } from './api';
 
-// Realtime backend URL (uses environment variable if deployed on Vercel)
-const REALTIME_URL = import.meta.env.VITE_REALTIME_URL || 'http://localhost:8000';
+// Local development uses the local service. Production must explicitly provide
+// the publicly deployed realtime service URL through Vercel's environment vars.
+const REALTIME_URL = import.meta.env.VITE_REALTIME_URL || (
+  import.meta.env.DEV ? 'http://localhost:8000' : null
+);
 
 let socket = null;
+const joinedRooms = new Set();
 
 // Connect to realtime backend with JWT auth
 export const connectSocket = () => {
-  if (socket && socket.connected) {
+  if (socket) {
+    if (!socket.connected) socket.connect();
     return socket;
+  }
+
+  if (!REALTIME_URL) {
+    console.error(
+      '[VOW Socket] Missing VITE_REALTIME_URL. Set it to the public URL of the realtime backend before deploying.'
+    );
+    return null;
   }
 
   const token = getStoredToken();
@@ -23,6 +35,8 @@ export const connectSocket = () => {
 
   socket.on('connect', () => {
     console.log('[VOW Socket] Connected:', socket.id);
+    // Rejoin after an initial connection or an automatic reconnection.
+    joinedRooms.forEach((roomId) => socket.emit('join-room', roomId));
   });
 
   socket.on('disconnect', (reason) => {
@@ -45,18 +59,21 @@ export const disconnectSocket = () => {
     socket.disconnect();
     socket = null;
   }
+  joinedRooms.clear();
 };
 
 // Join a room
 export const joinRoom = (roomId) => {
-  if (socket && socket.connected) {
+  joinedRooms.add(roomId);
+  if (socket?.connected) {
     socket.emit('join-room', roomId);
   }
 };
 
 // Leave a room
 export const leaveRoom = (roomId) => {
-  if (socket && socket.connected) {
+  joinedRooms.delete(roomId);
+  if (socket?.connected) {
     socket.emit('leave-room', roomId);
   }
 };

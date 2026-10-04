@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-// Base URL of the REST backend (uses environment variable if deployed on Vercel)
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+// Local development uses the local API. Production must explicitly provide
+// the publicly deployed API URL through Vercel's environment variables.
+const API_BASE_URL = import.meta.env.VITE_API_URL || (
+  import.meta.env.DEV ? 'http://localhost:3000/api' : null
+);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -12,6 +15,11 @@ const api = axios.create({
 
 // Automatically attach JWT token to every request if available
 api.interceptors.request.use((config) => {
+  if (!API_BASE_URL) {
+    return Promise.reject(new Error(
+      'Missing VITE_API_URL. Configure the public API URL in Vercel before deploying.'
+    ));
+  }
   const token = localStorage.getItem('vow_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

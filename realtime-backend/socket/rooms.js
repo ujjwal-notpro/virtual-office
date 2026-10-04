@@ -12,6 +12,11 @@ function setupRoomHandlers(io, socket) {
     });
 
     socket.on("leave-room", (roomId) => {
+        socket.leave(roomId);
+        console.log(`${socket.id} left room ${roomId}`);
+    });
+
+    socket.on("leave-room", (roomId) => {
 
         socket.leave(roomId);
 
