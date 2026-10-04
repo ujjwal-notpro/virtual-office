@@ -75,7 +75,7 @@ const verifyOTP = async (req, res) => {
         const { email, otp } = req.body;
         const cleanEmail = email ? email.trim().toLowerCase() : "";
 
-        const user = await User.findOne({ email: cleanemail });
+        const user = await User.findOne({ email: cleanEmail });
 
         if (!user) {
             return res.status(404).json({
