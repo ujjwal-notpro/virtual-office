@@ -32,3 +32,18 @@ async def transcribe(file: UploadFile = File(...)):
     transcript = transcribe_audio(audio_bytes)
 
     return {"transcript": transcript}
+
+
+@app.post("/meeting-summary")
+async def meeting_summary(file: UploadFile = File(...)):
+    # Read audio file
+    audio_bytes = await file.read()
+
+    # Step 1: Transcribe using existing Whisper function
+    transcript = transcribe_audio(audio_bytes)
+
+    # Step 2: Summarize using existing BART function
+    summary = summarize_text(transcript)
+
+    # Return both results
+    return {"transcript": transcript, "summary": summary}
