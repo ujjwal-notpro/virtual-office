@@ -42,7 +42,7 @@ console.log(" DB find result:", user);
 
         const{data,error}=await resend.emails.send({
             from:"onboarding@resend.dev",
-            to: user.email,
+            to: "ayushgupta2170@gmail.com",
             subject: "Flowbit Login OTP",
             html: `
                 <h2>Flowbit Login OTP</h2>
