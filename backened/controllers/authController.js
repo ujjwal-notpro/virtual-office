@@ -8,8 +8,9 @@ const resend=new Resend(process.env.RESEND_API_KEY);
 
 const loginUser=async(req,res)=>{
     try{
-        const{email,password}=req.body;
-        const user = await User.findOne({ email: email });
+        const { email, password } = req.body;
+const cleanEmail = email ? email.trim().toLowerCase() : "";
+const user = await User.findOne({ email: cleanEmail });
 
         if(!user){
             return res.status(404).json({
