@@ -1,9 +1,12 @@
 const User=require("../models/User");
 const jwt=require("jsonwebtoken");
 const bcrypt=require("bcryptjs");
+const crypto=require("crypto");
+const {Resend}=require("resend");
+
+const resend=new Resend(process.env.RESEND_API_KEY);
 
 const loginUser=async(req,res)=>{
-
     try{
         const{email,password}=req.body;
         const user = await User.findOne({ email: email });

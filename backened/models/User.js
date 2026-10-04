@@ -19,7 +19,7 @@ const userSchema=new mongoose.Schema({
     },
     otp:{type: String
     },//login ke time generated OTP store hoga
-    otpExpiresAt:{type:Date}
+    otpExpiresAt:{type:Date}//OTP ki expiry time store hogi, e.g. 5 minutes
 
 });
 module.exports=mongoose.model("User",userSchema);
