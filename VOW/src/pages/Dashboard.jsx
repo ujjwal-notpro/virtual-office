@@ -41,7 +41,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { getStoredUser } from '../services/api';
-import { connectSocket, getSocket } from '../services/socket';
+import { connectSocket, getSocket, joinRoom, leaveRoom } from '../services/socket';
 import CallModal from '../components/chat/CallModal';
 import IncomingCallModal from '../components/chat/IncomingCallModal';
 
@@ -192,15 +192,43 @@ export default function Dashboard() {
       const handleRejected = () => {
         setIncomingCall(null);
       };
+
+      // Real-time chat: listen for messages from other users
+      const handleReceiveMessage = (data) => {
+        console.log('[Chat] Received message:', data);
+        const incomingMsg = {
+          id: Date.now() + Math.random(),
+          sender: 'them',
+          text: data.message,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        };
+        setConversations(prev => prev.map(c => {
+          if (c.id === activeChatId) {
+            return {
+              ...c,
+              messages: [...c.messages, incomingMsg],
+              time: 'Just now'
+            };
+          }
+          return c;
+        }));
+      };
+
       socket.on('incoming-call', handleIncoming);
       socket.on('call-rejected', handleRejected);
+      socket.on('receive-message', handleReceiveMessage);
+
+      // Join the default room
+      joinRoom(`room-${activeChatId}`);
 
       return () => {
         socket.off('incoming-call', handleIncoming);
         socket.off('call-rejected', handleRejected);
+        socket.off('receive-message', handleReceiveMessage);
+        leaveRoom(`room-${activeChatId}`);
       };
     }
-  }, []);
+  }, [activeChatId]);
 
   // Chat State
   const [conversations, setConversations] = useState(INITIAL_CONVERSATIONS);
@@ -347,6 +375,15 @@ export default function Dashboard() {
       }
       return c;
     }));
+
+    // Emit message to Socket.IO for real-time broadcast
+    const socket = getSocket();
+    if (socket?.connected && messageInput.trim()) {
+      socket.emit('send-message', {
+        roomId: `room-${activeChatId}`,
+        message: messageInput.trim(),
+      });
+    }
 
     setMessageInput('');
     setSelectedFile(null);
