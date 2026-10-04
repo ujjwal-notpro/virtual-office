@@ -73,3 +73,22 @@ body {
 /* ── Feature Image Frame Theme Glow ── */
 .dark .dark-glow { opacity: 0.25 !important; }
 .light-glow { opacity: 0.15 !important; }
+
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-fadeIn { animation: fadeIn 0.2s ease-out; }
+.animate-slideInLeft { animation: slideInLeft 0.3s ease-out; }
+
+/* ── Mobile Bottom Nav Spacing ── */
+@media (max-width: 767px) {
+  .pb-mobile-nav { padding-bottom: 3.5rem; }
+}

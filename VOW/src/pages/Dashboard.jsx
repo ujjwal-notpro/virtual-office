@@ -32,7 +32,11 @@ import {
   FileArchive,
   FileCode,
   Menu,
-  ArrowLeft
+  ArrowLeft,
+  PanelLeftClose,
+  PanelLeft,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../hooks/useDarkMode';
@@ -213,6 +217,10 @@ export default function Dashboard() {
   // Mobile Responsive State
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [showMobileChat, setShowMobileChat] = useState(false);
+
+  // Desktop Sidebar Collapse State
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isChatListVisible, setIsChatListVisible] = useState(true);
 
   const handleStartCall = (type) => {
     setCallType(type);
@@ -465,9 +473,113 @@ export default function Dashboard() {
         />
       )}
 
-      {/* ─── LEFT SIDEBAR (Desktop Fixed, Mobile Slide-over Drawer) ─── */}
-      <aside className={`fixed md:relative inset-y-0 left-0 z-50 w-64 md:w-56 shrink-0 bg-white dark:bg-[#0d0d10] border-r border-zinc-200 dark:border-[#1e1e24] flex flex-col justify-between py-5 px-3 transition-transform duration-300 shadow-2xl md:shadow-sm dark:shadow-none ${
-        isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+      {/* ─── LEFT SIDEBAR (Desktop Fixed + Collapsible, Mobile Slide-over Drawer) ─── */}
+      {/* Desktop Sidebar */}
+      <aside className={`hidden md:flex relative inset-y-0 left-0 z-30 shrink-0 bg-white dark:bg-[#0d0d10] border-r border-zinc-200 dark:border-[#1e1e24] flex-col justify-between py-5 transition-all duration-300 shadow-sm dark:shadow-none ${
+        isSidebarCollapsed ? 'w-16 px-2' : 'w-56 px-3'
+      }`}>
+        <div>
+          {/* Brand Logo / Title */}
+          <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'justify-between px-3'} mb-8`}>
+            {isSidebarCollapsed ? (
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-black font-extrabold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                FB
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-black font-extrabold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                  FB
+                </div>
+                <div>
+                  <h1 className="text-base font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
+                    Flow Bit
+                  </h1>
+                  <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Virtual Office</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Navigation Links */}
+          <nav className="space-y-1.5">
+            <button
+              onClick={() => setActiveTab('chat')}
+              className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3.5 px-3.5'} py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'chat'
+                ? 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
+                }`}
+              title={isSidebarCollapsed ? 'Chat' : undefined}
+            >
+              <MessageSquare className={`w-4 h-4 shrink-0 ${activeTab === 'chat' ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+              {!isSidebarCollapsed && <span>Chat</span>}
+              {!isSidebarCollapsed && conversations.reduce((acc, c) => acc + c.unread, 0) > 0 && (
+                <span className="ml-auto bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 text-[11px] font-bold px-2 py-0.5 rounded-full">
+                  {conversations.reduce((acc, c) => acc + c.unread, 0)}
+                </span>
+              )}
+              {isSidebarCollapsed && conversations.reduce((acc, c) => acc + c.unread, 0) > 0 && (
+                <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full" />
+              )}
+            </button>
+
+            <button
+              onClick={() => setActiveTab('profile')}
+              className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3.5 px-3.5'} py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'profile'
+                ? 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
+                }`}
+              title={isSidebarCollapsed ? 'Profile' : undefined}
+            >
+              <User className={`w-4 h-4 shrink-0 ${activeTab === 'profile' ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+              {!isSidebarCollapsed && <span>Profile</span>}
+            </button>
+
+            <button
+              onClick={() => setActiveTab('settings')}
+              className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3.5 px-3.5'} py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'settings'
+                ? 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
+                }`}
+              title={isSidebarCollapsed ? 'Settings' : undefined}
+            >
+              <Settings className={`w-4 h-4 shrink-0 ${activeTab === 'settings' ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+              {!isSidebarCollapsed && <span>Settings</span>}
+            </button>
+          </nav>
+        </div>
+
+        {/* Bottom Section: Collapse Toggle + Log Out */}
+        <div className="pt-4 border-t border-zinc-200 dark:border-[#1e1e24] px-1 space-y-1.5">
+          {/* Desktop Collapse / Expand Toggle */}
+          <button
+            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-3'} py-2.5 rounded-xl text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer`}
+            title={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {isSidebarCollapsed ? (
+              <ChevronRight className="w-4 h-4 shrink-0" />
+            ) : (
+              <>
+                <PanelLeftClose className="w-4 h-4 shrink-0" />
+                <span>Collapse</span>
+              </>
+            )}
+          </button>
+
+          <button
+            onClick={handleLogout}
+            className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-3'} py-2.5 rounded-xl text-sm font-semibold text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors cursor-pointer`}
+            title={isSidebarCollapsed ? 'Log Out' : undefined}
+          >
+            <LogOut className="w-4 h-4 text-red-600 dark:text-red-500 rotate-180 shrink-0" />
+            {!isSidebarCollapsed && <span>Log Out</span>}
+          </button>
+        </div>
+      </aside>
+
+      {/* Mobile Sidebar (Slide-over Drawer) */}
+      <aside className={`fixed md:hidden inset-y-0 left-0 z-50 w-64 bg-white dark:bg-[#0d0d10] border-r border-zinc-200 dark:border-[#1e1e24] flex flex-col justify-between py-5 px-3 transition-transform duration-300 shadow-2xl ${
+        isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div>
           {/* Brand Logo / Title + Mobile Close Button */}
@@ -487,14 +599,14 @@ export default function Dashboard() {
             {/* Mobile Close Button */}
             <button
               onClick={() => setIsMobileSidebarOpen(false)}
-              className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 md:hidden cursor-pointer"
+              className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
               title="Close menu"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Navigation Links - ONLY Chat, Profile, Settings */}
+          {/* Navigation Links */}
           <nav className="space-y-1.5">
             <button
               onClick={() => {
@@ -545,7 +657,7 @@ export default function Dashboard() {
           </nav>
         </div>
 
-        {/* Bottom Section: Red Log Out Button (Matching Syncaura Screenshot) */}
+        {/* Bottom: Log Out */}
         <div className="pt-4 border-t border-zinc-200 dark:border-[#1e1e24] px-1">
           <button
             onClick={handleLogout}
@@ -558,7 +670,7 @@ export default function Dashboard() {
       </aside>
 
       {/* ─── MAIN APP CONTAINER ─── */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden bg-zinc-50 dark:bg-[#060608] transition-colors duration-300">
+      <div className="flex-1 flex flex-col h-full overflow-hidden pb-14 md:pb-0 bg-zinc-50 dark:bg-[#060608] transition-colors duration-300">
         
         {/* ─── TOP HEADER BAR (Responsive for Mobile) ─── */}
         <header className="h-16 shrink-0 border-b border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] px-3.5 md:px-6 flex items-center justify-between z-10 transition-colors duration-300">
@@ -617,8 +729,8 @@ export default function Dashboard() {
           {activeTab === 'chat' && (
             <div className="h-full flex overflow-hidden">
               
-              {/* Left Chat List Panel (Full Width on Mobile when not viewing chat) */}
-              <div className={`${showMobileChat ? 'hidden md:flex' : 'flex'} w-full md:w-80 shrink-0 border-r border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] flex-col h-full transition-colors duration-300`}>
+              {/* Left Chat List Panel (Full Width on Mobile when not viewing chat, toggleable on Desktop) */}
+              <div className={`${!isChatListVisible ? 'hidden' : showMobileChat ? 'hidden md:flex' : 'flex'} w-full md:w-80 shrink-0 border-r border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] flex-col h-full transition-all duration-300`}>
                 {/* Search Bar */}
                 <div className="p-3.5 sm:p-4 border-b border-zinc-200 dark:border-[#1a1a20]">
                   <div className="relative">
@@ -697,6 +809,15 @@ export default function Dashboard() {
                       title="Back to conversations"
                     >
                       <ArrowLeft className="w-4 h-4" />
+                    </button>
+
+                    {/* Desktop: Toggle Chat List Panel */}
+                    <button
+                      onClick={() => setIsChatListVisible(!isChatListVisible)}
+                      className="hidden md:flex p-1.5 -ml-1 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg cursor-pointer transition-colors"
+                      title={isChatListVisible ? 'Hide chat list' : 'Show chat list'}
+                    >
+                      {isChatListVisible ? <PanelLeftClose className="w-4 h-4" /> : <PanelLeft className="w-4 h-4" />}
                     </button>
 
                     <div className="relative">
@@ -1410,6 +1531,46 @@ export default function Dashboard() {
 
         </main>
       </div>
+
+      {/* ─── BOTTOM MOBILE NAV BAR (Phone-only, thumb-friendly) ─── */}
+      <nav className="fixed md:hidden bottom-0 left-0 right-0 z-40 h-14 bg-white/95 dark:bg-[#0c0c0f]/95 backdrop-blur-md border-t border-zinc-200 dark:border-[#1a1a20] flex items-center justify-around px-2">
+        <button
+          onClick={() => { setActiveTab('chat'); setShowMobileChat(false); }}
+          className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-colors cursor-pointer ${
+            activeTab === 'chat'
+              ? 'text-emerald-600 dark:text-emerald-400'
+              : 'text-zinc-500 dark:text-zinc-400'
+          }`}
+        >
+          <MessageSquare className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Chat</span>
+          {conversations.reduce((acc, c) => acc + c.unread, 0) > 0 && (
+            <span className="absolute top-1 right-1/4 w-2 h-2 bg-emerald-500 rounded-full" />
+          )}
+        </button>
+        <button
+          onClick={() => setActiveTab('profile')}
+          className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-colors cursor-pointer ${
+            activeTab === 'profile'
+              ? 'text-emerald-600 dark:text-emerald-400'
+              : 'text-zinc-500 dark:text-zinc-400'
+          }`}
+        >
+          <User className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Profile</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('settings')}
+          className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-colors cursor-pointer ${
+            activeTab === 'settings'
+              ? 'text-emerald-600 dark:text-emerald-400'
+              : 'text-zinc-500 dark:text-zinc-400'
+          }`}
+        >
+          <Settings className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Settings</span>
+        </button>
+      </nav>
 
       {/* Video & Audio Call Modal */}
       <CallModal
