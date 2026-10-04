@@ -6,6 +6,7 @@ const http = require("http");
 
 const setupRoomHandlers = require("../realtime-backend/socket/rooms");
 const setupSignalingHandlers = require("../realtime-backend/socket/signaling");
+const setupChatHandlers = require("../realtime-backend/socket/chat");
 
 const app=express();
 const server = http.createServer(app);
@@ -25,6 +26,7 @@ io.on("connection", (socket) => {
 
     setupRoomHandlers(io, socket);
     setupSignalingHandlers(io, socket);
+    setupChatHandlers(io, socket);
 
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id);
