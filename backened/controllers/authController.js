@@ -34,21 +34,21 @@ const loginUser=async(req,res)=>{
         await user.save();
 
         const{data,error}=await resend.emails.send({
-    from:"onboarding@resend.dev",
-    to: user.email,
-    subject: "Flowbit Login OTP",
-    html: `
-        <h2>Flowbit Login OTP</h2>
-        <p>Your OTP is:</p>
-        <h1>${otp}</h1>
-        <p>This OTP will expire in 5 minutes.</p>
+            from:"onboarding@resend.dev",
+            to: user.email,
+            subject: "Flowbit Login OTP",
+            html: `
+                <h2>Flowbit Login OTP</h2>
+                <p>Your OTP is:</p>
+                <h1>${otp}</h1>
+                <p>This OTP will expire in 5 minutes.</p>
     `
 });
 
-if (error) {
+if(error){
     return res.status(500).json({
-        message: "OTP email failed",
-        error: error.message
+        message:"OTP email failed",
+        error:error.message
     });
 }
 
