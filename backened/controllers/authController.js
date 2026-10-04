@@ -26,7 +26,7 @@ const loginUser=async(req,res)=>{
             });
         }
 
-        
+
 
         const otp=crypto.randomInt(100000, 1000000).toString();
 
@@ -53,11 +53,6 @@ if(error){
         error:error.message
     });
 }
-
-        const token = jwt.sign(//jwt.sign ek JWT token create karta hai.
-            {userId: user._id,role:user.role},//Token ke andar hum basic information rakh rahe hain:
-            process.env.JWT_SECRET,{expiresIn:"1d"}//Ye .env se secret key leta hai.1d--1day valid rhega token
-        );
         res.status(200).json({
             message: "Login successful",
             token: token,
