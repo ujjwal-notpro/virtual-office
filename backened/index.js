@@ -36,8 +36,10 @@ io.on("connection", (socket) => {
 
 
 app.use(express.json());//JSON format me frontend se jo data aayega,usko req.body ke andar read karne krega.
+app.use(cors());
 
-const PORT=3000;
+const PORT = process.env.PORT || 3000;
+
 require("./config/db");//folder ke nadr jo dbs hai ukso laod krega so that mongodb se communicate kr paye
 
 const userRoutes=require("./routes/userRoutes");
