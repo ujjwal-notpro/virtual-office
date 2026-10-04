@@ -52,12 +52,6 @@ const resources = {
       testimonials_title: 'Loved by Remote Teams',
       testimonials_subtitle: 'See how VOW has transformed the way teams work together.',
 
-      // CTABanner
-      cta_banner_title: 'Ready to Transform Your Remote Work?',
-      cta_banner_subtitle: 'Join 50,000+ teams already using VOW. Start free — no credit card required.',
-      cta_banner_primary: 'Start for Free',
-      cta_banner_secondary: 'Schedule a Demo',
-
       // FAQs
       faq_title: 'Frequently Asked Questions',
       faq_subtitle: 'Everything you need to know about VOW.',

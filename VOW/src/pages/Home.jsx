@@ -7,7 +7,6 @@ import WorkflowSection from '../components/home/WorkflowSection';
 import FeatureShowcase from '../components/home/FeatureShowcase';
 import ToolsGrid from '../components/home/ToolsGrid';
 import Testimonials from '../components/home/Testimonials';
-import CTABanner from '../components/home/CTABanner';
 import FAQs from '../components/home/FAQs';
 import Footer from '../components/home/Footer';
 
@@ -21,7 +20,6 @@ export default function Home() {
       <FeatureShowcase />
       <ToolsGrid />
       <Testimonials />
-      <CTABanner />
       <FAQs />
       <Footer />
     </div>
