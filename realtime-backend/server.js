@@ -5,6 +5,7 @@ const cors = require("cors");
 require("dotenv").config();
 const setupRoomHandlers = require("./socket/rooms");
 const setupSignalingHandlers = require("./socket/signaling");
+const setupChatHandlers = require("./socket/chat");
 
 
 const app=express();
@@ -32,7 +33,8 @@ io.on("connection", (socket) => {
 
     setupRoomHandlers(io, socket);
     setupSignalingHandlers(io, socket);
-    
+    setupChatHandlers(io, socket);
+
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id);
     });
