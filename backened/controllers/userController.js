@@ -1,26 +1,43 @@
-const User=require("../models/User");//controller ko usermodele mil rha hai
-const bcrypt = require("bcryptjs");//bcryptjs password ko hash karne ke kaam aata hai.
+const User = require("../models/User");
+const bcrypt = require("bcryptjs");
 
-const createUser=async(req,res)=>{
-    try{
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);//bcrypt.hash(...)---ye $2b$10$...form mein krdeta hai
+const createUser = async (req, res) => {
+    try {
+        const { name, email, phone, password, role } = req.body;
+        
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({
+                message: "User with this email already exists"
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({
-        name:req.body.name,
-        email:req.body.email,
-        password:hashedPassword,
-        role:req.body.role
+            name,
+            email,
+            phone: phone || "",
+            password: hashedPassword,
+            role: role || "employee"
         });
         
         res.status(201).json({
-            message:"User created successfully",
-            user:user
+            message: "User created successfully",
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                role: user.role
+            }
         });
-    }catch(error){
-        res.status(201).json({
-            message:"User created successfully",
-            error:error.message
-        });    //try ansd catch usekiya agr koi bhi error aaya crash hone ki bajaye message ye de de
+    } catch (error) {
+        res.status(500).json({
+            message: "User creation failed",
+            error: error.message
+        });
     }
 };
-module.exports={createUser};
+
+module.exports = { createUser };

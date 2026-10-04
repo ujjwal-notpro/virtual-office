@@ -9,6 +9,10 @@ const userSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
+    phone:{
+        type:String,
+        default:""
+    },
     password:{
         type:String,
         required:true
@@ -16,7 +20,15 @@ const userSchema=new mongoose.Schema({
     role:{
         type:String,
         default:"employee"
+    },
+    otp:{
+        type:String,
+        default:null
+    },
+    otpExpires:{
+        type:Date,
+        default:null
     }
+}, { timestamps: true });
 
-});
 module.exports=mongoose.model("User",userSchema);
