@@ -35,8 +35,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { getStoredUser } from '../services/api';
-import { connectSocket } from '../services/socket';
+import { connectSocket, getSocket } from '../services/socket';
 import CallModal from '../components/chat/CallModal';
+import IncomingCallModal from '../components/chat/IncomingCallModal';
 
 const INITIAL_CONVERSATIONS = [
   {
@@ -176,7 +177,23 @@ export default function Dashboard() {
     }
 
     // Connect to realtime socket backend
-    connectSocket();
+    const socket = connectSocket();
+    if (socket) {
+      const handleIncoming = (data) => {
+        console.log('Incoming call received:', data);
+        setIncomingCall(data);
+      };
+      const handleRejected = () => {
+        setIncomingCall(null);
+      };
+      socket.on('incoming-call', handleIncoming);
+      socket.on('call-rejected', handleRejected);
+
+      return () => {
+        socket.off('incoming-call', handleIncoming);
+        socket.off('call-rejected', handleRejected);
+      };
+    }
   }, []);
 
   // Chat State
@@ -189,6 +206,39 @@ export default function Dashboard() {
   // Audio / Video Call State
   const [isCallOpen, setIsCallOpen] = useState(false);
   const [callType, setCallType] = useState('video'); // 'video' | 'audio'
+  const [incomingCall, setIncomingCall] = useState(null);
+
+  const handleStartCall = (type) => {
+    setCallType(type);
+    setIsCallOpen(true);
+    const socket = getSocket();
+    if (socket?.connected) {
+      socket.emit('call-user', {
+        roomId: `room-${activeChat.id}`,
+        callerName: profile.name,
+        callerAvatar: '',
+        callType: type,
+      });
+    }
+  };
+
+  const handleAcceptIncomingCall = () => {
+    if (incomingCall) {
+      setCallType(incomingCall.callType || 'video');
+      setIsCallOpen(true);
+      setIncomingCall(null);
+    }
+  };
+
+  const handleDeclineIncomingCall = () => {
+    if (incomingCall) {
+      const socket = getSocket();
+      if (socket?.connected) {
+        socket.emit('reject-call', { roomId: incomingCall.roomId });
+      }
+      setIncomingCall(null);
+    }
+  };
 
   // Emojis State
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
@@ -615,20 +665,14 @@ export default function Dashboard() {
                   {/* Actions */}
                   <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
                     <button
-                      onClick={() => {
-                        setCallType('audio');
-                        setIsCallOpen(true);
-                      }}
+                      onClick={() => handleStartCall('audio')}
                       className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
                       title="Voice Call"
                     >
                       <Phone className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => {
-                        setCallType('video');
-                        setIsCallOpen(true);
-                      }}
+                      onClick={() => handleStartCall('video')}
                       className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
                       title="Video Meeting"
                     >
@@ -1317,6 +1361,14 @@ export default function Dashboard() {
         callType={callType}
         recipient={activeChat}
         currentUser={profile}
+      />
+
+      {/* Incoming Call Ringing Modal */}
+      <IncomingCallModal
+        isOpen={!!incomingCall}
+        incomingCall={incomingCall}
+        onAccept={handleAcceptIncomingCall}
+        onDecline={handleDeclineIncomingCall}
       />
     </div>
   );
