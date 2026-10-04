@@ -16,7 +16,10 @@ const userSchema=new mongoose.Schema({
     role:{
         type:String,
         default:"employee"
-    }
+    },
+    otp:{type: String
+    },//login ke time generated OTP store hoga
+    otpExpiresAt:{type:Date}
 
 });
 module.exports=mongoose.model("User",userSchema);
