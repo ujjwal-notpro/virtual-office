@@ -65,4 +65,63 @@ if(error){
     }
 };
 
-module.exports = {loginUser};
+const verifyOTP = async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+
+        const user = await User.findOne({ email: email });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        if (!user.otp || !user.otpExpiresAt) {
+            return res.status(400).json({
+                message: "OTP not found"
+            });
+        }
+
+        if (new Date() > user.otpExpiresAt) {
+            return res.status(400).json({
+                message: "OTP expired"
+            });
+        }
+
+        const isOTPValid = await bcrypt.compare(otp, user.otp);
+
+        if (!isOTPValid) {
+            return res.status(401).json({
+                message: "Invalid OTP"
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                userId: user._id,
+                role: user.role
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+        );
+
+        user.otp = undefined;
+        user.otpExpiresAt = undefined;
+        await user.save();
+
+        res.status(200).json({
+            message: "OTP verified successfully",
+            token: token,
+            user: user
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "OTP verification failed",
+            error: error.message
+        });
+    }
+};
+
+module.exports = { loginUser, verifyOTP };
