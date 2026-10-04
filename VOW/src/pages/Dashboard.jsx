@@ -159,6 +159,8 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useDarkMode();
   const [activeTab, setActiveTab] = useState('chat'); // 'chat' | 'profile' | 'settings'
+  const [conversations, setConversations] = useState(INITIAL_CONVERSATIONS);
+  const [activeChatId, setActiveChatId] = useState(1);
 
   // Current Date display like "Saturday | Oct 03, 2026"
   const [currentDateFormatted, setCurrentDateFormatted] = useState('');
@@ -231,8 +233,6 @@ export default function Dashboard() {
   }, [activeChatId]);
 
   // Chat State
-  const [conversations, setConversations] = useState(INITIAL_CONVERSATIONS);
-  const [activeChatId, setActiveChatId] = useState(1);
   const [messageInput, setMessageInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const messagesEndRef = useRef(null);
