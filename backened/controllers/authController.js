@@ -54,9 +54,8 @@ if(error){
     });
 }
         res.status(200).json({
-            message: "Login successful",
-            token: token,
-            user: user
+            message: "OTP sent successfully",
+            email: user.email
         });
         } catch (error) {
         res.status(500).json({
