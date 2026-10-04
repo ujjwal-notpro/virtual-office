@@ -25,6 +25,33 @@ const loginUser=async(req,res)=>{
                 message: "Invalid password"
             });
         }
+
+        const otp=crypto.randomInt(100000, 1000000).toString();
+
+        user.otp = await bcrypt.hash(otp, 10);
+        user.otpExpiresAt=new Date(Date.now()+5*60*1000);
+
+        await user.save();
+
+        const{data,error}=await resend.emails.send({
+    from:"onboarding@resend.dev",
+    to: user.email,
+    subject: "Flowbit Login OTP",
+    html: `
+        <h2>Flowbit Login OTP</h2>
+        <p>Your OTP is:</p>
+        <h1>${otp}</h1>
+        <p>This OTP will expire in 5 minutes.</p>
+    `
+});
+
+if (error) {
+    return res.status(500).json({
+        message: "OTP email failed",
+        error: error.message
+    });
+}
+
         const token = jwt.sign(//jwt.sign ek JWT token create karta hai.
             {userId: user._id,role:user.role},//Token ke andar hum basic information rakh rahe hain:
             process.env.JWT_SECRET,{expiresIn:"1d"}//Ye .env se secret key leta hai.1d--1day valid rhega token
