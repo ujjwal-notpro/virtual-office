@@ -26,6 +26,8 @@ const loginUser=async(req,res)=>{
             });
         }
 
+        
+
         const otp=crypto.randomInt(100000, 1000000).toString();
 
         user.otp = await bcrypt.hash(otp, 10);
