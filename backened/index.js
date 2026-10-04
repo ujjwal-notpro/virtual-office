@@ -9,10 +9,11 @@ const setupRoomHandlers = require("../realtime-backend/socket/rooms");
 const setupSignalingHandlers = require("../realtime-backend/socket/signaling");
 const setupChatHandlers = require("../realtime-backend/socket/chat");
 
+const cors = require("cors");
 const app=express();
 const server = http.createServer(app);
 
-const cors = require("cors");
+
 const {Server} = require("socket.io");
 
 const io=new Server(server,{
