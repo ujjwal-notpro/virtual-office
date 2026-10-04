@@ -3,13 +3,11 @@ from src.config import Config
 
 
 def transcribe_audio(audio_bytes):
-    # prepare the headers
     headers = {
         "Authorization": f"Bearer {Config.HF_API_TOKEN}",
         "Content-Type": "audio/mpeg"
     }
 
-    # send request to whisper model
     response = requests.post(
         Config.WHISPER_MODEL_URL,
         headers=headers,
@@ -18,7 +16,6 @@ def transcribe_audio(audio_bytes):
 
     result = response.json()
 
-    # check if we got text back
     if "text" in result:
         text = result["text"]
         return text.strip()

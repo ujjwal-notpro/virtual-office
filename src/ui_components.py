@@ -2,7 +2,6 @@ import streamlit as st
 
 
 def init_session_state():
-    # initialize variables if not present
     if "transcript" not in st.session_state:
         st.session_state["transcript"] = ""
 
@@ -14,7 +13,6 @@ def init_session_state():
 
 
 def display_transcript():
-    # show transcript
     if st.session_state["transcript"]:
         text = st.session_state["transcript"]
         words = len(text.split())
@@ -34,7 +32,6 @@ def display_transcript():
 
 
 def display_meeting_notes():
-    # show notes
     if st.session_state["meeting_notes"]:
         st.markdown(st.session_state["meeting_notes"])
     else:
@@ -42,7 +39,6 @@ def display_meeting_notes():
 
 
 def display_download_buttons():
-    # 3 columns for downloads
     col1, col2, col3 = st.columns(3)
 
     with col1:
