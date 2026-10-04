@@ -4,6 +4,6 @@ const authMiddleware=require("../middleware/authMiddleware");
 
 const router=express.Router();
 router.post("/",authMiddleware,createWorkspace);//yaani workspace create karne se pehle login/token check hoga
-router.post("/",authMiddleware,getWorkspaces);
+router.get("/",authMiddleware,getWorkspaces);
 
 module.exports=router;

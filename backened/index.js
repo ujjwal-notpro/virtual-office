@@ -2,25 +2,28 @@ const dns=require('node:dns');//node.js ka network codemein load kiya hai
 dns.setServers(['8.8.8.8','8.8.4.4']);//apne blocked dns ko choodkr direct google dns use krr ha hai
 
 const express=require("express");
+const cors = require("cors");
+require("dotenv").config();
 const http = require("http");
 
 const setupRoomHandlers = require("../realtime-backend/socket/rooms");
 const setupSignalingHandlers = require("../realtime-backend/socket/signaling");
 const setupChatHandlers = require("../realtime-backend/socket/chat");
 
+
 const app=express();
 const server = http.createServer(app);
 
-const cors = require("cors");
-const { Server } = require("socket.io");
 
-const io = new Server(server, {
+const {Server} = require("socket.io");
+
+const io=new Server(server,{
     cors: {
         origin: "*"
     }
 });
 
-io.on("connection", (socket) => {
+io.on("connection",(socket) => {
 
     console.log("A user connected:", socket.id);
 
@@ -37,6 +40,7 @@ io.on("connection", (socket) => {
 
 app.use(express.json());//JSON format me frontend se jo data aayega,usko req.body ke andar read karne krega.
 app.use(cors());
+
 
 const PORT = process.env.PORT || 3000;
 

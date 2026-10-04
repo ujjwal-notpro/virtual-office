@@ -17,8 +17,8 @@ const createUser=async(req,res)=>{
             user:user
         });
     }catch(error){
-        res.status(201).json({
-            message:"User created successfully",
+        res.status(500).json({
+            message:"User created failed",
             error:error.message
         });    //try ansd catch usekiya agr koi bhi error aaya crash hone ki bajaye message ye de de
     }
