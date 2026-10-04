@@ -12,15 +12,15 @@ const app=express();
 const server = http.createServer(app);
 
 const cors = require("cors");
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 
-const io = new Server(server, {
+const io=new Server(server,{
     cors: {
         origin: "*"
     }
 });
 
-io.on("connection", (socket) => {
+io.on("connection",(socket) => {
 
     console.log("A user connected:", socket.id);
 
