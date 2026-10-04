@@ -10,7 +10,11 @@ const loginUser=async(req,res)=>{
     try{
         const { email, password } = req.body;
 const cleanEmail = email ? email.trim().toLowerCase() : "";
+
+
+console.log(" Login request email:", cleanEmail);
 const user = await User.findOne({ email: cleanEmail });
+console.log(" DB find result:", user);
 
         if(!user){
             return res.status(404).json({
