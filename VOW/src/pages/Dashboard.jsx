@@ -34,6 +34,9 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../hooks/useDarkMode';
+import { getStoredUser } from '../services/api';
+import { connectSocket } from '../services/socket';
+import CallModal from '../components/chat/CallModal';
 
 const INITIAL_CONVERSATIONS = [
   {
@@ -159,6 +162,21 @@ export default function Dashboard() {
     const dateStr = now.toLocaleDateString('en-US', options);
     const formatted = dateStr.replace(',', ' |');
     setCurrentDateFormatted(formatted);
+
+    // Load logged in user details
+    const user = getStoredUser();
+    if (user) {
+      setProfile((prev) => ({
+        ...prev,
+        name: user.name || prev.name,
+        email: user.email || prev.email,
+        phone: user.phone || prev.phone,
+        role: user.role ? user.role.toUpperCase() : prev.role,
+      }));
+    }
+
+    // Connect to realtime socket backend
+    connectSocket();
   }, []);
 
   // Chat State
@@ -167,6 +185,10 @@ export default function Dashboard() {
   const [messageInput, setMessageInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const messagesEndRef = useRef(null);
+
+  // Audio / Video Call State
+  const [isCallOpen, setIsCallOpen] = useState(false);
+  const [callType, setCallType] = useState('video'); // 'video' | 'audio'
 
   // Emojis State
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
@@ -296,6 +318,32 @@ export default function Dashboard() {
       default:
         return <File className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />;
     }
+  };
+
+  // Helper to extract first letter/initial dynamically based on user name
+  const getAvatarInitial = (name) => {
+    if (!name || typeof name !== 'string') return 'U';
+    return name.trim().charAt(0).toUpperCase();
+  };
+
+  // Helper to generate a consistent harmonious avatar color based on user name
+  const getAvatarBgColor = (name) => {
+    const colorClasses = [
+      'bg-[#b91c1c] ring-[#b91c1c]/30',
+      'bg-blue-600 ring-blue-600/30',
+      'bg-emerald-600 ring-emerald-600/30',
+      'bg-violet-600 ring-violet-600/30',
+      'bg-amber-600 ring-amber-600/30',
+      'bg-rose-600 ring-rose-600/30',
+      'bg-indigo-600 ring-indigo-600/30',
+      'bg-teal-600 ring-teal-600/30',
+    ];
+    if (!name) return colorClasses[0];
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return colorClasses[Math.abs(hash) % colorClasses.length];
   };
 
   // Profile State
@@ -428,10 +476,10 @@ export default function Dashboard() {
         
         {/* ─── TOP HEADER BAR (Matching Syncaura Screenshot) ─── */}
         <header className="h-16 shrink-0 border-b border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] px-6 flex items-center justify-between z-10 transition-colors duration-300">
-          {/* User Info Greeting (Red Avatar 'U' + Hello! Ujjwal Gupta) */}
+          {/* User Info Greeting (Dynamic Avatar Initial + Hello! User Name) */}
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-full bg-[#b91c1c] text-white font-bold flex items-center justify-center text-sm shadow-md ring-2 ring-[#b91c1c]/30">
-              U
+            <div className={`w-10 h-10 rounded-full ${getAvatarBgColor(profile.name)} text-white font-bold flex items-center justify-center text-sm shadow-md ring-2 transition-all`}>
+              {getAvatarInitial(profile.name)}
             </div>
             <div>
               <div className="flex items-center gap-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300">
@@ -566,10 +614,24 @@ export default function Dashboard() {
 
                   {/* Actions */}
                   <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
-                    <button className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer" title="Voice Call">
+                    <button
+                      onClick={() => {
+                        setCallType('audio');
+                        setIsCallOpen(true);
+                      }}
+                      className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
+                      title="Voice Call"
+                    >
                       <Phone className="w-4 h-4" />
                     </button>
-                    <button className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer" title="Video Meeting">
+                    <button
+                      onClick={() => {
+                        setCallType('video');
+                        setIsCallOpen(true);
+                      }}
+                      className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
+                      title="Video Meeting"
+                    >
                       <Video className="w-4 h-4" />
                     </button>
                     <div className="w-px h-4 bg-zinc-200 dark:bg-zinc-800 mx-1" />
@@ -842,8 +904,8 @@ export default function Dashboard() {
                 <div className="px-6 pb-6 pt-0 flex flex-col md:flex-row md:items-end justify-between gap-4 -mt-12">
                   <div className="flex items-end gap-4">
                     <div className="relative group">
-                      <div className="w-24 h-24 rounded-2xl bg-[#b91c1c] text-white font-black text-3xl flex items-center justify-center border-4 border-white dark:border-[#0f0f14] shadow-xl">
-                        U
+                      <div className={`w-24 h-24 rounded-2xl ${getAvatarBgColor(profile.name)} text-white font-black text-3xl flex items-center justify-center border-4 border-white dark:border-[#0f0f14] shadow-xl transition-all`}>
+                        {getAvatarInitial(profile.name)}
                       </div>
                       <button className="absolute bottom-1 right-1 p-1.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg border border-zinc-600 transition-colors cursor-pointer">
                         <Camera className="w-3.5 h-3.5" />
@@ -1247,6 +1309,15 @@ export default function Dashboard() {
 
         </main>
       </div>
+
+      {/* Video & Audio Call Modal */}
+      <CallModal
+        isOpen={isCallOpen}
+        onClose={() => setIsCallOpen(false)}
+        callType={callType}
+        recipient={activeChat}
+        currentUser={profile}
+      />
     </div>
   );
 }
