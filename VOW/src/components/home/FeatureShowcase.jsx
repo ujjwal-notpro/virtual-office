@@ -298,44 +298,6 @@ const FeatureShowcase = () => {
                     <div className="absolute inset-0 z-30 pointer-events-none rounded-xl border border-white/20 dark:border-white/10" />
                   </div>
                 </div>
-
-                {/* Floating badge — top right */}
-                <motion.div
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -top-3 -right-2 sm:-top-5 sm:-right-5 z-50 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold shadow-2xl pointer-events-auto"
-                  style={{
-                    background: 'linear-gradient(135deg, #e4c5e4ff, #e464e1ff)',
-                    color: '#fff',
-                    boxShadow: '0 10px 25px -3px rgba(228, 100, 225, 0.5), 0 4px 10px rgba(0,0,0,0.2)',
-                    zIndex: 50,
-                    transform: 'translateZ(40px)',
-                  }}
-                >
-                  <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                  <span>Live & Syncing</span>
-                </motion.div>
-
-                {/* Floating badge — bottom left */}
-                <motion.div
-                  animate={{ y: [4, 5, 4] }}
-                  transition={{ duration: 3.5, delay: 0.5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -bottom-3 left-2 sm:-bottom-5 left-4 z-50 flex items-center gap-3 px-4 py-2.5 rounded-2xl shadow-2xl pointer-events-auto"
-                  style={{
-                    background: 'var(--card-bg)',
-                    border: '1.5px solid rgba(99,102,241,0.4)',
-                    boxShadow: '0 16px 36px -4px rgba(0,0,0,0.3), 0 0 20px rgba(99,102,241,0.25)',
-                    zIndex: 50,
-                    transform: 'translateZ(40px)',
-                  }}
-                >
-                  <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-md" style={{ background: 'linear-gradient(135deg, #424472ff, #030009ff)' }}>
-                    <BarChart3 size={15} className="text-white" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-semibold" style={{ color: 'var(--text-secondary)' }}>Productivity</p>
-                  </div>
-                </motion.div>
               </motion.div>
             </div>
 

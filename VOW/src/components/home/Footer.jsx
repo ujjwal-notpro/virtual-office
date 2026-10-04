@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Globe, Share2, Tv2, Rss,
@@ -11,11 +10,24 @@ import {
 /* ── Social links with brand colors ── */
 const socials = [
   { icon: Globe, label: 'Facebook', href: '#', color: '#1877f2' },
-  { icon: MessageCircle, label: 'X / Twitter', href: '#', color: '#1DA1F2' },
+  { icon: MessageCircle, label: 'Twitter', href: '#', color: '#1DA1F2' },
   { icon: Share2, label: 'Instagram', href: '#', color: '#e1306c' },
   { icon: Rss, label: 'LinkedIn', href: '#', color: '#0a66c2' },
   { icon: Tv2, label: 'YouTube', href: '#', color: '#ff0000' },
 ];
+
+const footerText = {
+  newsletter_errorEmpty: 'Please enter an email address.',
+  newsletter_errorInvalid: 'Please enter a valid email address.',
+  newsletter_success: 'Subscribed successfully!',
+  footer_tagline: 'Your Virtual Office, Anywhere.',
+  'connect with us': 'Connect with us',
+  'add your email here': 'Add your email here',
+  product: 'Product', features: 'Features', security: 'Security', roadmap: 'Roadmap', blog: 'Blog', contact: 'Contact',
+  company: 'Company', about: 'About', careers: 'Careers', social: 'Social', footer_followUs: 'Follow Us',
+  copyright: 'All rights reserved.', privacyPolicy: 'Privacy Policy', termsOfService: 'Terms of Service',
+  cookieSettings: 'Cookie Settings', accessibility: 'Accessibility',
+};
 
 const ColHeading = ({ children }) => (
   <div className="mb-5">
@@ -58,7 +70,7 @@ const NavLink = ({ children, href, to, onClick }) => (
 );
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const t = (key) => footerText[key] ?? key;
   const location = useLocation();
   const navigate = useNavigate();
   const [email, setEmail] = useState(''); // Stores the user's email input
@@ -104,7 +116,7 @@ const Footer = () => {
       {/* Rainbow top border */}
       <div
         className="absolute top-0 left-0 right-0 h-[3px]"
-        style={{ background: 'linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6, #ec4899, #f59e0b)' }}
+        style={{ background: 'linear-gradient(90deg, #3b82f6, #4d3dffff, #8b5cf6, #ec4899, #f59e0b)' }}
       />
 
       {/* Background glow */}
@@ -155,7 +167,7 @@ const Footer = () => {
               {[
                 { icon: Mail, text: 'hello@FlowBit.io' },
                 { icon: Phone, text: '+1 (800) 123-4567' },
-                { icon: MapPin, text: 'San Francisco, CA' },
+                { icon: MapPin, text: 'Ghaziabad, Uttar Pradesh, India' },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-2.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
                   <Icon size={13} style={{ color: '#6366f1', flexShrink: 0 }} />

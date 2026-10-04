@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useTransform, animate, useInView } from 'framer-motion';
 import { Users, TrendingUp, BookOpen, ArrowRight } from 'lucide-react';
@@ -18,11 +17,10 @@ import img17 from "../../assets/17-Photoroom.png";
 const trustImages = [img3, img5, img6, img9, img10, img12, img13, img14, img15, img16, img17];
 
 const StatsSection = () => {
-  const { t } = useTranslation();
   const sectionRef = useRef(null); // Reference to track when this section scrolls into view
   const usersRef = useRef(null); // Reference for the "2M+" counter
   const satisfactionRef = useRef(null); // Reference for the "98%" counter
-  
+
   // Triggers animations only once when the component enters 30% of the viewport
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
@@ -62,12 +60,12 @@ const StatsSection = () => {
   return (
     <section ref={sectionRef} className="w-full py-8 md:py-16" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
-        
+
         {/* 
           MAIN STATS CARD
           A large, glass-like container holding the text and statistics.
         */}
-        <motion.div 
+        <motion.div
           whileHover="hover"
           initial="initial"
           className="relative mb-12 p-6 md:p-10 lg:p-12 rounded-[2rem] overflow-hidden group max-w-6xl mx-auto transition-all duration-500 hover:-translate-y-1"
@@ -84,12 +82,12 @@ const StatsSection = () => {
             FLUID BACKGROUND RIPPLE
             This creates a glowing gradient blob that slowly rotates infinitely behind the content.
           */}
-          <motion.div 
+          <motion.div
             variants={{
               initial: { opacity: 0, scale: 0.8, rotate: 0 },
-              hover: { 
-                opacity: 0.15, 
-                scale: 1.5, 
+              hover: {
+                opacity: 0.15,
+                scale: 1.5,
                 rotate: 90,
                 transition: { duration: 10, ease: "linear", repeat: Infinity }
               }
@@ -103,42 +101,41 @@ const StatsSection = () => {
           />
 
           <div className="relative z-10 flex flex-col gap-8 lg:gap-10">
-            
+
             {/* 
               TOP SECTION: TEXT HEADERS 
               Contains the "Growth" badge, headline, and paragraph description.
             */}
             <div className="w-full text-center md:text-left max-w-4xl mx-auto md:mx-0 flex flex-col items-center md:items-start">
-              
+
               {/* Animated Growth Badge */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5 }}
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 mb-6 shadow-sm"
               >
                 <TrendingUp className="w-4 h-4" />
-                <span className="text-xs font-black tracking-[0.2em] uppercase">{t("stats_growth")}</span>
+                <span className="text-xs font-black tracking-[0.2em] uppercase">Stats Growth</span>
               </motion.div>
 
-              <motion.h2 
+              <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-4xl md:text-5xl lg:text-[54px] font-black tracking-tighter mb-6 leading-[1.1]" 
+                className="text-4xl md:text-5xl lg:text-[54px] font-black tracking-tighter mb-6 leading-[1.1]"
                 style={{ color: 'var(--text-primary)' }}
               >
-                {t("stats_title")}
+                Trusted by Teams Worldwide
               </motion.h2>
 
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="text-base md:text-lg lg:text-xl font-medium max-w-2xl leading-relaxed" 
+                className="text-base md:text-lg lg:text-xl font-medium max-w-2xl leading-relaxed"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                {t("stats_description")}
               </motion.p>
             </div>
 
@@ -147,7 +144,7 @@ const StatsSection = () => {
               Holds the two number counters (2M+ users and 98% satisfaction).
             */}
             <div className="w-full flex flex-col sm:flex-row gap-6 md:gap-8 mt-2 max-w-4xl mx-auto">
-              
+
               {/* Users Counter Card */}
               <motion.div
                 variants={{
@@ -166,7 +163,7 @@ const StatsSection = () => {
                   <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-5 shadow-sm border border-indigo-500/20">
                     <Users className="w-6 h-6 text-indigo-500" strokeWidth={2.5} />
                   </div>
-                  <h3 
+                  <h3
                     ref={usersRef}
                     className="text-[40px] md:text-5xl lg:text-6xl font-black mb-2 tracking-tighter"
                     style={{
@@ -203,7 +200,7 @@ const StatsSection = () => {
                   <div className="w-12 h-12 rounded-2xl bg-teal-500/10 flex items-center justify-center mb-5 shadow-sm border border-teal-500/20">
                     <TrendingUp className="w-6 h-6 text-teal-500" strokeWidth={2.5} />
                   </div>
-                  <h3 
+                  <h3
                     ref={satisfactionRef}
                     className="text-[40px] md:text-5xl lg:text-6xl font-black mb-2 tracking-tighter"
                     style={{
@@ -248,21 +245,22 @@ const StatsSection = () => {
             </p>
             <div className="h-[1px] w-12 md:w-32" style={{ background: 'linear-gradient(to left, transparent, var(--text-secondary))', opacity: 0.3 }}></div>
           </div>
-          
+
           {/* Infinite Marquee Container */}
           <div className="overflow-hidden relative w-full flex justify-center py-2">
-            
+
             {/* Fade Edges (Left and Right) */}
-            <div 
-              className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none" 
+            <div
+              className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none"
               style={{ background: 'linear-gradient(to right, var(--bg-primary) 0%, transparent 100%)' }}
             />
-            <div 
-              className="absolute inset-y-0 right-0 w-24 z-10 pointer-events-none" 
+            <div
+              className="absolute inset-y-0 right-0 w-24 z-10 pointer-events-none"
               style={{ background: 'linear-gradient(to left, var(--bg-primary) 0%, transparent 100%)' }}
             />
 
-            <style dangerouslySetInnerHTML={{ __html: `
+            <style dangerouslySetInnerHTML={{
+              __html: `
               @keyframes scroll-logos {
                 0% { transform: translateX(0); }
                 100% { transform: translateX(-50%); }
@@ -275,7 +273,7 @@ const StatsSection = () => {
                 animation-play-state: paused;
               }
             `}} />
-            
+
             <div className="flex gap-6 md:gap-8 animate-scroll-logos">
               {/* Double the array for seamless infinite looping */}
               {[...trustImages, ...trustImages].map((imgSrc, i) => (
@@ -284,10 +282,10 @@ const StatsSection = () => {
                   className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full flex-shrink-0 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_25px_rgba(59,130,246,0.3)] transition-all duration-300 hover:-translate-y-1.5 overflow-hidden ring-2 ring-transparent hover:ring-blue-500/50"
                   style={{ backgroundColor: 'var(--bg-primary)' }}
                 >
-                  <img 
-                    src={imgSrc} 
-                    alt="Trusted Student" 
-                    className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-110" 
+                  <img
+                    src={imgSrc}
+                    alt="Trusted Student"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-110"
                   />
                 </div>
               ))}

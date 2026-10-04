@@ -9,16 +9,8 @@ const faqData = [
 
   },
   {
-    question: "How do I create and manage projects?",
-    answer: "Simply navigate to the Projects section, click 'New Project', and fill in your project details. You can create tasks, assign team members, set deadlines, and track progress using our intuitive Kanban boards. Filter by status (Ongoing, Completed, On Hold) and sort by date to stay organized."
-  },
-  {
     question: "Does FlowBit support video meetings?",
     answer: "Yes! FlowBit has built-in meeting scheduling with automatic Google Meet link generation. You can schedule meetings, view upcoming calls on your calendar, and join video conferences directly from the platform — no need to switch between tools."
-  },
-  {
-    question: "How does the attendance and leave system work?",
-    answer: "Team members can check in and check out daily to mark their attendance. The leave management system lets you apply for casual, sick, or earned leave with just a few clicks. Managers can approve or reject requests, and everyone can view team availability at a glance."
   },
   {
     question: "Is my data secure on FlowBit?",

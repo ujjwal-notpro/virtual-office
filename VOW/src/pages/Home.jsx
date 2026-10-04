@@ -1,12 +1,9 @@
 
-import React from 'react';
 import Navbar from '../components/home/Navbar';
 import Hero from '../components/home/Hero';
 import StatsSection from '../components/home/StatsSection';
 import WorkflowSection from '../components/home/WorkflowSection';
 import FeatureShowcase from '../components/home/FeatureShowcase';
-import ToolsGrid from '../components/home/ToolsGrid';
-import Testimonials from '../components/home/Testimonials';
 import FAQs from '../components/home/FAQs';
 import Footer from '../components/home/Footer';
 
@@ -18,8 +15,6 @@ export default function Home() {
       <StatsSection />
       <WorkflowSection />
       <FeatureShowcase />
-      <ToolsGrid />
-      <Testimonials />
       <FAQs />
       <Footer />
     </div>

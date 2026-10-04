@@ -5,11 +5,9 @@ import Navbar from '../components/home/Navbar';
 import Footer from '../components/home/Footer';
 import {
   Terminal,
-  Layers,
   Video,
   MessageSquare,
   FileText,
-  Calendar,
   HelpCircle,
   CheckCircle2,
   ArrowRight,
@@ -47,11 +45,6 @@ export default function LearnMore() {
 
   const features = [
     {
-      icon: <Layers className="w-6 h-6 text-black dark:text-white" />,
-      title: 'Project & Task Management',
-      description: 'Organize files, tasks, and roadmaps. Use our card-based Kanban boards to assign items, configure progress states, and ensure project deadlines are met.'
-    },
-    {
       icon: <Video className="w-6 h-6 text-black dark:text-white" />,
       title: 'HD Video Meetings',
       description: 'Start or join secure virtual meetings instantly from your browser. Includes real-time screen sharing, in-call chat, and live collaborative meeting notes.'
@@ -65,11 +58,6 @@ export default function LearnMore() {
       icon: <FileText className="w-6 h-6 text-black dark:text-white" />,
       title: 'Centralized Documentation',
       description: 'Create and edit documents in our collaborative editor. Build a team wiki, organize folders, and link files directly to specific tasks or projects.'
-    },
-    {
-      icon: <Calendar className="w-6 h-6 text-black dark:text-white" />,
-      title: 'Attendance & Notice System',
-      description: 'Keep the team updated with official announcements via the Notice Board. Manage time-off requests, check-ins, and leave status seamlessly.'
     },
     {
       icon: <Terminal className="w-6 h-6 text-black dark:text-white" />,

@@ -1,8 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, Layers, MessageSquare, BarChart3, Calendar } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { CheckCircle2, Layers, MessageSquare, BarChart3, Calendar } from 'lucide-react';
 
 const features = [
   {
@@ -58,13 +56,7 @@ const statsItems = [
 ];
 
 const WorkflowSection = () => {
-  const { t } = useTranslation();
-  const scrollToFeatures = (e) => {
-    e.preventDefault();
-    const element = document.getElementById('features');
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
-  };
-
+  const t = (_, fallback) => fallback;
   return (
     <section
       className="w-full py-16 md:py-24 relative overflow-hidden"
@@ -176,42 +168,6 @@ const WorkflowSection = () => {
               ))}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="flex flex-wrap gap-3 pt-2"
-            >
-              <Link to="/sign-up">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="group relative flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold text-white overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(135deg, #2563eb, #4f46e5)',
-                    boxShadow: '0 8px 32px rgba(37,99,235,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
-                  }}
-                >
-                  <span className="absolute inset-0 bg-white/20 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700" />
-                  {t('workflow_startFreeBtn', 'Start for free')}
-                  <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-                </motion.button>
-              </Link>
-
-              <motion.button
-                onClick={scrollToFeatures}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold transition-all bg-white hover:bg-gray-50 text-gray-800"
-                style={{
-                  border: '1px solid var(--border-color)'
-                }}
-              >
-                {t('workflow_exploreBtn', 'Explore features')}
-                <ArrowRight size={14} className="opacity-60" />
-              </motion.button>
-            </motion.div>
           </div>
 
           <motion.div
@@ -314,4 +270,4 @@ const WorkflowSection = () => {
   );
 };
 
-export default WorkflowSection;
+export default WorkflowSection;
