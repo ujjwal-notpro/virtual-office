@@ -1,8 +1,8 @@
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const User=require("../models/User");
+const jwt=require("jsonwebtoken");
+const bcrypt=require("bcryptjs");
 
-const loginUser = async (req,res)=>{
+const loginUser=async(req,res)=>{
 
     try{
         const{email,password}=req.body;
