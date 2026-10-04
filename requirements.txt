@@ -2,3 +2,5 @@ streamlit
 streamlit-mic-recorder
 requests
 python-dotenv
+fastapi
+uvicorn
