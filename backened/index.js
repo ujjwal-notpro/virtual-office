@@ -2,6 +2,7 @@ const dns=require('node:dns');//node.js ka network codemein load kiya hai
 dns.setServers(['8.8.8.8','8.8.4.4']);//apne blocked dns ko choodkr direct google dns use krr ha hai
 
 const express=require("express");
+require("dotenv").config();
 const http = require("http");
 
 const setupRoomHandlers = require("../realtime-backend/socket/rooms");
