@@ -30,7 +30,9 @@ import {
   X,
   FileSpreadsheet,
   FileArchive,
-  FileCode
+  FileCode,
+  Menu,
+  ArrowLeft
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../hooks/useDarkMode';
@@ -207,6 +209,10 @@ export default function Dashboard() {
   const [isCallOpen, setIsCallOpen] = useState(false);
   const [callType, setCallType] = useState('video'); // 'video' | 'audio'
   const [incomingCall, setIncomingCall] = useState(null);
+
+  // Mobile Responsive State
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [showMobileChat, setShowMobileChat] = useState(false);
 
   const handleStartCall = (type) => {
     setCallType(type);
@@ -451,26 +457,50 @@ export default function Dashboard() {
         accept="*/*"
       />
 
-      {/* ─── LEFT SIDEBAR (Syncaura-Style Wide Sidebar with Light/Dark Mode) ─── */}
-      <aside className="w-56 shrink-0 bg-white dark:bg-[#0d0d10] border-r border-zinc-200 dark:border-[#1e1e24] flex flex-col justify-between py-5 px-3 z-20 transition-colors duration-300 shadow-sm dark:shadow-none">
+      {/* Mobile Sidebar Backdrop Overlay */}
+      {isMobileSidebarOpen && (
+        <div
+          onClick={() => setIsMobileSidebarOpen(false)}
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 md:hidden animate-fadeIn"
+        />
+      )}
+
+      {/* ─── LEFT SIDEBAR (Desktop Fixed, Mobile Slide-over Drawer) ─── */}
+      <aside className={`fixed md:relative inset-y-0 left-0 z-50 w-64 md:w-56 shrink-0 bg-white dark:bg-[#0d0d10] border-r border-zinc-200 dark:border-[#1e1e24] flex flex-col justify-between py-5 px-3 transition-transform duration-300 shadow-2xl md:shadow-sm dark:shadow-none ${
+        isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+      }`}>
         <div>
-          {/* Brand Logo / Title */}
-          <div className="flex items-center gap-3 px-3 mb-8">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-black font-extrabold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-              FB
+          {/* Brand Logo / Title + Mobile Close Button */}
+          <div className="flex items-center justify-between px-3 mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-black font-extrabold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                FB
+              </div>
+              <div>
+                <h1 className="text-base font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
+                  Flow Bit
+                </h1>
+                <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Virtual Office</span>
+              </div>
             </div>
-            <div>
-              <h1 className="text-base font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
-                Flow Bit
-              </h1>
-              <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Virtual Office</span>
-            </div>
+
+            {/* Mobile Close Button */}
+            <button
+              onClick={() => setIsMobileSidebarOpen(false)}
+              className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 md:hidden cursor-pointer"
+              title="Close menu"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
           {/* Navigation Links - ONLY Chat, Profile, Settings */}
           <nav className="space-y-1.5">
             <button
-              onClick={() => setActiveTab('chat')}
+              onClick={() => {
+                setActiveTab('chat');
+                setIsMobileSidebarOpen(false);
+              }}
               className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'chat'
                 ? 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
@@ -486,7 +516,10 @@ export default function Dashboard() {
             </button>
 
             <button
-              onClick={() => setActiveTab('profile')}
+              onClick={() => {
+                setActiveTab('profile');
+                setIsMobileSidebarOpen(false);
+              }}
               className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'profile'
                 ? 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
@@ -497,7 +530,10 @@ export default function Dashboard() {
             </button>
 
             <button
-              onClick={() => setActiveTab('settings')}
+              onClick={() => {
+                setActiveTab('settings');
+                setIsMobileSidebarOpen(false);
+              }}
               className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'settings'
                 ? 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
@@ -524,25 +560,34 @@ export default function Dashboard() {
       {/* ─── MAIN APP CONTAINER ─── */}
       <div className="flex-1 flex flex-col h-full overflow-hidden bg-zinc-50 dark:bg-[#060608] transition-colors duration-300">
         
-        {/* ─── TOP HEADER BAR (Matching Syncaura Screenshot) ─── */}
-        <header className="h-16 shrink-0 border-b border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] px-6 flex items-center justify-between z-10 transition-colors duration-300">
-          {/* User Info Greeting (Dynamic Avatar Initial + Hello! User Name) */}
-          <div className="flex items-center gap-3.5">
-            <div className={`w-10 h-10 rounded-full ${getAvatarBgColor(profile.name)} text-white font-bold flex items-center justify-center text-sm shadow-md ring-2 transition-all`}>
+        {/* ─── TOP HEADER BAR (Responsive for Mobile) ─── */}
+        <header className="h-16 shrink-0 border-b border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] px-3.5 md:px-6 flex items-center justify-between z-10 transition-colors duration-300">
+          {/* User Info Greeting + Mobile Hamburger Menu Button */}
+          <div className="flex items-center gap-2.5 md:gap-3.5">
+            {/* Hamburger Button (Mobile Only) */}
+            <button
+              onClick={() => setIsMobileSidebarOpen(true)}
+              className="p-2 -ml-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl md:hidden cursor-pointer"
+              title="Open menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+
+            <div className={`w-9 h-9 md:w-10 md:h-10 rounded-full ${getAvatarBgColor(profile.name)} text-white font-bold flex items-center justify-center text-xs md:text-sm shadow-md ring-2 transition-all shrink-0`}>
               {getAvatarInitial(profile.name)}
             </div>
             <div>
-              <div className="flex items-center gap-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              <div className="flex items-center gap-1.5 text-xs md:text-sm font-medium text-zinc-700 dark:text-zinc-300">
                 <span>Hello!</span>
-                <span className="font-bold text-zinc-950 dark:text-white">{profile.name}</span>
+                <span className="font-bold text-zinc-950 dark:text-white truncate max-w-[120px] sm:max-w-[200px]">{profile.name}</span>
               </div>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">User</span>
+              <span className="text-[11px] md:text-xs text-zinc-500 dark:text-zinc-400 font-medium">User</span>
             </div>
           </div>
 
           {/* Right Header: Date + Status/Theme Toggle Switch */}
-          <div className="flex items-center gap-5">
-            <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-300 tracking-wide">
+          <div className="flex items-center gap-3 sm:gap-5">
+            <span className="hidden sm:inline-block text-xs font-semibold text-zinc-600 dark:text-zinc-300 tracking-wide">
               {currentDateFormatted || 'Saturday | Oct 03, 2026'}
             </span>
 
@@ -572,15 +617,15 @@ export default function Dashboard() {
           {activeTab === 'chat' && (
             <div className="h-full flex overflow-hidden">
               
-              {/* Left Chat List Panel */}
-              <div className="w-80 shrink-0 border-r border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] flex flex-col h-full transition-colors duration-300">
+              {/* Left Chat List Panel (Full Width on Mobile when not viewing chat) */}
+              <div className={`${showMobileChat ? 'hidden md:flex' : 'flex'} w-full md:w-80 shrink-0 border-r border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] flex-col h-full transition-colors duration-300`}>
                 {/* Search Bar */}
-                <div className="p-4 border-b border-zinc-200 dark:border-[#1a1a20]">
+                <div className="p-3.5 sm:p-4 border-b border-zinc-200 dark:border-[#1a1a20]">
                   <div className="relative">
                     <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-400" />
                     <input
                       type="text"
-                      placeholder="Search chats or team members..."
+                      placeholder="Search chats..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="w-full pl-9.5 pr-4 py-2 bg-zinc-100 dark:bg-[#16161b] border border-zinc-300 dark:border-[#24242e] rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition-colors"
@@ -595,7 +640,10 @@ export default function Dashboard() {
                     .map((chat) => (
                       <div
                         key={chat.id}
-                        onClick={() => setActiveChatId(chat.id)}
+                        onClick={() => {
+                          setActiveChatId(chat.id);
+                          setShowMobileChat(true);
+                        }}
                         className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all ${activeChatId === chat.id
                           ? 'bg-zinc-100 dark:bg-[#181820] border border-zinc-300 dark:border-[#2c2c38] shadow-xs'
                           : 'hover:bg-zinc-50 dark:hover:bg-[#121217] border border-transparent'
@@ -636,12 +684,21 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* Right Active Chat Window */}
-              <div className="flex-1 flex flex-col h-full bg-zinc-50 dark:bg-[#08080a] relative transition-colors duration-300">
+              {/* Right Active Chat Window (Full Screen on Mobile when chat active) */}
+              <div className={`${showMobileChat ? 'flex' : 'hidden md:flex'} flex-1 flex-col h-full bg-zinc-50 dark:bg-[#08080a] relative transition-colors duration-300`}>
                 
                 {/* Chat Top Header */}
-                <div className="h-14 shrink-0 px-6 border-b border-zinc-200 dark:border-[#1a1a20] bg-white/90 dark:bg-[#0c0c0f]/80 backdrop-blur flex items-center justify-between transition-colors duration-300">
-                  <div className="flex items-center gap-3">
+                <div className="h-14 shrink-0 px-3.5 md:px-6 border-b border-zinc-200 dark:border-[#1a1a20] bg-white/90 dark:bg-[#0c0c0f]/80 backdrop-blur flex items-center justify-between transition-colors duration-300">
+                  <div className="flex items-center gap-2.5 md:gap-3">
+                    {/* Back to chat list button (Mobile Only) */}
+                    <button
+                      onClick={() => setShowMobileChat(false)}
+                      className="p-1.5 -ml-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg md:hidden cursor-pointer"
+                      title="Back to conversations"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                    </button>
+
                     <div className="relative">
                       <img
                         src={activeChat.avatar}
@@ -932,7 +989,7 @@ export default function Dashboard() {
 
           {/* ══════════════ 2. PROFILE SECTION ══════════════ */}
           {activeTab === 'profile' && (
-            <div className="h-full overflow-y-auto p-8 max-w-4xl mx-auto">
+            <div className="h-full overflow-y-auto p-4 sm:p-6 md:p-8 max-w-4xl mx-auto">
               {profileSavedToast && (
                 <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/40 text-emerald-700 dark:text-emerald-400 text-xs font-semibold flex items-center gap-2 animate-fadeIn">
                   <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -1121,7 +1178,7 @@ export default function Dashboard() {
 
           {/* ══════════════ 3. SETTINGS SECTION ══════════════ */}
           {activeTab === 'settings' && (
-            <div className="h-full overflow-y-auto p-8 max-w-4xl mx-auto">
+            <div className="h-full overflow-y-auto p-4 sm:p-6 md:p-8 max-w-4xl mx-auto">
               <div className="mb-6">
                 <h2 className="text-xl font-bold text-zinc-900 dark:text-white">Preferences & Settings</h2>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Manage your workspace configuration and notification preferences</p>

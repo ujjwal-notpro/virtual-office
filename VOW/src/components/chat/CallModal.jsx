@@ -342,13 +342,13 @@ export default function CallModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-2 sm:p-4 animate-fadeIn">
       <div
         ref={modalContainerRef}
-        className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[85vh] max-h-[720px] transition-all"
+        className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[92vh] sm:h-[85vh] max-h-[720px] transition-all"
       >
         {/* Header Bar */}
-        <div className="absolute top-0 inset-x-0 z-20 h-16 px-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent flex items-center justify-between pointer-events-auto">
+        <div className="absolute top-0 inset-x-0 z-20 h-16 px-3.5 sm:px-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent flex items-center justify-between pointer-events-auto">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
               <Signal className="w-4 h-4 text-emerald-400 animate-pulse" />
@@ -448,7 +448,7 @@ export default function CallModal({
           )}
 
           {/* Local Camera (Floating Picture-in-Picture) */}
-          <div className="absolute bottom-24 right-6 w-48 h-32 rounded-2xl overflow-hidden bg-zinc-900 border-2 border-zinc-800/80 shadow-2xl z-20 group transition-all duration-300 hover:scale-105">
+          <div className="absolute bottom-20 sm:bottom-24 right-3 sm:right-6 w-32 h-24 sm:w-48 sm:h-32 rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-900 border-2 border-zinc-800/80 shadow-2xl z-20 group transition-all duration-300 hover:scale-105">
             <video
               ref={localVideoRef}
               autoPlay
@@ -458,78 +458,78 @@ export default function CallModal({
             />
             {isVideoOff && (
               <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-900 text-zinc-500 gap-1">
-                <VideoOff className="w-6 h-6" />
-                <span className="text-[10px] font-semibold">Camera Off</span>
+                <VideoOff className="w-5 sm:w-6 h-5 sm:h-6" />
+                <span className="text-[9px] sm:text-[10px] font-semibold">Camera Off</span>
               </div>
             )}
-            <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-black/70 backdrop-blur text-[10px] font-semibold text-white">
+            <div className="absolute bottom-1 sm:bottom-2 left-1 sm:left-2 px-1.5 sm:px-2 py-0.5 rounded-md bg-black/70 backdrop-blur text-[9px] sm:text-[10px] font-semibold text-white">
               {currentUser.name || 'You'} {isMuted && '(Muted)'}
             </div>
           </div>
         </div>
 
         {/* Bottom Control Bar */}
-        <div className="h-22 px-6 bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800/80 flex items-center justify-center gap-4 z-30">
+        <div className="h-18 sm:h-22 px-3 sm:px-6 bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800/80 flex items-center justify-center gap-2 sm:gap-4 z-30 overflow-x-auto">
           {/* Mute Mic */}
           <button
             onClick={toggleMute}
-            className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
+            className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all cursor-pointer shrink-0 ${
               isMuted
                 ? 'bg-red-500/20 border-red-500/40 text-red-400 hover:bg-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.2)]'
                 : 'bg-zinc-800/90 border-zinc-700 hover:bg-zinc-700 text-white'
             }`}
             title={isMuted ? 'Unmute Microphone' : 'Mute Microphone'}
           >
-            {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+            {isMuted ? <MicOff className="w-4 sm:w-5 h-4 sm:h-5" /> : <Mic className="w-4 sm:w-5 h-4 sm:h-5" />}
           </button>
 
           {/* Toggle Video */}
           <button
             onClick={toggleVideo}
-            className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
+            className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all cursor-pointer shrink-0 ${
               isVideoOff
                 ? 'bg-red-500/20 border-red-500/40 text-red-400 hover:bg-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.2)]'
                 : 'bg-zinc-800/90 border-zinc-700 hover:bg-zinc-700 text-white'
             }`}
             title={isVideoOff ? 'Turn Camera On' : 'Turn Camera Off'}
           >
-            {isVideoOff ? <VideoOff className="w-5 h-5" /> : <Video className="w-5 h-5" />}
+            {isVideoOff ? <VideoOff className="w-4 sm:w-5 h-4 sm:h-5" /> : <Video className="w-4 sm:w-5 h-4 sm:h-5" />}
           </button>
 
           {/* Screen Share */}
           <button
             onClick={toggleScreenShare}
-            className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
+            className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all cursor-pointer shrink-0 ${
               isScreenSharing
                 ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]'
                 : 'bg-zinc-800/90 border-zinc-700 hover:bg-zinc-700 text-white'
             }`}
             title={isScreenSharing ? 'Stop Screen Share' : 'Share Screen'}
           >
-            <ScreenShare className="w-5 h-5" />
+            <ScreenShare className="w-4 sm:w-5 h-4 sm:h-5" />
           </button>
 
           {/* Speaker Mute */}
           <button
             onClick={() => setIsSpeakerMuted(!isSpeakerMuted)}
-            className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
+            className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all cursor-pointer shrink-0 ${
               isSpeakerMuted
                 ? 'bg-amber-500/20 border-amber-500/40 text-amber-400'
                 : 'bg-zinc-800/90 border-zinc-700 hover:bg-zinc-700 text-white'
             }`}
             title={isSpeakerMuted ? 'Unmute Audio' : 'Mute Audio'}
           >
-            {isSpeakerMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+            {isSpeakerMuted ? <VolumeX className="w-4 sm:w-5 h-4 sm:h-5" /> : <Volume2 className="w-4 sm:w-5 h-4 sm:h-5" />}
           </button>
 
           {/* End Call Button */}
           <button
             onClick={handleEndCall}
-            className="px-6 py-3.5 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-[0_4px_20px_rgba(220,38,38,0.4)] hover:shadow-[0_4px_25px_rgba(220,38,38,0.6)] active:scale-95 transition-all cursor-pointer flex items-center gap-2"
+            className="px-3.5 sm:px-6 py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl bg-red-600 hover:bg-red-700 text-white font-semibold text-xs sm:text-sm shadow-[0_4px_20px_rgba(220,38,38,0.4)] active:scale-95 transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0"
             title="End Call"
           >
-            <PhoneOff className="w-5 h-5" />
-            <span>Leave Call</span>
+            <PhoneOff className="w-4 sm:w-5 h-4 sm:h-5" />
+            <span>Leave</span>
           </button>
         </div>
       </div>
