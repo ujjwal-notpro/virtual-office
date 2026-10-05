@@ -26,9 +26,9 @@ const loginUser=async(req,res)=>{
             });
         }
 
-        const isPasswordCorrect = await bcrypt.compare(//bcrypt.compare() check kregaki dono match karte hain ya nahi.
+        const isPasswordCorrect = await bcrypt.compare(
             password,
-            user.password//user.password = MongoDB me stored hashed password
+            user.password
         );
 
         if(!isPasswordCorrect) {
@@ -49,7 +49,7 @@ const loginUser=async(req,res)=>{
             const result = await brevo.transactionalEmails.sendTransacEmail({
                 sender: {
                     name: "Flowbit",
-                    email: "YOUR_VERIFIED_BREVO_EMAIL"
+                    email: "ayushgupta2170@gmail.com"
                 },
                 to: [
                     {
