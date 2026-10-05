@@ -126,7 +126,7 @@ const loginUser=async(req,res)=>{
             const result = await brevo.transactionalEmails.sendTransacEmail({
                 sender: {
                     name: "Flowbit",
-                    email: "YOUR_VERIFIED_BREVO_EMAIL"
+                    email: "ayushgupta2170@gmail.com"
                 },
                 to: [
                     {
