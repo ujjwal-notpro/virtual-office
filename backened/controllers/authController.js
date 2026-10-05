@@ -63,12 +63,7 @@ console.log(" DB find result:", user);
     `
 });
 
-if(error){
-    return res.status(500).json({
-        message:"OTP email failed",
-        error:error.message
-    });
-}
+
         res.status(200).json({
             message: "OTP sent successfully",
             email: user.email
