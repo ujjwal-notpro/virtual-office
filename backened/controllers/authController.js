@@ -174,6 +174,7 @@ const verifyOTP = async (req, res) => {
     try {
         const { email, otp } = req.body;
         const cleanEmail = email ? email.trim().toLowerCase() : "";
+        console.log("VERIFY OTP EMAIL:", cleanEmail);
 
         const user = await User.findOne({ email: cleanEmail });
 
