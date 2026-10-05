@@ -40,24 +40,20 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      style={{ perspective: 1000 }} // 3D Perspective container
       className="mb-4"
     >
       <motion.div
         className="rounded-2xl border relative overflow-hidden"
-        style={{ 
+        style={{
           backgroundColor: 'var(--card-bg)',
           borderColor: isOpen ? 'var(--accent-color)' : 'var(--border-color)',
-          boxShadow: isOpen ? '0 10px 40px rgba(99, 102, 241, 0.1)' : '0 4px 20px rgba(0, 0, 0, 0.02)',
         }}
-        whileHover={{ scale: 1.01, translateY: -2 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
         {isOpen && (
-           <div 
-             className="absolute inset-0 opacity-10 pointer-events-none" 
-             style={{ background: 'linear-gradient(120deg, #6366f1, transparent)' }} 
-           />
+          <div
+            className="absolute inset-0 opacity-10 pointer-events-none"
+            style={{ background: 'linear-gradient(120deg, #6366f1, transparent)' }}
+          />
         )}
 
         <button
@@ -68,7 +64,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
           className="w-full relative z-10 flex items-center justify-between p-5 md:p-6 text-left group cursor-pointer"
         >
           <div className="flex items-center gap-4">
-            <div 
+            <div
               className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300"
               style={{
                 background: isOpen ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : 'var(--bg-secondary)',
@@ -84,7 +80,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
               {faq.question}
             </span>
           </div>
-          
+
           <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
@@ -156,7 +152,7 @@ const FAQs = () => {
       <div className="max-w-4xl mx-auto px-4 md:px-6 relative z-10">
         <div className="text-center mb-12 md:mb-16">
 
-          
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -173,7 +169,7 @@ const FAQs = () => {
               Asked Questions
             </span>
           </motion.h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

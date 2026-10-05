@@ -23,6 +23,7 @@ const SignOut = () => {
   return (
     <AuthLayout
       title={isLoggedOut ? "Signed Out" : "Sign Out"}
+      showBrandImage
       subtitle={
         isLoggedOut
           ? "You have been safely signed out."

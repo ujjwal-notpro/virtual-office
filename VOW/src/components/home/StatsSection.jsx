@@ -1,20 +1,6 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
-import { Users, TrendingUp, BookOpen, ArrowRight } from 'lucide-react';
-import img3 from "../../assets/3-Photoroom.png";
-import img5 from "../../assets/5-Photoroom.png";
-import img6 from "../../assets/6-Photoroom.png";
-import img9 from "../../assets/9-Photoroom.png";
-import img10 from "../../assets/10-Photoroom.png";
-import img12 from "../../assets/12-Photoroom.png";
-import img13 from "../../assets/13-Photoroom.png";
-import img14 from "../../assets/14-Photoroom.png";
-import img15 from "../../assets/15-Photoroom.png";
-import img16 from "../../assets/16-Photoroom.png";
-import img17 from "../../assets/17-Photoroom.png";
-
-const trustImages = [img3, img5, img6, img9, img10, img12, img13, img14, img15, img16, img17];
+import { Users, TrendingUp } from 'lucide-react';
 
 const StatsSection = () => {
   const sectionRef = useRef(null); // Reference to track when this section scrolls into view
@@ -165,69 +151,6 @@ const StatsSection = () => {
           </div>
         </motion.div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-start gap-4 mb-12 pt-2 md:mb-16 pl-2">
-          <Link to="/learn-more" className="inline-block">
-            <button className="group relative flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-110 active:scale-95 bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black shadow-[0_4px_14px_rgba(0,0,0,0.2)] dark:shadow-[0_4px_14px_rgba(255,255,255,0.15)] overflow-hidden cursor-pointer">
-              <span className="absolute inset-0 w-full h-full bg-white/20 dark:bg-black/10 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
-              <BookOpen className="w-4 h-4 transition-transform group-hover:-translate-y-1" />
-              Learn More
-            </button>
-          </Link>
-
-        </div>
-
-        <div>
-          <div className="flex items-center justify-center gap-3 md:gap-6 mb-8 pt-6">
-            <div className="h-[1px] w-12 md:w-32" style={{ background: 'linear-gradient(to right, transparent, var(--text-secondary))', opacity: 0.3 }}></div>
-            <p className="text-center text-base md:text-xl lg:text-2xl font-bold uppercase tracking-[0.2em]" style={{ color: 'var(--text-secondary)' }}>
-              Trusted by Top Professionals
-            </p>
-            <div className="h-[1px] w-12 md:w-32" style={{ background: 'linear-gradient(to left, transparent, var(--text-secondary))', opacity: 0.3 }}></div>
-          </div>
-
-          <div className="overflow-hidden relative w-full flex justify-center py-2">
-
-            <div
-              className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none"
-              style={{ background: 'linear-gradient(to right, var(--bg-primary) 0%, transparent 100%)' }}
-            />
-            <div
-              className="absolute inset-y-0 right-0 w-24 z-10 pointer-events-none"
-              style={{ background: 'linear-gradient(to left, var(--bg-primary) 0%, transparent 100%)' }}
-            />
-
-            <style dangerouslySetInnerHTML={{
-              __html: `
-              @keyframes scroll-logos {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-50%); }
-              }
-              .animate-scroll-logos {
-                animation: scroll-logos 40s linear infinite;
-                width: max-content;
-              }
-              .animate-scroll-logos:hover {
-                animation-play-state: paused;
-              }
-            `}} />
-
-            <div className="flex gap-6 md:gap-8 animate-scroll-logos">
-              {[...trustImages, ...trustImages].map((imgSrc, i) => (
-                <div
-                  key={i}
-                  className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full flex-shrink-0 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_25px_rgba(59,130,246,0.3)] transition-all duration-300 hover:-translate-y-1.5 overflow-hidden ring-2 ring-transparent hover:ring-blue-500/50"
-                  style={{ backgroundColor: 'var(--bg-primary)' }}
-                >
-                  <img
-                    src={imgSrc}
-                    alt="Trusted Student"
-                    className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-110"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

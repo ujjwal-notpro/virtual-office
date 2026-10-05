@@ -4,7 +4,6 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import SignOut from './pages/SignOut';
 import ResetPassword from './pages/ResetPassword';
-import LearnMore from './pages/LearnMore';
 import Dashboard from './pages/dashboard/DashboardPage';
 
 function App() {
@@ -33,7 +32,6 @@ function App() {
         <Route path="/profile" element={<Dashboard />} />
         <Route path="/settings" element={<Dashboard />} />
 
-        <Route path="/learn-more" element={<LearnMore />} />
       </Routes>
     </BrowserRouter>
   );

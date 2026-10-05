@@ -1,14 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import dashboardPreview from "../../assets/Imageto.PNG";
-import { Zap, CheckCircle2, Layers, MessageSquare, BarChart3, Users, Clock, ShieldCheck } from 'lucide-react';
-
-const stats = [
-  { val: '10+', label: 'Modules', icon: Layers, color: '#3b82f6' },
-  { val: '99.9%', label: 'Uptime', icon: ShieldCheck, color: '#22c55e' },
-  { val: '50K+', label: 'Users', icon: Users, color: '#8b5cf6' },
-  { val: '<2min', label: 'Setup', icon: Clock, color: '#f59e0b' },
-];
+import { Zap, CheckCircle2, Layers, MessageSquare, BarChart3, ShieldCheck } from 'lucide-react';
 
 const featureList = [
   { icon: Layers, color: '#3b82f6', text: 'Unified project & task management' },
@@ -108,7 +101,7 @@ const FeatureShowcase = () => {
 
           <div className="grid lg:grid-cols-2 gap-0">
 
-            <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center space-y-10">
+            <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center space-y-8">
 
               <motion.div
                 initial={{ opacity: 0, x: -24 }}
@@ -138,50 +131,6 @@ const FeatureShowcase = () => {
                   seamless and modern platform built to scale with your team.
                 </p>
               </motion.div>
-
-              <div className="grid grid-cols-2 gap-3">
-                {stats.map(({ val, label, icon: Icon, color }, i) => (
-                  <motion.div
-                    key={label}
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 + i * 0.08 }}
-                    whileHover={{ y: -4, scale: 1.04 }}
-                    className="relative flex items-center gap-3.5 p-4 rounded-2xl overflow-hidden group cursor-default"
-                    style={{
-                      background: `linear-gradient(135deg, ${color}12, ${color}06)`,
-                      border: `1px solid ${color}15`,
-                      transition: 'all 0.25s ease',
-                    }}
-                  >
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{
-                        background: `linear-gradient(135deg, ${color}25, ${color}10)`,
-                        border: `1px solid ${color}35`,
-                      }}
-                    >
-                      <Icon size={18} style={{ color }} />
-                    </div>
-                    <div>
-                      <p
-                        className="text-xl font-black leading-none text-transparent bg-clip-text"
-                        style={{ backgroundImage: `linear-gradient(135deg, ${color}, ${color}aa)` }}
-                      >{val}</p>
-                      <p className="text-[11px] font-semibold mt-0.5 uppercase tracking-wide" style={{ color: 'var(--text-secondary)', opacity: 0.65 }}>{label}</p>
-                    </div>
-                    <div
-                      className="absolute -top-3 -right-3 w-12 h-12 rounded-full blur-lg opacity-30 group-hover:opacity-55 transition-opacity"
-                      style={{ backgroundColor: color }}
-                    />
-                    <div
-                      className="absolute bottom-0 left-3 right-3 h-[1.5px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }}
-                    />
-                  </motion.div>
-                ))}
-              </div>
 
               <motion.ul
                 initial={{ opacity: 0, y: 16 }}

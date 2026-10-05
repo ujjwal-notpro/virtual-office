@@ -68,6 +68,7 @@ const SignUp = () => {
       title="Sign Up"
       subtitle="Create your workspace account in seconds."
       backTo="/"
+      showBrandImage
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {errorMessage && (

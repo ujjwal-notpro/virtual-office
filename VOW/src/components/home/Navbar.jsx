@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Sun, Moon, Home, CreditCard, Mail, LogIn, ArrowRight, BookOpen } from 'lucide-react';
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { Sun, Moon, Home, CreditCard, Mail, LogIn, ArrowRight } from 'lucide-react';
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDarkMode } from "../../hooks/useDarkMode";
 import brandLogo from '../../assets/image.png';
 
@@ -8,7 +8,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useDarkMode();
   const location = useLocation();
-  const isLearnMoreActive = location.pathname === "/learn-more";
   const [activeSection, setActiveSection] = useState('home');
   useEffect(() => {
     if (location.pathname !== "/") {
@@ -78,17 +77,6 @@ const Navbar = () => {
               <Mail className="w-4 h-4 transition-transform group-hover:scale-110" />
               Contact
             </a>
-            <Link
-              to="/learn-more"
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/10"
-              style={{
-                backgroundColor: isLearnMoreActive ? (theme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(51, 102, 255, 0.1)') : '',
-                color: isLearnMoreActive ? 'var(--accent-color)' : 'var(--text-secondary)',
-              }}
-            >
-              <BookOpen className="w-4 h-4 transition-transform group-hover:scale-110" />
-              Learn More
-            </Link>
           </nav>
         </div>
 
@@ -185,20 +173,6 @@ const Navbar = () => {
               Contact
             </a>
 
-            <Link
-              to="/learn-more"
-              className="text-sm font-medium whitespace-nowrap border-b-2 pb-0.5 transition-all"
-              style={{
-                color: isLearnMoreActive
-                  ? "var(--accent-color)"
-                  : "var(--text-secondary)",
-                borderColor: isLearnMoreActive
-                  ? "var(--accent-color)"
-                  : "transparent",
-              }}
-            >
-              Learn More
-            </Link>
           </nav>
         </div>
       </div>

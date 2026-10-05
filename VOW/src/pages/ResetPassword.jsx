@@ -50,6 +50,7 @@ const ResetPassword = () => {
   return (
     <AuthLayout
       title="Reset Password"
+      showBrandImage
       subtitle={isSuccess ? undefined : 'Enter and confirm your new password below.'}
       backTo="/sign-in"
     >

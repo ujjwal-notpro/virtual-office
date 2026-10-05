@@ -3,8 +3,9 @@ import { ArrowLeft, Sun, Moon, Sparkles } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useDarkMode } from '../../hooks/useDarkMode';
+import authLogo from '../../assets/image.png';
 
-const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/' }) => {
+const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/', showBrandImage = false }) => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useDarkMode();
   const isDark = theme === 'dark';
@@ -30,9 +31,17 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/' }
           to="/"
           className="group flex items-center gap-2.5 font-bold tracking-tight text-xl text-black dark:text-white transition-opacity hover:opacity-90"
         >
-          <div className="w-8 h-8 rounded-xl bg-black dark:bg-white flex items-center justify-center text-white dark:text-black shadow-md group-hover:scale-105 transition-transform duration-200">
-            <Sparkles className="w-4 h-4" />
-          </div>
+          {showBrandImage ? (
+            <img
+              src={authLogo}
+              alt=""
+              className="w-8 h-8 rounded-xl object-contain shadow-md group-hover:scale-105 transition-transform duration-200"
+            />
+          ) : (
+            <div className="w-8 h-8 rounded-xl bg-black dark:bg-white flex items-center justify-center text-white dark:text-black shadow-md group-hover:scale-105 transition-transform duration-200">
+              <Sparkles className="w-4 h-4" />
+            </div>
+          )}
           <span className="font-extrabold text-black dark:text-white">
             Flow Bit
           </span>

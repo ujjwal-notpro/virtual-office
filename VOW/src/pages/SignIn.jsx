@@ -166,7 +166,7 @@ const SignIn = () => {
 
   if (step === 'credentials') {
     return (
-      <AuthLayout title="Sign In" subtitle="Welcome back! Please sign in to continue." backTo="/">
+      <AuthLayout title="Sign In" subtitle="Welcome back! Please sign in to continue." backTo="/" showBrandImage>
         <form onSubmit={handleCredentialsSubmit} className="space-y-4">
           {errorMessage && (
             <div className="p-3 text-xs font-semibold text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950/40 rounded-2xl border border-red-200 dark:border-red-900/50 flex items-center justify-between animate-fadeIn">
@@ -240,7 +240,7 @@ const SignIn = () => {
 
   if (step === 'otp-method') {
     return (
-      <AuthLayout title="Verify Identity" subtitle="Choose how you'd like to receive your OTP code." backTo="/">
+      <AuthLayout title="Verify Identity" subtitle="Choose how you'd like to receive your OTP code." backTo="/" showBrandImage>
         <div className="space-y-4">
           {errorMessage && (
             <div className="p-3 text-xs font-semibold text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950/40 rounded-2xl border border-red-200 dark:border-red-900/50 animate-fadeIn">
@@ -282,7 +282,7 @@ const SignIn = () => {
   }
 
   return (
-    <AuthLayout title="Enter OTP" subtitle={successMessage || 'Enter the 6-digit code sent to you.'} backTo="/">
+    <AuthLayout title="Enter OTP" subtitle={successMessage || 'Enter the 6-digit code sent to you.'} backTo="/" showBrandImage>
       <form onSubmit={handleVerifyOTP} className="space-y-5">
         {errorMessage && (
           <div className="p-3 text-xs font-semibold text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950/40 rounded-2xl border border-red-200 dark:border-red-900/50 animate-fadeIn">

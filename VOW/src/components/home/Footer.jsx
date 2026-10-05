@@ -210,7 +210,6 @@ const Footer = () => {
             <ColHeading>{t("company")}</ColHeading>
             <ul className="space-y-3">
               <NavLink to="/about-us">{t("about")}</NavLink>
-              <NavLink to="/learn-more">Learn More</NavLink>
               {[
                 { label: t("blog") },
                 { label: t("careers") },
