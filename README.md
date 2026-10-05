@@ -55,6 +55,8 @@ Frontend
 - Task Management
 - Meetings
 - Collaboration
+
+
 Backend
 - REST APIs
 - User Authentication
@@ -64,6 +66,8 @@ Backend
 - Task Management
 - Meeting Management
 - Email OTP Verification
+
+
 Real-Time Backend
 - Socket.IO Communication
 - Room Management
@@ -71,11 +75,15 @@ Real-Time Backend
 - WebRTC Signaling
 - Video & Audio Communication
 - Screen Sharing
+
+
 Machine Learning
 - ML-based project features
 - Data processing
 - Model integration
 - AI-assisted collaboration features
+
+
 Tech Stack
 Module	Technologies
 Frontend	React, Vite
