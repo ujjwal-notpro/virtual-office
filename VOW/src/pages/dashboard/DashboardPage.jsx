@@ -96,6 +96,10 @@ export default function Dashboard() {
   const [activeChatId, setActiveChatId] = useState(1);
 
   const [currentDateFormatted, setCurrentDateFormatted] = useState('');
+  // Some realtime servers broadcast a sent event to every room member, including
+  // the socket that sent it. Keep short-lived ids for optimistic messages so an
+  // echoed event is not rendered again as an incoming message.
+  const outgoingMessageIdsRef = useRef(new Set());
 
   useEffect(() => {
     const now = new Date();
@@ -127,18 +131,34 @@ export default function Dashboard() {
 
       const handleReceiveMessage = (data) => {
         console.log('[Chat] Received message:', data);
+
+        const currentUser = getStoredUser();
+        const senderId = data.senderId ?? data.sender?.id ?? data.userId;
+        const currentUserId = currentUser?.id ?? currentUser?._id ?? currentUser?.userId;
+        const isOwnEcho =
+          (data.clientMessageId && outgoingMessageIdsRef.current.has(data.clientMessageId)) ||
+          (senderId != null && currentUserId != null && String(senderId) === String(currentUserId));
+
+        if (isOwnEcho) return;
+
         const incomingMsg = {
-          id: Date.now() + Math.random(),
+          id: data.id ?? data.messageId ?? Date.now() + Math.random(),
           sender: 'them',
           text: data.message,
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
+        const roomConversationId = Number(String(data.roomId || '').replace(/^room-/, ''));
+        const conversationId = Number.isFinite(roomConversationId) && roomConversationId > 0
+          ? roomConversationId
+          : activeChatId;
+
         setConversations(prev => prev.map(c => {
-          if (c.id === activeChatId) {
+          if (c.id === conversationId) {
             return {
               ...c,
               messages: [...c.messages, incomingMsg],
-              time: 'Just now'
+              time: 'Just now',
+              unread: c.id === activeChatId ? c.unread : c.unread + 1,
             };
           }
           return c;
@@ -271,8 +291,9 @@ export default function Dashboard() {
     e?.preventDefault();
     if (!messageInput.trim() && !selectedFile) return;
 
+    const clientMessageId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
     const newMsg = {
-      id: Date.now(),
+      id: clientMessageId,
       sender: 'me',
       text: messageInput.trim(),
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -298,10 +319,15 @@ export default function Dashboard() {
 
     const socket = getSocket();
     if (socket?.connected && messageInput.trim()) {
+      outgoingMessageIdsRef.current.add(clientMessageId);
       socket.emit('send-message', {
         roomId: `room-${activeChatId}`,
         message: messageInput.trim(),
+        clientMessageId,
       });
+
+      // Do not retain ids indefinitely if a server does not echo the payload.
+      window.setTimeout(() => outgoingMessageIdsRef.current.delete(clientMessageId), 30000);
     }
 
     setMessageInput('');
