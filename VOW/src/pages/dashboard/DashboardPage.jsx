@@ -16,13 +16,9 @@ import {
   Check,
   CheckCheck,
   Shield,
-  Bell,
-  Palette,
   Camera,
   Edit3,
   Save,
-  Sliders,
-  Lock,
   FileText,
   Download,
   Image as ImageIcon,
@@ -388,21 +384,7 @@ export default function Dashboard() {
     setTimeout(() => setProfileSavedToast(false), 3000);
   };
 
-  const [settingsTab, setSettingsTab] = useState('appearance');
-  const [settings, setSettings] = useState({
-    emailNotifications: true,
-    desktopNotifications: true,
-    soundAlerts: false,
-    readReceipts: true,
-    twoFactorAuth: true,
-    autoStatusAway: true,
-    compactView: false,
-    language: 'English (US)'
-  });
-
-  const toggleSetting = (key) => {
-    setSettings(prev => ({ ...prev, [key]: !prev[key] }));
-  };
+  const [isCompactView, setIsCompactView] = useState(false);
 
   const handleLogout = () => {
     navigate('/sign-in');
@@ -1205,32 +1187,7 @@ export default function Dashboard() {
                   <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Manage your workspace configuration and notification preferences</p>
                 </div>
 
-                <div className="flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-3 mb-6 overflow-x-auto">
-                  {[
-                    { id: 'appearance', label: 'Appearance', icon: Palette },
-                    { id: 'notifications', label: 'Notifications', icon: Bell },
-                    { id: 'privacy', label: 'Privacy & Security', icon: Lock },
-                    { id: 'general', label: 'General', icon: Sliders },
-                  ].map((tab) => {
-                    const Icon = tab.icon;
-                    return (
-                      <button
-                        key={tab.id}
-                        onClick={() => setSettingsTab(tab.id)}
-                        className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer shrink-0 ${settingsTab === tab.id
-                          ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-950 dark:text-white border border-zinc-300 dark:border-zinc-700 shadow-xs'
-                          : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-850'
-                          }`}
-                      >
-                        <Icon className="w-3.5 h-3.5" />
-                        <span>{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {settingsTab === 'appearance' && (
-                  <div className="space-y-4">
+                <div className="space-y-4">
                     <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 shadow-sm dark:shadow-none transition-colors duration-300">
                       <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-4">Interface Theme</h3>
 
@@ -1287,138 +1244,16 @@ export default function Dashboard() {
                           <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Reduce paddings and list heights for higher density</p>
                         </div>
                         <button
-                          onClick={() => toggleSetting('compactView')}
-                          className={`w-11 h-6 rounded-full p-0.5 flex items-center transition-colors cursor-pointer ${settings.compactView ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-800'
+                          onClick={() => setIsCompactView((value) => !value)}
+                          className={`w-11 h-6 rounded-full p-0.5 flex items-center transition-colors cursor-pointer ${isCompactView ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-800'
                             }`}
                         >
-                          <div className={`w-5 h-5 rounded-full bg-white transition-transform ${settings.compactView ? 'translate-x-5' : 'translate-x-0'}`} />
+                          <div className={`w-5 h-5 rounded-full bg-white transition-transform ${isCompactView ? 'translate-x-5' : 'translate-x-0'}`} />
                         </button>
                       </div>
                     </div>
-                  </div>
-                )}
+                </div>
 
-                {settingsTab === 'notifications' && (
-                  <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 divide-y divide-zinc-200 dark:divide-zinc-800 shadow-sm dark:shadow-none transition-colors duration-300">
-                    <div className="flex items-center justify-between pb-4 text-xs">
-                      <div>
-                        <h4 className="font-semibold text-zinc-900 dark:text-white">Email Notifications</h4>
-                        <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Receive summary digest of missed mentions & messages</p>
-                      </div>
-                      <button
-                        onClick={() => toggleSetting('emailNotifications')}
-                        className={`w-11 h-6 rounded-full p-0.5 flex items-center transition-colors cursor-pointer ${settings.emailNotifications ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-800'
-                          }`}
-                      >
-                        <div className={`w-5 h-5 rounded-full bg-white transition-transform ${settings.emailNotifications ? 'translate-x-5' : 'translate-x-0'}`} />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center justify-between py-4 text-xs">
-                      <div>
-                        <h4 className="font-semibold text-zinc-900 dark:text-white">Desktop Push Notifications</h4>
-                        <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Show real-time alerts when you receive new chat messages</p>
-                      </div>
-                      <button
-                        onClick={() => toggleSetting('desktopNotifications')}
-                        className={`w-11 h-6 rounded-full p-0.5 flex items-center transition-colors cursor-pointer ${settings.desktopNotifications ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-800'
-                          }`}
-                      >
-                        <div className={`w-5 h-5 rounded-full bg-white transition-transform ${settings.desktopNotifications ? 'translate-x-5' : 'translate-x-0'}`} />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-4 text-xs">
-                      <div>
-                        <h4 className="font-semibold text-zinc-900 dark:text-white">Sound Alerts</h4>
-                        <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Play chime when receiving direct messages</p>
-                      </div>
-                      <button
-                        onClick={() => toggleSetting('soundAlerts')}
-                        className={`w-11 h-6 rounded-full p-0.5 flex items-center transition-colors cursor-pointer ${settings.soundAlerts ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-800'
-                          }`}
-                      >
-                        <div className={`w-5 h-5 rounded-full bg-white transition-transform ${settings.soundAlerts ? 'translate-x-5' : 'translate-x-0'}`} />
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {settingsTab === 'privacy' && (
-                  <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 divide-y divide-zinc-200 dark:divide-zinc-800 shadow-sm dark:shadow-none transition-colors duration-300">
-                    <div className="flex items-center justify-between pb-4 text-xs">
-                      <div>
-                        <h4 className="font-semibold text-zinc-900 dark:text-white">Read Receipts</h4>
-                        <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Allow team members to see when you have read messages</p>
-                      </div>
-                      <button
-                        onClick={() => toggleSetting('readReceipts')}
-                        className={`w-11 h-6 rounded-full p-0.5 flex items-center transition-colors cursor-pointer ${settings.readReceipts ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-800'
-                          }`}
-                      >
-                        <div className={`w-5 h-5 rounded-full bg-white transition-transform ${settings.readReceipts ? 'translate-x-5' : 'translate-x-0'}`} />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center justify-between py-4 text-xs">
-                      <div>
-                        <h4 className="font-semibold text-zinc-900 dark:text-white">Auto Status Away</h4>
-                        <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Set status to away after 10 minutes of inactivity</p>
-                      </div>
-                      <button
-                        onClick={() => toggleSetting('autoStatusAway')}
-                        className={`w-11 h-6 rounded-full p-0.5 flex items-center transition-colors cursor-pointer ${settings.autoStatusAway ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-800'
-                          }`}
-                      >
-                        <div className={`w-5 h-5 rounded-full bg-white transition-transform ${settings.autoStatusAway ? 'translate-x-5' : 'translate-x-0'}`} />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-4 text-xs">
-                      <div>
-                        <h4 className="font-semibold text-zinc-900 dark:text-white">Two-Factor Authentication</h4>
-                        <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Require verification code on every login</p>
-                      </div>
-                      <button
-                        onClick={() => toggleSetting('twoFactorAuth')}
-                        className={`w-11 h-6 rounded-full p-0.5 flex items-center transition-colors cursor-pointer ${settings.twoFactorAuth ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-800'
-                          }`}
-                      >
-                        <div className={`w-5 h-5 rounded-full bg-white transition-transform ${settings.twoFactorAuth ? 'translate-x-5' : 'translate-x-0'}`} />
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {settingsTab === 'general' && (
-                  <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 text-xs space-y-4 shadow-sm dark:shadow-none transition-colors duration-300">
-                    <div>
-                      <label className="block text-zinc-600 dark:text-zinc-400 font-medium mb-1.5">Language & Region</label>
-                      <select
-                        value={settings.language}
-                        onChange={(e) => setSettings({ ...settings, language: e.target.value })}
-                        className="w-full bg-zinc-100 dark:bg-[#16161c] border border-zinc-300 dark:border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white focus:outline-none focus:border-emerald-500 transition-colors"
-                      >
-                        <option value="English (US)">English (US)</option>
-                        <option value="English (UK)">English (UK)</option>
-                        <option value="Spanish">Español</option>
-                        <option value="French">Français</option>
-                        <option value="German">Deutsch</option>
-                        <option value="Hindi">हिन्दी (Hindi)</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-zinc-600 dark:text-zinc-400 font-medium mb-1.5">Active Workspace</label>
-                      <input
-                        type="text"
-                        disabled
-                        value="Syncaura HQ (Primary)"
-                        className="w-full bg-zinc-100 dark:bg-[#16161c] border border-zinc-300 dark:border-zinc-800 opacity-70 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white"
-                      />
-                    </div>
-                  </div>
-                )}
               </div>
             </SettingsSection>
           )}
