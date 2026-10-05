@@ -147,7 +147,8 @@ const loginUser=async(req,res)=>{
         } catch (error) {
             console.error("Brevo email failed:", error);
 
-            return res.status(500).json({
+            console.error("Brevo Error Details:", error.response?.data || error.message);
+return res.status(500).json({
     message: "OTP email failed",
     error: error.response?.data || error.message
 });
