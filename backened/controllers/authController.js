@@ -63,7 +63,7 @@ const sendOTP=async(req, res) => {
             });
           
             console.log("Brevo OTP sent:", result);
-
+            
         } catch (error) {
             console.error("Brevo OTP failed:", error);
 
