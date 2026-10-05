@@ -24,47 +24,10 @@ const createUser=async(req,res)=>{
     }
 };
 
-const resetPassword = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        console.log("RESET BODY:", req.body);
-
-        if (!email || !password) {
-            return res.status(400).json({
-                message: "Email and password are required"
-            });
-        }
-
-        const user = await User.findOne({
-            email: email.trim().toLowerCase()
-        });
-
-        if (!user) {
-            return res.status(404).json({
-                message: "User not found"
-            });
-        }
-
-        user.password = await bcrypt.hash(password, 10);
-        await user.save();
-
-        res.json({
-            message: "Password reset successfully"
-        });
-
-    } catch (error) {
-        console.error("RESET ERROR:", error);
-
-        res.status(500).json({
-            message: "Password reset failed",
-            error: error.message
-        });
-    }
-};
 
 
 
 
 
-module.exports={createUser,resetPassword};
+
+module.exports={createUser};
