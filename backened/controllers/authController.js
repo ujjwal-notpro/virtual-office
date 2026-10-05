@@ -13,28 +13,29 @@ const brevo = new BrevoClient({
 const loginUser=async(req,res)=>{
     try{
         const { email, password } = req.body;
-const cleanEmail = email ? email.trim().toLowerCase() : "";
+        const cleanEmail = email ? email.trim().toLowerCase() : "";
 
 
-console.log(" Login request email:", cleanEmail);
-const user = await User.findOne({ email: cleanEmail });
-console.log(" DB find result:", user);
+        console.log(" Login request email:", cleanEmail);
+        const user = await User.findOne({ email: cleanEmail });
+        console.log(" DB find result:", user);
 
         if(!user){
             return res.status(404).json({
                 message: "User not found"
             });
         }
-         const isPasswordCorrect = await bcrypt.compare(//bcrypt.compare() check kregaki dono match karte hain ya nahi.
+
+        const isPasswordCorrect = await bcrypt.compare(//bcrypt.compare() check kregaki dono match karte hain ya nahi.
             password,
             user.password//user.password = MongoDB me stored hashed password
         );
+
         if(!isPasswordCorrect) {
             return res.status(401).json({
                 message: "Invalid password"
             });
         }
-
 
 
         const otp=crypto.randomInt(100000, 1000000).toString();
@@ -44,31 +45,44 @@ console.log(" DB find result:", user);
 
         await user.save();
 
-        const result = await brevo.transactionalEmails.sendTransacEmail({
-    sender: {
-        name: "Flowbit",
-        email: "YOUR_VERIFIED_BREVO_EMAIL"
-    },
-    to: [
-        {
-            email: user.email
+        try {
+            const result = await brevo.transactionalEmails.sendTransacEmail({
+                sender: {
+                    name: "Flowbit",
+                    email: "YOUR_VERIFIED_BREVO_EMAIL"
+                },
+                to: [
+                    {
+                        email: user.email
+                    }
+                ],
+                subject: "Flowbit Login OTP",
+                htmlContent: `
+                    <h2>Flowbit Login OTP</h2>
+                    <p>Your OTP is:</p>
+                    <h1>${otp}</h1>
+                    <p>This OTP will expire in 5 minutes.</p>
+                `
+            });
+
+            console.log("Brevo email sent:", result);
+
+        } catch (error) {
+            console.error("Brevo email failed:", error);
+
+            return res.status(500).json({
+                message: "OTP email failed",
+                error: error.message
+            });
         }
-    ],
-    subject: "Flowbit Login OTP",
-    htmlContent: `
-        <h2>Flowbit Login OTP</h2>
-        <p>Your OTP is:</p>
-        <h1>${otp}</h1>
-        <p>This OTP will expire in 5 minutes.</p>
-    `
-});
 
 
         res.status(200).json({
             message: "OTP sent successfully",
             email: user.email
         });
-        } catch (error) {
+
+    } catch (error) {
         res.status(500).json({
             message: "Login failed",
             error: error.message
