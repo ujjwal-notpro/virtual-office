@@ -11,7 +11,7 @@ const brevo = new BrevoClient({
 });
 
 
-const sendOTP = async (req, res) => {
+const sendOTP=async(req, res) => {
     try {
         const { email, password } = req.body;
         const cleanEmail = email ? email.trim().toLowerCase() : "";
