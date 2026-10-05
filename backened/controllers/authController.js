@@ -61,7 +61,7 @@ const sendOTP=async(req, res) => {
                     <p>This OTP will expire in 5 minutes.</p>
                 `
             });
-
+          
             console.log("Brevo OTP sent:", result);
 
         } catch (error) {
