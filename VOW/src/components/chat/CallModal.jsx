@@ -41,7 +41,6 @@ export default function CallModal({
 
   const roomId = `room-${recipient?.id || 'vow-call'}`;
 
-  // Call timer
   useEffect(() => {
     let timer;
     if (isOpen && callStatus === 'Connected') {
@@ -52,14 +51,12 @@ export default function CallModal({
     return () => clearInterval(timer);
   }, [isOpen, callStatus]);
 
-  // Format call duration (MM:SS)
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // WebRTC & Media Initialization
   useEffect(() => {
     if (!isOpen) return;
 
@@ -81,7 +78,6 @@ export default function CallModal({
     });
     peerConnectionRef.current = pc;
 
-    // Handle remote track
     pc.ontrack = (event) => {
       console.log('[WebRTC] Received remote stream track');
       if (remoteVideoRef.current) {
@@ -91,7 +87,6 @@ export default function CallModal({
       }
     };
 
-    // Handle ICE candidates
     pc.onicecandidate = (event) => {
       if (event.candidate && remoteUserIdRef.current && socket?.connected) {
         socket.emit('ice-candidate', {
@@ -101,7 +96,6 @@ export default function CallModal({
       }
     };
 
-    // Start local camera/microphone
     async function startMedia() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -123,14 +117,11 @@ export default function CallModal({
           pc.addTrack(track, stream);
         });
 
-        // Connected state
         setCallStatus('Ringing...');
 
-        // If socket is connected, join call room
         if (socket?.connected) {
           socket.emit('join-room', roomId);
         } else {
-          // Local fallback simulation if socket is offline
           setTimeout(() => {
             if (mounted) setCallStatus('Connected');
           }, 1500);
@@ -143,7 +134,6 @@ export default function CallModal({
 
     startMedia();
 
-    // Socket signaling events
     if (socket) {
       const handleUserJoined = async (data) => {
         console.log('[WebRTC] Remote user joined room:', data.socketId);
@@ -241,7 +231,6 @@ export default function CallModal({
     }
   };
 
-  // Toggle Microphone
   const toggleMute = () => {
     if (localStreamRef.current) {
       const audioTrack = localStreamRef.current.getAudioTracks()[0];
@@ -252,7 +241,6 @@ export default function CallModal({
     }
   };
 
-  // Toggle Camera
   const toggleVideo = async () => {
     if (localStreamRef.current) {
       const videoTrack = localStreamRef.current.getVideoTracks()[0];
@@ -260,7 +248,6 @@ export default function CallModal({
         videoTrack.enabled = !videoTrack.enabled;
         setIsVideoOff(!videoTrack.enabled);
       } else {
-        // Add video track if didn't exist before
         try {
           const videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
           const newTrack = videoStream.getVideoTracks()[0];
@@ -279,7 +266,6 @@ export default function CallModal({
     }
   };
 
-  // Screen Share Toggle
   const toggleScreenShare = async () => {
     if (!isScreenSharing) {
       try {
@@ -322,7 +308,6 @@ export default function CallModal({
     setIsScreenSharing(false);
   };
 
-  // Toggle Full Screen
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       modalContainerRef.current?.requestFullscreen?.();
@@ -333,7 +318,6 @@ export default function CallModal({
     }
   };
 
-  // End Call
   const handleEndCall = () => {
     cleanupCall();
     onClose();
@@ -347,7 +331,6 @@ export default function CallModal({
         ref={modalContainerRef}
         className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[92vh] sm:h-[85vh] max-h-[720px] transition-all"
       >
-        {/* Header Bar */}
         <div className="absolute top-0 inset-x-0 z-20 h-16 px-3.5 sm:px-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent flex items-center justify-between pointer-events-auto">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
@@ -387,9 +370,7 @@ export default function CallModal({
           </div>
         </div>
 
-        {/* Main Video / Audio Stage */}
         <div className="relative flex-1 bg-zinc-950 flex items-center justify-center overflow-hidden">
-          {/* Remote Video (Full Screen Stage) */}
           <video
             ref={remoteVideoRef}
             autoPlay
@@ -400,11 +381,9 @@ export default function CallModal({
             }`}
           />
 
-          {/* Audio Avatar / Fallback Placeholder when remote video is off or audio-only */}
           {(!remoteUserJoined || isVideoOff || callType === 'audio') && (
             <div className="text-center space-y-6 animate-fadeIn z-10">
               <div className="relative mx-auto w-32 h-32">
-                {/* Pulsing rings for active voice connection */}
                 <div className="absolute inset-0 rounded-full bg-emerald-500/20 animate-ping opacity-60" />
                 <div className="absolute -inset-3 rounded-full bg-emerald-500/10 animate-pulse" />
                 <img
@@ -432,7 +411,6 @@ export default function CallModal({
                 </div>
               </div>
 
-              {/* Audio Wave Visualizer Bars */}
               <div className="flex items-center justify-center gap-1.5 pt-2">
                 {[40, 75, 55, 90, 60, 85, 45, 95, 70, 50, 80, 65].map((height, i) => (
                   <div
@@ -447,7 +425,6 @@ export default function CallModal({
             </div>
           )}
 
-          {/* Local Camera (Floating Picture-in-Picture) */}
           <div className="absolute bottom-20 sm:bottom-24 right-3 sm:right-6 w-32 h-24 sm:w-48 sm:h-32 rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-900 border-2 border-zinc-800/80 shadow-2xl z-20 group transition-all duration-300 hover:scale-105">
             <video
               ref={localVideoRef}
@@ -468,9 +445,7 @@ export default function CallModal({
           </div>
         </div>
 
-        {/* Bottom Control Bar */}
         <div className="h-18 sm:h-22 px-3 sm:px-6 bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800/80 flex items-center justify-center gap-2 sm:gap-4 z-30 overflow-x-auto">
-          {/* Mute Mic */}
           <button
             onClick={toggleMute}
             className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all cursor-pointer shrink-0 ${
@@ -483,7 +458,6 @@ export default function CallModal({
             {isMuted ? <MicOff className="w-4 sm:w-5 h-4 sm:h-5" /> : <Mic className="w-4 sm:w-5 h-4 sm:h-5" />}
           </button>
 
-          {/* Toggle Video */}
           <button
             onClick={toggleVideo}
             className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all cursor-pointer shrink-0 ${
@@ -496,7 +470,6 @@ export default function CallModal({
             {isVideoOff ? <VideoOff className="w-4 sm:w-5 h-4 sm:h-5" /> : <Video className="w-4 sm:w-5 h-4 sm:h-5" />}
           </button>
 
-          {/* Screen Share */}
           <button
             onClick={toggleScreenShare}
             className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all cursor-pointer shrink-0 ${
@@ -509,7 +482,6 @@ export default function CallModal({
             <ScreenShare className="w-4 sm:w-5 h-4 sm:h-5" />
           </button>
 
-          {/* Speaker Mute */}
           <button
             onClick={() => setIsSpeakerMuted(!isSpeakerMuted)}
             className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all cursor-pointer shrink-0 ${
@@ -522,7 +494,6 @@ export default function CallModal({
             {isSpeakerMuted ? <VolumeX className="w-4 sm:w-5 h-4 sm:h-5" /> : <Volume2 className="w-4 sm:w-5 h-4 sm:h-5" />}
           </button>
 
-          {/* End Call Button */}
           <button
             onClick={handleEndCall}
             className="px-3.5 sm:px-6 py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl bg-red-600 hover:bg-red-700 text-white font-semibold text-xs sm:text-sm shadow-[0_4px_20px_rgba(220,38,38,0.4)] active:scale-95 transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0"

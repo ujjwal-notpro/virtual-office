@@ -38,7 +38,6 @@ const ResetPassword = () => {
     }
 
     setIsLoading(true);
-    // Simulate reset flow
     setTimeout(() => {
       setIsLoading(false);
       setIsSuccess(true);
@@ -83,7 +82,6 @@ const ResetPassword = () => {
             </div>
           )}
 
-          {/* Enter New Password */}
           <AuthInput
             id="newPassword"
             name="newPassword"
@@ -96,7 +94,6 @@ const ResetPassword = () => {
             autoComplete="new-password"
           />
 
-          {/* Confirm New Password */}
           <AuthInput
             id="confirmPassword"
             name="confirmPassword"
@@ -109,7 +106,6 @@ const ResetPassword = () => {
             autoComplete="new-password"
           />
 
-          {/* Submit CTA Button */}
           <div className="pt-3">
             <button
               type="submit"
@@ -127,7 +123,6 @@ const ResetPassword = () => {
             </button>
           </div>
 
-          {/* Back to Sign In Link */}
           <div className="text-center pt-3 text-[13px] text-slate-600 dark:text-zinc-400 font-medium">
             Remember your password?{' '}
             <Link

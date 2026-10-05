@@ -12,7 +12,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* Auth Routes */}
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/login" element={<SignIn />} />
@@ -29,13 +28,11 @@ function App() {
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
 
-        {/* Dashboard Routes */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/chat" element={<Dashboard />} />
         <Route path="/profile" element={<Dashboard />} />
         <Route path="/settings" element={<Dashboard />} />
 
-        {/* Informational routes */}
         <Route path="/learn-more" element={<LearnMore />} />
       </Routes>
     </BrowserRouter>

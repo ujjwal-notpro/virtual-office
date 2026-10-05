@@ -13,9 +13,7 @@ const SignOut = () => {
   const handleConfirmSignOut = () => {
     setIsLoading(true);
     setTimeout(() => {
-      // Clear JWT token and user data from localStorage
       clearAuth();
-      // Disconnect from realtime-backend socket
       disconnectSocket();
       setIsLoading(false);
       setIsLoggedOut(true);

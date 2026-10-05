@@ -94,7 +94,6 @@ export default function LearnMore() {
       <div>
         <Navbar />
 
-        {/* Hero Section */}
         <section className="w-full py-16 md:py-24 border-b" style={{ borderColor: 'var(--border-color)', backgroundColor: 'var(--bg-primary)' }}>
           <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
             <motion.div
@@ -113,7 +112,6 @@ export default function LearnMore() {
           </div>
         </section>
 
-        {/* How the Platform Works */}
         <section className="w-full py-16 md:py-24" style={{ backgroundColor: 'var(--bg-secondary)' }}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
@@ -169,7 +167,6 @@ export default function LearnMore() {
           </div>
         </section>
 
-        {/* Main Features Grid */}
         <section className="w-full py-16 md:py-24 border-t" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
@@ -222,7 +219,6 @@ export default function LearnMore() {
           </div>
         </section>
 
-        {/* How to Use Them Accordion */}
         <section className="w-full py-16 md:py-24 border-t" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
           <div className="max-w-4xl mx-auto px-4 md:px-6">
             <div className="text-center mb-12">

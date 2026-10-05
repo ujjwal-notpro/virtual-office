@@ -3,7 +3,6 @@ import React from 'react';
 const SocialAuth = () => {
   return (
     <div className="flex items-center justify-center gap-4 my-2">
-      {/* X (formerly Twitter) */}
       <button
         type="button"
         aria-label="Sign in with X"
@@ -15,7 +14,6 @@ const SocialAuth = () => {
         </svg>
       </button>
 
-      {/* Facebook */}
       <button
         type="button"
         aria-label="Sign in with Facebook"
@@ -27,7 +25,6 @@ const SocialAuth = () => {
         </svg>
       </button>
 
-      {/* Google */}
       <button
         type="button"
         aria-label="Sign in with Google"

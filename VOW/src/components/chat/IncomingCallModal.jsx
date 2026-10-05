@@ -12,11 +12,9 @@ export default function IncomingCallModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 animate-fadeIn">
       <div className="w-full max-w-sm bg-zinc-950 border border-zinc-800 rounded-3xl p-6 text-center shadow-2xl space-y-6 relative overflow-hidden">
-        {/* Ambient Ringing Glow */}
         <div className="absolute -top-12 -left-12 w-40 h-40 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none animate-pulse" />
         <div className="absolute -bottom-12 -right-12 w-40 h-40 bg-teal-500/20 rounded-full blur-2xl pointer-events-none animate-pulse" />
 
-        {/* Avatar with Pulsing Rings */}
         <div className="relative mx-auto w-24 h-24 pt-2">
           <div className="absolute inset-0 rounded-full bg-emerald-500/20 animate-ping opacity-75" />
           <div className="absolute -inset-2 rounded-full bg-emerald-500/10 animate-pulse" />
@@ -37,7 +35,6 @@ export default function IncomingCallModal({
           </span>
         </div>
 
-        {/* Call Info */}
         <div className="space-y-1">
           <h3 className="text-xl font-bold text-white">{incomingCall.callerName || 'Incoming Caller'}</h3>
           <p className="text-xs text-zinc-400 font-medium">
@@ -48,9 +45,7 @@ export default function IncomingCallModal({
           </span>
         </div>
 
-        {/* Action Buttons: Decline / Accept */}
         <div className="flex items-center justify-center gap-6 pt-2">
-          {/* Decline */}
           <button
             onClick={onDecline}
             className="flex flex-col items-center gap-1.5 group cursor-pointer"
@@ -61,7 +56,6 @@ export default function IncomingCallModal({
             <span className="text-xs text-zinc-400 font-medium">Decline</span>
           </button>
 
-          {/* Accept */}
           <button
             onClick={onAccept}
             className="flex flex-col items-center gap-1.5 group cursor-pointer"

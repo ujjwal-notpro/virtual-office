@@ -24,11 +24,6 @@ const FeatureShowcase = () => {
       className="w-full py-20 md:py-32 relative overflow-hidden"
       style={{ backgroundColor: 'var(--bg-primary)' }}
     >
-      {/* 
-        RICH BACKGROUND
-        Large, slow-moving blurred orbs that create a subtle ambient glow 
-        behind the entire section.
-      */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           animate={{ scale: [1, 1.3, 1], opacity: [0.05, 0.12, 0.05] }}
@@ -46,7 +41,6 @@ const FeatureShowcase = () => {
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
 
-        {/* ── Section Header ── */}
         <div className="text-center mb-16 md:mb-24 space-y-5">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -95,11 +89,6 @@ const FeatureShowcase = () => {
           </motion.p>
         </div>
 
-        {/* 
-          MAIN CONTENT CARD 
-          A massive, glass-like container that holds the feature text, stats, and the main image.
-          Uses a subtle border and shadow to lift it off the background.
-        */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -112,7 +101,6 @@ const FeatureShowcase = () => {
             boxShadow: '0 40px 100px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.04)',
           }}
         >
-          {/* Rainbow Top Border Accent */}
           <div
             className="absolute top-0 left-0 right-0 h-[3px]"
             style={{ background: 'linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6, #06b6d4)' }}
@@ -120,10 +108,8 @@ const FeatureShowcase = () => {
 
           <div className="grid lg:grid-cols-2 gap-0">
 
-            {/* ── LEFT: Text + Stats + Feature list ── */}
             <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center space-y-10">
 
-              {/* Headline */}
               <motion.div
                 initial={{ opacity: 0, x: -24 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -153,7 +139,6 @@ const FeatureShowcase = () => {
                 </p>
               </motion.div>
 
-              {/* ── STAT CARDS ── */}
               <div className="grid grid-cols-2 gap-3">
                 {stats.map(({ val, label, icon: Icon, color }, i) => (
                   <motion.div
@@ -170,7 +155,6 @@ const FeatureShowcase = () => {
                       transition: 'all 0.25s ease',
                     }}
                   >
-                    {/* Icon */}
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                       style={{
@@ -180,7 +164,6 @@ const FeatureShowcase = () => {
                     >
                       <Icon size={18} style={{ color }} />
                     </div>
-                    {/* Value + Label */}
                     <div>
                       <p
                         className="text-xl font-black leading-none text-transparent bg-clip-text"
@@ -188,12 +171,10 @@ const FeatureShowcase = () => {
                       >{val}</p>
                       <p className="text-[11px] font-semibold mt-0.5 uppercase tracking-wide" style={{ color: 'var(--text-secondary)', opacity: 0.65 }}>{label}</p>
                     </div>
-                    {/* Corner glow */}
                     <div
                       className="absolute -top-3 -right-3 w-12 h-12 rounded-full blur-lg opacity-30 group-hover:opacity-55 transition-opacity"
                       style={{ backgroundColor: color }}
                     />
-                    {/* Bottom accent on hover */}
                     <div
                       className="absolute bottom-0 left-3 right-3 h-[1.5px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                       style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }}
@@ -202,7 +183,6 @@ const FeatureShowcase = () => {
                 ))}
               </div>
 
-              {/* ── FEATURE CHECKLIST ── */}
               <motion.ul
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -232,22 +212,15 @@ const FeatureShowcase = () => {
               </motion.ul>
             </div>
 
-            {/* ── RIGHT: Dashboard Image ── */}
             <div
               className="relative flex items-center justify-center p-6 md:p-10 lg:p-12"
               style={{ borderLeft: '1px solid var(--border-color)' }}
             >
-              {/* Background radial glow specifically behind the image */}
               <div
                 className="absolute inset-0 opacity-30 pointer-events-none"
                 style={{ background: 'radial-gradient(ellipse at 60% 40%, rgba(99,102,241,0.2) 0%, transparent 65%)' }}
               />
 
-              {/* 
-                3D IMAGE CONTAINER
-                Holds the main product screenshot (downimg.png) along with floating 
-                statistic badges that bob up and down infinitely.
-              */}
               <motion.div
                 initial={{ opacity: 0, y: 30, rotateX: 10 }}
                 whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
@@ -256,13 +229,11 @@ const FeatureShowcase = () => {
                 style={{ perspective: 1200, transformStyle: 'preserve-3d' }}
                 className="relative w-full"
               >
-                {/* Outer glow ring — adapts per theme */}
                 <div
                   className="absolute -inset-4 rounded-3xl blur-2xl opacity-30 pointer-events-none dark-glow light-glow"
                   style={{ background: 'linear-gradient(135deg, #3b82f6, #c3b5e2ff)' }}
                 />
 
-                {/* Image frame */}
                 <div
                   className="relative rounded-2xl overflow-hidden feature-img-frame"
                   style={{
@@ -271,10 +242,8 @@ const FeatureShowcase = () => {
                     padding: '6px',
                   }}
                 >
-                  {/* Elegant Theme-Aware Image Frame */}
                   <div className="rounded-xl overflow-hidden relative group">
 
-                    {/* Dark/Light mode base background to ensure contrast if image is transparent */}
                     <div className="absolute inset-0 bg-[var(--card-bg)] transition-colors duration-300"></div>
 
                     <img
@@ -285,7 +254,6 @@ const FeatureShowcase = () => {
                       className="relative z-10 w-full h-auto block transform group-hover:scale-[1.02] transition-transform duration-500 ease-out"
                     />
 
-                    {/* Subtle shine overlay — adapts to theme via CSS variables */}
                     <div
                       className="absolute inset-0 pointer-events-none z-20"
                       style={{
@@ -294,7 +262,6 @@ const FeatureShowcase = () => {
                       }}
                     />
 
-                    {/* Glassmorphic border ring inside the frame */}
                     <div className="absolute inset-0 z-30 pointer-events-none rounded-xl border border-white/20 dark:border-white/10" />
                   </div>
                 </div>

@@ -99,7 +99,6 @@ export default function Dashboard() {
   const [conversations, setConversations] = useState(INITIAL_CONVERSATIONS);
   const [activeChatId, setActiveChatId] = useState(1);
 
-  // Current Date display like "Saturday | Oct 03, 2026"
   const [currentDateFormatted, setCurrentDateFormatted] = useState('');
 
   useEffect(() => {
@@ -109,7 +108,6 @@ export default function Dashboard() {
     const formatted = dateStr.replace(',', ' |');
     setCurrentDateFormatted(formatted);
 
-    // Load logged in user details
     const user = getStoredUser();
     if (user) {
       setProfile((prev) => ({
@@ -121,7 +119,6 @@ export default function Dashboard() {
       }));
     }
 
-    // Connect to realtime socket backend
     const socket = connectSocket();
     if (socket) {
       const handleIncoming = (data) => {
@@ -132,7 +129,6 @@ export default function Dashboard() {
         setIncomingCall(null);
       };
 
-      // Real-time chat: listen for messages from other users
       const handleReceiveMessage = (data) => {
         console.log('[Chat] Received message:', data);
         const incomingMsg = {
@@ -157,7 +153,6 @@ export default function Dashboard() {
       socket.on('call-rejected', handleRejected);
       socket.on('receive-message', handleReceiveMessage);
 
-      // Join the default room
       joinRoom(`room-${activeChatId}`);
 
       return () => {
@@ -169,21 +164,17 @@ export default function Dashboard() {
     }
   }, [activeChatId]);
 
-  // Chat State
   const [messageInput, setMessageInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const messagesEndRef = useRef(null);
 
-  // Audio / Video Call State
   const [isCallOpen, setIsCallOpen] = useState(false);
   const [callType, setCallType] = useState('video'); // 'video' | 'audio'
   const [incomingCall, setIncomingCall] = useState(null);
 
-  // Mobile Responsive State
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [showMobileChat, setShowMobileChat] = useState(false);
 
-  // Desktop Sidebar Collapse State
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isChatListVisible, setIsChatListVisible] = useState(true);
 
@@ -219,13 +210,11 @@ export default function Dashboard() {
     }
   };
 
-  // Emojis State
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState('Smileys');
   const [emojiSearchQuery, setEmojiSearchQuery] = useState('');
   const emojiPickerRef = useRef(null);
 
-  // Attachments & Document Sending State
   const [isAttachmentMenuOpen, setIsAttachmentMenuOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -237,7 +226,6 @@ export default function Dashboard() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [activeChat?.messages]);
 
-  // Click outside listener for emoji picker & attachment menu
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (emojiPickerRef.current && !emojiPickerRef.current.contains(e.target)) {
@@ -276,7 +264,6 @@ export default function Dashboard() {
     });
 
     setIsAttachmentMenuOpen(false);
-    // Reset file input value to allow selecting same file again
     e.target.value = '';
   };
 
@@ -313,7 +300,6 @@ export default function Dashboard() {
       return c;
     }));
 
-    // Emit message to Socket.IO for real-time broadcast
     const socket = getSocket();
     if (socket?.connected && messageInput.trim()) {
       socket.emit('send-message', {
@@ -327,7 +313,6 @@ export default function Dashboard() {
     setIsEmojiPickerOpen(false);
   };
 
-  // Helper to render file icon based on extension
   const renderDocumentIcon = (ext) => {
     switch (ext) {
       case 'PDF':
@@ -358,13 +343,11 @@ export default function Dashboard() {
     }
   };
 
-  // Helper to extract first letter/initial dynamically based on user name
   const getAvatarInitial = (name) => {
     if (!name || typeof name !== 'string') return 'U';
     return name.trim().charAt(0).toUpperCase();
   };
 
-  // Helper to generate a consistent harmonious avatar color based on user name
   const getAvatarBgColor = (name) => {
     const colorClasses = [
       'bg-[#b91c1c] ring-[#b91c1c]/30',
@@ -384,7 +367,6 @@ export default function Dashboard() {
     return colorClasses[Math.abs(hash) % colorClasses.length];
   };
 
-  // Profile State
   const [profile, setProfile] = useState({
     name: 'Ujjwal Gupta',
     role: 'Lead Architect',
@@ -406,7 +388,6 @@ export default function Dashboard() {
     setTimeout(() => setProfileSavedToast(false), 3000);
   };
 
-  // Settings State
   const [settingsTab, setSettingsTab] = useState('appearance');
   const [settings, setSettings] = useState({
     emailNotifications: true,
@@ -430,7 +411,6 @@ export default function Dashboard() {
   return (
     <div className="flex h-screen w-full overflow-hidden bg-zinc-100 dark:bg-[#0a0a0c] text-zinc-900 dark:text-zinc-100 font-sans select-none antialiased transition-colors duration-300">
 
-      {/* Hidden File Input for document upload */}
       <input
         type="file"
         ref={fileInputRef}
@@ -439,7 +419,6 @@ export default function Dashboard() {
         accept="*/*"
       />
 
-      {/* Mobile Sidebar Backdrop Overlay */}
       {isMobileSidebarOpen && (
         <div
           onClick={() => setIsMobileSidebarOpen(false)}
@@ -447,12 +426,9 @@ export default function Dashboard() {
         />
       )}
 
-      {/* ─── LEFT SIDEBAR (Desktop Fixed + Collapsible, Mobile Slide-over Drawer) ─── */}
-      {/* Desktop Sidebar */}
       <aside className={`hidden md:flex relative inset-y-0 left-0 z-30 shrink-0 bg-white dark:bg-[#0d0d10] border-r border-zinc-200 dark:border-[#1e1e24] flex-col justify-between py-5 transition-all duration-300 shadow-sm dark:shadow-none ${isSidebarCollapsed ? 'w-16 px-2' : 'w-56 px-3'
         }`}>
         <div>
-          {/* Brand Logo / Title */}
           <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'justify-between px-3'} mb-8`}>
             {isSidebarCollapsed ? (
               <img src={brandLogo} alt="Flow Bit logo" className="w-9 h-9 object-contain" />
@@ -469,7 +445,6 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* Navigation Links */}
           <nav className="space-y-1.5">
             <button
               onClick={() => setActiveTab('chat')}
@@ -517,9 +492,7 @@ export default function Dashboard() {
           </nav>
         </div>
 
-        {/* Bottom Section: Collapse Toggle + Log Out */}
         <div className="pt-4 border-t border-zinc-200 dark:border-[#1e1e24] px-1 space-y-1.5">
-          {/* Desktop Collapse / Expand Toggle */}
           <button
             onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
             className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-3'} py-2.5 rounded-xl text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer`}
@@ -545,11 +518,9 @@ export default function Dashboard() {
         </div>
       </aside>
 
-      {/* Mobile Sidebar (Slide-over Drawer) */}
       <aside className={`fixed md:hidden inset-y-0 left-0 z-50 w-64 bg-white dark:bg-[#0d0d10] border-r border-zinc-200 dark:border-[#1e1e24] flex flex-col justify-between py-5 px-3 transition-transform duration-300 shadow-2xl ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
         <div>
-          {/* Brand Logo / Title + Mobile Close Button */}
           <div className="flex items-center justify-between px-3 mb-8">
             <div className="flex items-center gap-3">
               <img src={brandLogo} alt="Flow Bit logo" className="w-9 h-9 object-contain" />
@@ -561,7 +532,6 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Mobile Close Button */}
             <button
               onClick={() => setIsMobileSidebarOpen(false)}
               className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
@@ -571,7 +541,6 @@ export default function Dashboard() {
             </button>
           </div>
 
-          {/* Navigation Links */}
           <nav className="space-y-1.5">
             <button
               onClick={() => {
@@ -622,7 +591,6 @@ export default function Dashboard() {
           </nav>
         </div>
 
-        {/* Bottom: Log Out */}
         <div className="pt-4 border-t border-zinc-200 dark:border-[#1e1e24] px-1">
           <button
             onClick={handleLogout}
@@ -634,14 +602,10 @@ export default function Dashboard() {
         </div>
       </aside>
 
-      {/* ─── MAIN APP CONTAINER ─── */}
       <div className="flex-1 flex flex-col h-full overflow-hidden pb-14 md:pb-0 bg-zinc-50 dark:bg-[#060608] transition-colors duration-300">
 
-        {/* ─── TOP HEADER BAR (Responsive for Mobile) ─── */}
         <header className="h-16 shrink-0 border-b border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] px-3.5 md:px-6 flex items-center justify-between z-10 transition-colors duration-300">
-          {/* User Info Greeting + Mobile Hamburger Menu Button */}
           <div className="flex items-center gap-2.5 md:gap-3.5">
-            {/* Hamburger Button (Mobile Only) */}
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
               className="p-2 -ml-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl md:hidden cursor-pointer"
@@ -662,13 +626,11 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Right Header: Date + Status/Theme Toggle Switch */}
           <div className="flex items-center gap-3 sm:gap-5">
             <span className="hidden sm:inline-block text-xs font-semibold text-zinc-600 dark:text-zinc-300 tracking-wide">
               {currentDateFormatted || 'Saturday | Oct 03, 2026'}
             </span>
 
-            {/* Green Online / Theme Toggle Button (Syncaura Style) */}
             <div className="flex items-center gap-2">
               <button
                 onClick={toggleTheme}
@@ -687,17 +649,13 @@ export default function Dashboard() {
           </div>
         </header>
 
-        {/* ─── BODY CONTENT SWITCHER ─── */}
         <main className="flex-1 overflow-hidden relative">
 
-          {/* ══════════════ 1. CHAT SECTION ══════════════ */}
           {activeTab === 'chat' && (
             <ChatSection>
               <div className="h-full flex overflow-hidden">
 
-                {/* Left Chat List Panel (Full Width on Mobile when not viewing chat, toggleable on Desktop) */}
                 <div className={`${!isChatListVisible ? 'hidden' : showMobileChat ? 'hidden md:flex' : 'flex'} w-full md:w-80 shrink-0 border-r border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] flex-col h-full transition-all duration-300`}>
-                  {/* Search Bar */}
                   <div className="p-3.5 sm:p-4 border-b border-zinc-200 dark:border-[#1a1a20]">
                     <div className="relative">
                       <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-400" />
@@ -711,7 +669,6 @@ export default function Dashboard() {
                     </div>
                   </div>
 
-                  {/* Conversation List */}
                   <div className="flex-1 overflow-y-auto divide-y divide-zinc-100 dark:divide-[#17171d] p-2 space-y-1">
                     {conversations
                       .filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -762,13 +719,10 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Right Active Chat Window (Full Screen on Mobile when chat active) */}
                 <div className={`${showMobileChat ? 'flex' : 'hidden md:flex'} flex-1 flex-col h-full bg-zinc-50 dark:bg-[#08080a] relative transition-colors duration-300`}>
 
-                  {/* Chat Top Header */}
                   <div className="h-14 shrink-0 px-3.5 md:px-6 border-b border-zinc-200 dark:border-[#1a1a20] bg-white/90 dark:bg-[#0c0c0f]/80 backdrop-blur flex items-center justify-between transition-colors duration-300">
                     <div className="flex items-center gap-2.5 md:gap-3">
-                      {/* Back to chat list button (Mobile Only) */}
                       <button
                         onClick={() => setShowMobileChat(false)}
                         className="p-1.5 -ml-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg md:hidden cursor-pointer"
@@ -777,7 +731,6 @@ export default function Dashboard() {
                         <ArrowLeft className="w-4 h-4" />
                       </button>
 
-                      {/* Desktop: Toggle Chat List Panel */}
                       <button
                         onClick={() => setIsChatListVisible(!isChatListVisible)}
                         className="hidden md:flex p-1.5 -ml-1 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg cursor-pointer transition-colors"
@@ -806,7 +759,6 @@ export default function Dashboard() {
                       </div>
                     </div>
 
-                    {/* Actions */}
                     <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
                       <button
                         onClick={() => handleStartCall('audio')}
@@ -829,7 +781,6 @@ export default function Dashboard() {
                     </div>
                   </div>
 
-                  {/* Message Stream */}
                   <div className="flex-1 overflow-y-auto p-6 space-y-4">
                     <div className="text-center my-2">
                       <span className="text-[10px] font-semibold text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-[#141418] px-3 py-1 rounded-full border border-zinc-300 dark:border-zinc-800">
@@ -857,7 +808,6 @@ export default function Dashboard() {
                             : 'bg-white dark:bg-[#18181f] text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-[#262632] rounded-bl-xs'
                             }`}>
 
-                            {/* ── WhatsApp-Style Document / Media Card ── */}
                             {msg.attachment && (
                               <div className="mb-2">
                                 {msg.attachment.type === 'image' && msg.attachment.previewUrl ? (
@@ -899,12 +849,10 @@ export default function Dashboard() {
                               </div>
                             )}
 
-                            {/* Message Text Caption */}
                             {msg.text && (
                               <p className="leading-relaxed px-1 font-normal text-xs">{msg.text}</p>
                             )}
 
-                            {/* Timestamp and Checkmarks */}
                             <div className={`flex items-center justify-end gap-1 mt-1 px-1 text-[9px] ${isMe ? 'text-emerald-200' : 'text-zinc-400 dark:text-zinc-500'}`}>
                               <span>{msg.time}</span>
                               {isMe && <CheckCheck className="w-3 h-3 text-emerald-200" />}
@@ -916,7 +864,6 @@ export default function Dashboard() {
                     <div ref={messagesEndRef} />
                   </div>
 
-                  {/* ── Pending Attachment Preview Bar (WhatsApp Style) ── */}
                   {selectedFile && (
                     <div className="px-4 py-2 bg-zinc-100 dark:bg-[#121217] border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between animate-fadeIn">
                       <div className="flex items-center gap-3 min-w-0">
@@ -942,13 +889,11 @@ export default function Dashboard() {
                     </div>
                   )}
 
-                  {/* ── EMOJI PICKER POPUP ── */}
                   {isEmojiPickerOpen && (
                     <div
                       ref={emojiPickerRef}
                       className="absolute bottom-16 left-6 w-80 max-h-96 rounded-2xl bg-white dark:bg-[#14141a] border border-zinc-200 dark:border-zinc-800 shadow-2xl p-3 z-50 flex flex-col animate-fadeIn"
                     >
-                      {/* Emoji Search Box */}
                       <div className="relative mb-2">
                         <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400" />
                         <input
@@ -960,7 +905,6 @@ export default function Dashboard() {
                         />
                       </div>
 
-                      {/* Category Tabs */}
                       <div className="flex items-center gap-1 border-b border-zinc-200 dark:border-zinc-800 pb-2 mb-2 overflow-x-auto">
                         {EMOJI_CATEGORIES.map(cat => (
                           <button
@@ -977,7 +921,6 @@ export default function Dashboard() {
                         ))}
                       </div>
 
-                      {/* Emoji Grid */}
                       <div className="flex-1 overflow-y-auto max-h-56 grid grid-cols-7 gap-1 p-1">
                         {EMOJI_CATEGORIES.find(c => c.name === selectedEmojiCategory)?.emojis
                           .filter(e => emojiSearchQuery ? e.includes(emojiSearchQuery) : true)
@@ -994,8 +937,6 @@ export default function Dashboard() {
                       </div>
                     </div>
                   )}
-
-                  {/* ── ATTACHMENT MENU POPOVER (WhatsApp Style) ── */}
                   {isAttachmentMenuOpen && (
                     <div
                       ref={attachmentMenuRef}
@@ -1025,7 +966,6 @@ export default function Dashboard() {
                     </div>
                   )}
 
-                  {/* ── Message Input Box ── */}
                   <form
                     onSubmit={handleSendMessage}
                     className="p-4 border-t border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] flex items-center gap-3 transition-colors duration-300"
@@ -1071,7 +1011,6 @@ export default function Dashboard() {
             </ChatSection>
           )}
 
-          {/* ══════════════ 2. PROFILE SECTION ══════════════ */}
           {activeTab === 'profile' && (
             <ProfileSection>
               <div className="h-full overflow-y-auto p-4 sm:p-6 md:p-8 max-w-4xl mx-auto">
@@ -1082,9 +1021,7 @@ export default function Dashboard() {
                   </div>
                 )}
 
-                {/* Profile Card Header */}
                 <div className="relative rounded-2xl bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] overflow-hidden mb-6 shadow-sm dark:shadow-none transition-colors duration-300">
-                  {/* Banner Gradient */}
                   <div className="h-32 bg-gradient-to-r from-zinc-200 via-zinc-300 to-emerald-200 dark:from-zinc-900 dark:via-zinc-800 dark:to-emerald-950 border-b border-zinc-200 dark:border-zinc-800" />
 
                   <div className="px-6 pb-6 pt-0 flex flex-col md:flex-row md:items-end justify-between gap-4 -mt-12">
@@ -1119,7 +1056,6 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Profile Details Grid */}
                 <form onSubmit={handleSaveProfile} className="space-y-6">
                   <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 shadow-sm dark:shadow-none transition-colors duration-300">
                     <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
@@ -1226,7 +1162,6 @@ export default function Dashboard() {
                     )}
                   </div>
 
-                  {/* Account Security Overview Card */}
                   <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 shadow-sm dark:shadow-none transition-colors duration-300">
                     <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
                       <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -1262,7 +1197,6 @@ export default function Dashboard() {
             </ProfileSection>
           )}
 
-          {/* ══════════════ 3. SETTINGS SECTION ══════════════ */}
           {activeTab === 'settings' && (
             <SettingsSection>
               <div className="h-full overflow-y-auto p-4 sm:p-6 md:p-8 max-w-4xl mx-auto">
@@ -1271,7 +1205,6 @@ export default function Dashboard() {
                   <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Manage your workspace configuration and notification preferences</p>
                 </div>
 
-                {/* Settings Sub-Nav Tabs */}
                 <div className="flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-3 mb-6 overflow-x-auto">
                   {[
                     { id: 'appearance', label: 'Appearance', icon: Palette },
@@ -1296,14 +1229,12 @@ export default function Dashboard() {
                   })}
                 </div>
 
-                {/* Sub-tab: Appearance */}
                 {settingsTab === 'appearance' && (
                   <div className="space-y-4">
                     <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 shadow-sm dark:shadow-none transition-colors duration-300">
                       <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-4">Interface Theme</h3>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {/* Dark Mode Card */}
                         <div
                           onClick={() => theme !== 'dark' && toggleTheme()}
                           className={`p-4 rounded-xl border cursor-pointer transition-all ${theme === 'dark'
@@ -1325,7 +1256,6 @@ export default function Dashboard() {
                           <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">Optimized high contrast deep black palette</p>
                         </div>
 
-                        {/* Light Mode Card */}
                         <div
                           onClick={() => theme !== 'light' && toggleTheme()}
                           className={`p-4 rounded-xl border cursor-pointer transition-all ${theme === 'light'
@@ -1368,7 +1298,6 @@ export default function Dashboard() {
                   </div>
                 )}
 
-                {/* Sub-tab: Notifications */}
                 {settingsTab === 'notifications' && (
                   <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 divide-y divide-zinc-200 dark:divide-zinc-800 shadow-sm dark:shadow-none transition-colors duration-300">
                     <div className="flex items-center justify-between pb-4 text-xs">
@@ -1415,7 +1344,6 @@ export default function Dashboard() {
                   </div>
                 )}
 
-                {/* Sub-tab: Privacy */}
                 {settingsTab === 'privacy' && (
                   <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 divide-y divide-zinc-200 dark:divide-zinc-800 shadow-sm dark:shadow-none transition-colors duration-300">
                     <div className="flex items-center justify-between pb-4 text-xs">
@@ -1462,7 +1390,6 @@ export default function Dashboard() {
                   </div>
                 )}
 
-                {/* Sub-tab: General */}
                 {settingsTab === 'general' && (
                   <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 text-xs space-y-4 shadow-sm dark:shadow-none transition-colors duration-300">
                     <div>
@@ -1499,7 +1426,6 @@ export default function Dashboard() {
         </main>
       </div>
 
-      {/* ─── BOTTOM MOBILE NAV BAR (Phone-only, thumb-friendly) ─── */}
       <nav className="fixed md:hidden bottom-0 left-0 right-0 z-40 h-14 bg-white/95 dark:bg-[#0c0c0f]/95 backdrop-blur-md border-t border-zinc-200 dark:border-[#1a1a20] flex items-center justify-around px-2">
         <button
           onClick={() => { setActiveTab('chat'); setShowMobileChat(false); }}
@@ -1536,7 +1462,6 @@ export default function Dashboard() {
         </button>
       </nav>
 
-      {/* Video & Audio Call Modal */}
       <CallModal
         isOpen={isCallOpen}
         onClose={() => setIsCallOpen(false)}
@@ -1545,7 +1470,6 @@ export default function Dashboard() {
         currentUser={profile}
       />
 
-      {/* Incoming Call Ringing Modal */}
       <IncomingCallModal
         isOpen={!!incomingCall}
         incomingCall={incomingCall}

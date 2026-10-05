@@ -53,7 +53,6 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
         whileHover={{ scale: 1.01, translateY: -2 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
-        {/* Glow effect when open */}
         {isOpen && (
            <div 
              className="absolute inset-0 opacity-10 pointer-events-none" 
@@ -139,7 +138,6 @@ const FAQs = () => {
       className="w-full py-16 md:py-28 relative overflow-hidden"
       style={{ backgroundColor: 'var(--bg-primary)' }}
     >
-      {/* 3D Background Glows */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           animate={{ scale: [1, 1.1, 1], opacity: [0.03, 0.06, 0.03] }}
@@ -156,7 +154,6 @@ const FAQs = () => {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 md:px-6 relative z-10">
-        {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
 
           
@@ -189,7 +186,6 @@ const FAQs = () => {
           </motion.p>
         </div>
 
-        {/* FAQ List */}
         <div className="flex flex-col gap-2">
           {faqData.map((faq, index) => (
             <FAQItem

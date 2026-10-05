@@ -10,7 +10,6 @@ import { connectSocket } from '../services/socket';
 const SignIn = () => {
   const navigate = useNavigate();
 
-  // Step: 'credentials' → 'otp-method' → 'otp-verify'
   const [step, setStep] = useState('credentials');
 
   const [formData, setFormData] = useState({
@@ -31,7 +30,6 @@ const SignIn = () => {
 
   const otpRefs = useRef([]);
 
-  // Countdown timer for resend
   useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
@@ -47,7 +45,6 @@ const SignIn = () => {
     if (errorMessage) setErrorMessage('');
   };
 
-  // Step 1: Validate credentials → go to OTP method picker
   const handleCredentialsSubmit = (e) => {
     e.preventDefault();
     if (!formData.identifier || !formData.password) {
@@ -58,7 +55,6 @@ const SignIn = () => {
     setStep('otp-method');
   };
 
-  // Step 2: Send OTP via chosen method
   const handleSendOTP = async (method) => {
     setIsLoading(true);
     setErrorMessage('');
@@ -85,7 +81,6 @@ const SignIn = () => {
     } catch (error) {
       const msg = error.response?.data?.message || 'Failed to send OTP';
       setErrorMessage(msg);
-      // If password/email is wrong, go back to credentials
       if (error.response?.status === 401 || error.response?.status === 404) {
         setStep('credentials');
       }
@@ -94,7 +89,6 @@ const SignIn = () => {
     }
   };
 
-  // Handle OTP digit input
   const handleOtpChange = (index, value) => {
     if (!/^\d*$/.test(value)) return; // Only digits
 
@@ -104,7 +98,6 @@ const SignIn = () => {
 
     if (errorMessage) setErrorMessage('');
 
-    // Auto-focus next input
     if (value && index < 5) {
       otpRefs.current[index + 1]?.focus();
     }
@@ -116,7 +109,6 @@ const SignIn = () => {
     }
   };
 
-  // Handle paste for OTP
   const handleOtpPaste = (e) => {
     e.preventDefault();
     const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
@@ -127,7 +119,6 @@ const SignIn = () => {
     }
   };
 
-  // Step 3: Verify OTP
   const handleVerifyOTP = async (e) => {
     e.preventDefault();
     const otpString = otpData.otp.join('');
@@ -145,10 +136,8 @@ const SignIn = () => {
         otp: otpString,
       });
 
-      // Save auth data
       saveAuth(response.token, response.user);
 
-      // Connect to realtime backend
       connectSocket();
 
       setSuccessMessage('Login successful! Redirecting...');
@@ -163,13 +152,11 @@ const SignIn = () => {
     }
   };
 
-  // Resend OTP
   const handleResendOTP = () => {
     if (countdown > 0) return;
     handleSendOTP(otpData.method);
   };
 
-  // Go back to credentials
   const handleBackToCredentials = () => {
     setStep('credentials');
     setErrorMessage('');
@@ -177,7 +164,6 @@ const SignIn = () => {
     setOtpData({ userId: '', otp: ['', '', '', '', '', ''], method: 'email', maskedTarget: '' });
   };
 
-  // ─── RENDER: Step 1 — Credentials ───────────────────────
   if (step === 'credentials') {
     return (
       <AuthLayout title="Sign In" subtitle="Welcome back! Please sign in to continue." backTo="/">
@@ -252,7 +238,6 @@ const SignIn = () => {
     );
   }
 
-  // ─── RENDER: Step 2 — OTP Method Picker ─────────────────
   if (step === 'otp-method') {
     return (
       <AuthLayout title="Verify Identity" subtitle="Choose how you'd like to receive your OTP code." backTo="/">
@@ -263,7 +248,6 @@ const SignIn = () => {
             </div>
           )}
 
-          {/* Email Option */}
           <button
             onClick={() => handleSendOTP('email')}
             disabled={isLoading}
@@ -286,7 +270,6 @@ const SignIn = () => {
             </div>
           )}
 
-          {/* Back Button */}
           <button
             onClick={handleBackToCredentials}
             className="w-full text-center text-[13px] text-slate-500 dark:text-zinc-500 font-semibold hover:text-black dark:hover:text-white transition-colors cursor-pointer pt-2"
@@ -298,7 +281,6 @@ const SignIn = () => {
     );
   }
 
-  // ─── RENDER: Step 3 — OTP Verify ────────────────────────
   return (
     <AuthLayout title="Enter OTP" subtitle={successMessage || 'Enter the 6-digit code sent to you.'} backTo="/">
       <form onSubmit={handleVerifyOTP} className="space-y-5">
@@ -308,14 +290,12 @@ const SignIn = () => {
           </div>
         )}
 
-        {/* OTP Icon */}
         <div className="flex justify-center">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-950/60 dark:to-emerald-900/30 flex items-center justify-center shadow-lg">
             <ShieldCheck className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
           </div>
         </div>
 
-        {/* 6-Digit OTP Input */}
         <div className="flex justify-center gap-2.5" onPaste={handleOtpPaste}>
           {otpData.otp.map((digit, index) => (
             <input
@@ -333,7 +313,6 @@ const SignIn = () => {
           ))}
         </div>
 
-        {/* Verify Button */}
         <div className="pt-1">
           <button
             type="submit"
@@ -351,7 +330,6 @@ const SignIn = () => {
           </button>
         </div>
 
-        {/* Resend / Timer */}
         <div className="text-center">
           {countdown > 0 ? (
             <p className="text-[13px] text-slate-500 dark:text-zinc-500 font-medium">
@@ -369,7 +347,6 @@ const SignIn = () => {
           )}
         </div>
 
-        {/* Back Button */}
         <button
           type="button"
           onClick={handleBackToCredentials}

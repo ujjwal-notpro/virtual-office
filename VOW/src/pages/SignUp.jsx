@@ -82,7 +82,6 @@ const SignUp = () => {
           </div>
         )}
 
-        {/* Email Field */}
         <AuthInput
           id="identifier"
           name="identifier"
@@ -95,7 +94,6 @@ const SignUp = () => {
           autoComplete="email"
         />
 
-        {/* Full Name Field */}
         <AuthInput
           id="fullName"
           name="fullName"
@@ -108,7 +106,6 @@ const SignUp = () => {
           autoComplete="name"
         />
 
-        {/* Phone Field (Optional) */}
         <AuthInput
           id="phone"
           name="phone"
@@ -120,7 +117,6 @@ const SignUp = () => {
           autoComplete="tel"
         />
 
-        {/* Password Field */}
         <AuthInput
           id="password"
           name="password"
@@ -133,7 +129,6 @@ const SignUp = () => {
           autoComplete="new-password"
         />
 
-        {/* Terms and Privacy Checkbox */}
         <div className="flex items-start gap-2.5 pt-1">
           <input
             type="checkbox"
@@ -158,7 +153,6 @@ const SignUp = () => {
           </label>
         </div>
 
-        {/* Continue CTA Button */}
         <div className="pt-2">
           <button
             type="submit"
@@ -176,7 +170,6 @@ const SignUp = () => {
           </button>
         </div>
 
-        {/* Divider */}
         <div className="relative flex items-center justify-center py-2.5">
           <div className="w-full border-t border-slate-200/90 dark:border-zinc-800" />
           <span className="absolute px-3 bg-white dark:bg-[#0f0f12] text-[11px] font-bold text-slate-400 dark:text-zinc-500 tracking-wider uppercase">
@@ -184,10 +177,8 @@ const SignUp = () => {
           </span>
         </div>
 
-        {/* Social Authentication */}
         <SocialAuth />
 
-        {/* Bottom Switch Link */}
         <div className="text-center pt-2 text-[13px] text-slate-600 dark:text-zinc-400 font-medium">
           Joined us before?{' '}
           <Link

@@ -34,7 +34,6 @@ const Navbar = () => {
       className="w-full sticky top-0 z-50"
       style={{ backgroundColor: 'var(--bg-primary)' }}
     >
-      {/* Desktop/Tablet */}
       <div
         className="hidden md:flex max-w-7xl mx-auto px-6 h-20 items-center justify-between border-b"
         style={{ borderColor: 'var(--border-color)' }}
@@ -124,10 +123,8 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile */}
       <div className="md:hidden">
         <div className="flex items-center justify-between px-6 py-5">
-          {/* Logo */}
           <div className="flex items-center gap-2 text-[23px] font-bold tracking-tight text-black dark:text-white">
             <img src={brandLogo} alt="Flow Bit logo" className="w-8 h-8 object-contain" />
             <span>Flow Bit</span>
@@ -152,7 +149,6 @@ const Navbar = () => {
               backgroundColor: 'var(--bg-primary)',
             }}
           >
-            {/* Home */}
             <a
               href="#home"
               onClick={(e) => scrollToSection(e, "home")}
@@ -171,7 +167,6 @@ const Navbar = () => {
               Home
             </a>
 
-            {/* Contact */}
             <a
               href="#contact"
               onClick={(e) => scrollToSection(e, "contact")}
@@ -190,7 +185,6 @@ const Navbar = () => {
               Contact
             </a>
 
-            {/* Learn More */}
             <Link
               to="/learn-more"
               className="text-sm font-medium whitespace-nowrap border-b-2 pb-0.5 transition-all"

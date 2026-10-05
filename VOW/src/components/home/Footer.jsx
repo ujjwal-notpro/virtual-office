@@ -7,7 +7,6 @@ import {
   MapPin, Mail, Phone,
 } from 'lucide-react';
 
-/* ── Social links with brand colors ── */
 const socials = [
   { label: 'Facebook', href: '#', color: '#1877f2', logo: 'https://www.google.com/s2/favicons?domain=facebook.com&sz=64' },
   { label: 'Twitter', href: '#', color: '#1DA1F2', logo: 'https://www.google.com/s2/favicons?domain=x.com&sz=64' },
@@ -92,18 +91,15 @@ const Footer = () => {
     }
   };
 
-  // Handles the newsletter form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email) return setStatus(t("newsletter_errorEmpty"));
 
-    // Basic regex to check for valid email format (contains @ and .)
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setStatus(t("newsletter_errorInvalid"));
 
     setStatus(`✓ ${t("newsletter_success")}`);
     setEmail('');
 
-    // Clear the success message after 3 seconds
     setTimeout(() => setStatus(''), 3000);
   };
 
@@ -113,13 +109,11 @@ const Footer = () => {
       className="w-full relative overflow-hidden"
       style={{ backgroundColor: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}
     >
-      {/* Rainbow top border */}
       <div
         className="absolute top-0 left-0 right-0 h-[3px]"
         style={{ background: 'linear-gradient(90deg, #3b82f6, #4d3dffff, #8b5cf6, #ec4899, #f59e0b)' }}
       />
 
-      {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           animate={{ opacity: [0.03, 0.07, 0.03] }}
@@ -131,18 +125,9 @@ const Footer = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 pt-14 pb-8">
 
-        {/* 
-          MAIN FOOTER GRID
-          Configures a responsive layout for the columns:
-          - Mobile: 1 column
-          - Tablet: 2 columns
-          - Desktop: 4 columns with custom fractional widths (the brand col is widest)
-        */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2.2fr_1fr_1fr_1.4fr] gap-12 lg:gap-16 mb-12">
 
-          {/* ── Brand + Newsletter ── */}
           <div className="space-y-6">
-            {/* Logo */}
             <div className="flex items-center gap-2">
               <img src={brandLogo} alt="Flow Bit logo" className="w-9 h-9 object-contain" />
               <span
@@ -156,7 +141,6 @@ const Footer = () => {
               {t("footer_tagline")}
             </p>
 
-            {/* Contact info */}
             <div className="space-y-2">
               {[
                 { icon: Mail, text: 'hello@FlowBit.io' },
@@ -170,7 +154,6 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Newsletter */}
             <div className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>
                 {t("connect with us")}
@@ -206,7 +189,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* ── Product ── */}
           <div>
             <ColHeading>{t("product")}</ColHeading>
             <ul className="space-y-3">
@@ -224,7 +206,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ── Company ── */}
           <div>
             <ColHeading>{t("company")}</ColHeading>
             <ul className="space-y-3">
@@ -243,7 +224,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ── Follow Us ── */}
           <div>
             <ColHeading>{t("footer_followUs")}</ColHeading>
             <div className="space-y-3">
@@ -254,7 +234,6 @@ const Footer = () => {
                   whileHover={{ x: 4, scale: 1.02 }}
                   className="flex items-center gap-3 group cursor-pointer"
                 >
-                  {/* Icon bubble */}
                   <div
                     className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200"
                     style={{
@@ -277,19 +256,16 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* ── Bottom Bar ── */}
         <div
           className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t"
           style={{ borderColor: 'var(--border-color)' }}
         >
-          {/* Copyright */}
           <p className="text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
             © 2026{' '}
             <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>FlowBit, Inc.</span>
             {' '}{t("copyright")}
           </p>
 
-          {/* Legal links */}
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
             {[t("privacyPolicy"), t("termsOfService"), t("cookieSettings"), t("accessibility")].map((link, i, arr) => (
               <React.Fragment key={link}>

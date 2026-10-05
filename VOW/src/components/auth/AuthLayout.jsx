@@ -19,15 +19,12 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/' }
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 md:p-8 bg-[#f8fafc] dark:bg-black text-slate-900 dark:text-zinc-100 transition-colors duration-300 relative overflow-hidden selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
-      {/* Background Decorative Blur Gradients */}
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-slate-300/30 dark:bg-blue-600/10 rounded-full blur-[100px] pointer-events-none transition-all duration-500" />
       <div className="absolute top-1/4 -right-32 w-96 h-96 bg-zinc-300/30 dark:bg-purple-600/10 rounded-full blur-[100px] pointer-events-none transition-all duration-500" />
       <div className="absolute -bottom-32 -left-20 w-96 h-96 bg-slate-300/20 dark:bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none transition-all duration-500" />
 
-      {/* Subtle grid pattern for light & dark */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:32px_32px] opacity-40 dark:opacity-20 pointer-events-none" />
 
-      {/* Top Navigation Bar */}
       <header className="absolute top-0 left-0 right-0 max-w-5xl mx-auto px-6 py-5 flex items-center justify-between pointer-events-auto z-20">
         <Link
           to="/"
@@ -41,7 +38,6 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/' }
           </span>
         </Link>
 
-        {/* Segmented Dual Theme Switcher (Bright vs Dark) */}
         <div className="flex items-center p-1 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-[0_2px_10px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.4)]">
           <button
             type="button"
@@ -77,7 +73,6 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/' }
         </div>
       </header>
 
-      {/* Main Card Container */}
       <motion.main
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -85,7 +80,6 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/' }
         className="w-full max-w-[430px] z-10 my-16 sm:my-8"
       >
         <div className="bg-white dark:bg-[#0f0f12] rounded-[28px] sm:rounded-[32px] p-7 sm:p-9 border border-slate-200/90 dark:border-zinc-800/90 shadow-[0_20px_50px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.03)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] relative transition-all duration-200">
-          {/* Header Row with Back Button & Title */}
           <div className="relative flex flex-col items-center justify-center mb-6 text-center">
             {showBack && (
               <button
@@ -108,7 +102,6 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/' }
             )}
           </div>
 
-          {/* Form Content */}
           {children}
         </div>
       </motion.main>

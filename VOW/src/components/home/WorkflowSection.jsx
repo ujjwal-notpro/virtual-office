@@ -80,7 +80,6 @@ const WorkflowSection = () => {
 
           <div className="space-y-8">
 
-            {/* Glowing "Workflow" Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -97,7 +96,6 @@ const WorkflowSection = () => {
               {t('workflow_badge', 'Workflow')}
             </motion.div>
 
-            {/* Headline */}
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

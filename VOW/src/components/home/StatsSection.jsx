@@ -18,17 +18,12 @@ const trustImages = [img3, img5, img6, img9, img10, img12, img13, img14, img15, 
 
 const StatsSection = () => {
   const sectionRef = useRef(null); // Reference to track when this section scrolls into view
-  // Triggers animations only once when the component enters 30% of the viewport
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   return (
     <section ref={sectionRef} className="w-full py-8 md:py-16" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
 
-        {/* 
-          MAIN STATS CARD
-          A large, glass-like container holding the text and statistics.
-        */}
         <motion.div
           whileHover="hover"
           initial="initial"
@@ -42,10 +37,6 @@ const StatsSection = () => {
             perspective: 1200
           }}
         >
-          {/* 
-            FLUID BACKGROUND RIPPLE
-            This creates a glowing gradient blob that slowly rotates infinitely behind the content.
-          */}
           <motion.div
             variants={{
               initial: { opacity: 0, scale: 0.8, rotate: 0 },
@@ -66,13 +57,8 @@ const StatsSection = () => {
 
           <div className="relative z-10 flex flex-col gap-8 lg:gap-10">
 
-            {/* 
-              TOP SECTION: TEXT HEADERS 
-              Contains the "Growth" badge, headline, and paragraph description.
-            */}
             <div className="w-full text-center md:text-left max-w-4xl mx-auto md:mx-0 flex flex-col items-center md:items-start">
 
-              {/* Animated Growth Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -103,13 +89,8 @@ const StatsSection = () => {
               </motion.p>
             </div>
 
-            {/* 
-              BOTTOM SECTION: THE STATISTIC CARDS
-              Holds the two number counters (2M+ users and 98% satisfaction).
-            */}
             <div className="w-full flex flex-col sm:flex-row gap-6 md:gap-8 mt-2 max-w-4xl mx-auto">
 
-              {/* Users Counter Card */}
               <motion.div
                 variants={{
                   initial: { y: 0 },
@@ -145,7 +126,6 @@ const StatsSection = () => {
                 </div>
               </motion.div>
 
-              {/* 98% Card */}
               <motion.div
                 variants={{
                   initial: { y: 0 },
@@ -185,9 +165,7 @@ const StatsSection = () => {
           </div>
         </motion.div>
 
-        {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-start gap-4 mb-12 pt-2 md:mb-16 pl-2">
-          {/* Learn More Button */}
           <Link to="/learn-more" className="inline-block">
             <button className="group relative flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-110 active:scale-95 bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black shadow-[0_4px_14px_rgba(0,0,0,0.2)] dark:shadow-[0_4px_14px_rgba(255,255,255,0.15)] overflow-hidden cursor-pointer">
               <span className="absolute inset-0 w-full h-full bg-white/20 dark:bg-black/10 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
@@ -198,7 +176,6 @@ const StatsSection = () => {
 
         </div>
 
-        {/* Trust Bar */}
         <div>
           <div className="flex items-center justify-center gap-3 md:gap-6 mb-8 pt-6">
             <div className="h-[1px] w-12 md:w-32" style={{ background: 'linear-gradient(to right, transparent, var(--text-secondary))', opacity: 0.3 }}></div>
@@ -208,10 +185,8 @@ const StatsSection = () => {
             <div className="h-[1px] w-12 md:w-32" style={{ background: 'linear-gradient(to left, transparent, var(--text-secondary))', opacity: 0.3 }}></div>
           </div>
 
-          {/* Infinite Marquee Container */}
           <div className="overflow-hidden relative w-full flex justify-center py-2">
 
-            {/* Fade Edges (Left and Right) */}
             <div
               className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none"
               style={{ background: 'linear-gradient(to right, var(--bg-primary) 0%, transparent 100%)' }}
@@ -237,7 +212,6 @@ const StatsSection = () => {
             `}} />
 
             <div className="flex gap-6 md:gap-8 animate-scroll-logos">
-              {/* Double the array for seamless infinite looping */}
               {[...trustImages, ...trustImages].map((imgSrc, i) => (
                 <div
                   key={i}

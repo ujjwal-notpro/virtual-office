@@ -42,7 +42,6 @@ const Newsletter = () => {
     >
       <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
 
-        {/* TITLE */}
         <h2
           className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4"
           style={{ color: 'var(--text-primary)' }}
@@ -50,7 +49,6 @@ const Newsletter = () => {
           Stay in the loop
         </h2>
 
-        {/* DESCRIPTION */}
         <p
           className="text-sm md:text-base mb-6 md:mb-8 leading-relaxed"
           style={{ color: 'var(--text-secondary)' }}
@@ -58,7 +56,6 @@ const Newsletter = () => {
           Get updates on new features, tips, and stories from teams using FlowBit.
         </p>
 
-        {/* FORM */}
         <form
           onSubmit={handleSubmit}
           className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto mb-4"
@@ -89,7 +86,6 @@ const Newsletter = () => {
 
         </form>
 
-        {/* STATUS */}
         {status && (
           <p
             className="text-sm mb-2"
@@ -104,7 +100,6 @@ const Newsletter = () => {
           </p>
         )}
 
-        {/* FOOT NOTE */}
         <p
           className="text-xs leading-relaxed"
           style={{ color: 'var(--text-secondary)' }}
