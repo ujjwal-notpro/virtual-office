@@ -45,9 +45,9 @@ const sendOTP = async (req, res) => {
         try {
             const result = await brevo.transactionalEmails.sendTransacEmail({
                 sender: {
-                    name: "Flowbit",
-                    email: "YOUR_VERIFIED_BREVO_EMAIL"
-                },
+                        name: "Flowbit",
+                        email: "ayushgupta2170@gmail.com"
+                    },  
                 to: [
                     {
                         email: user.email
