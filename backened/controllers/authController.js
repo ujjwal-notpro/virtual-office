@@ -43,6 +43,7 @@ const sendOTP=async(req, res) => {
         await user.save();
 
         try {
+            console.log("Inside the OTP section--->");
             const result = await brevo.transactionalEmails.sendTransacEmail({
                 sender: {
                         name: "Flowbit",
