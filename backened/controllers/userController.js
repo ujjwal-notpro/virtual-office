@@ -23,4 +23,34 @@ const createUser=async(req,res)=>{
         });    //try ansd catch usekiya agr koi bhi error aaya crash hone ki bajaye message ye de de
     }
 };
-module.exports={createUser};
+
+const resetPassword = async (req, res) => {
+    try {
+        const { email, newPassword } = req.body;
+
+        const user = await User.findOne({
+            email: email.trim().toLowerCase()
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        user.password = await bcrypt.hash(newPassword, 10);
+
+        await user.save();
+
+        res.status(200).json({
+            message: "Password reset successfully"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Password reset failed",
+            error: error.message
+        });
+    }
+};
+module.exports={createUser,resetPassword};
