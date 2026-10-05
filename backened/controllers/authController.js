@@ -10,6 +10,83 @@ const brevo = new BrevoClient({
     apiKey: process.env.BREVO_API_KEY
 });
 
+
+const sendOTP = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const cleanEmail = email ? email.trim().toLowerCase() : "";
+
+        const user = await User.findOne({ email: cleanEmail });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(
+            password,
+            user.password
+        );
+
+        if (!isPasswordCorrect) {
+            return res.status(401).json({
+                message: "Invalid password"
+            });
+        }
+
+        const otp = crypto.randomInt(100000, 1000000).toString();
+
+        user.otp = await bcrypt.hash(otp, 10);
+        user.otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+        await user.save();
+
+        try {
+            const result = await brevo.transactionalEmails.sendTransacEmail({
+                sender: {
+                    name: "Flowbit",
+                    email: "YOUR_VERIFIED_BREVO_EMAIL"
+                },
+                to: [
+                    {
+                        email: user.email
+                    }
+                ],
+                subject: "Flowbit Login OTP",
+                htmlContent: `
+                    <h2>Flowbit Login OTP</h2>
+                    <p>Your OTP is:</p>
+                    <h1>${otp}</h1>
+                    <p>This OTP will expire in 5 minutes.</p>
+                `
+            });
+
+            console.log("Brevo OTP sent:", result);
+
+        } catch (error) {
+            console.error("Brevo OTP failed:", error);
+
+            return res.status(500).json({
+                message: "OTP email failed",
+                error: error.message
+            });
+        }
+
+        res.status(200).json({
+            message: "OTP sent successfully",
+            email: user.email
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Send OTP failed",
+            error: error.message
+        });
+    }
+};
+
+
 const loginUser=async(req,res)=>{
     try{
         const { email, password } = req.body;
@@ -49,7 +126,7 @@ const loginUser=async(req,res)=>{
             const result = await brevo.transactionalEmails.sendTransacEmail({
                 sender: {
                     name: "Flowbit",
-                    email: "ayushgupta2170@gmail.com"
+                    email: "YOUR_VERIFIED_BREVO_EMAIL"
                 },
                 to: [
                     {
@@ -89,6 +166,7 @@ const loginUser=async(req,res)=>{
         });
     }
 };
+
 
 const verifyOTP = async (req, res) => {
     try {
@@ -150,4 +228,5 @@ const verifyOTP = async (req, res) => {
     }
 };
 
-module.exports = { loginUser, verifyOTP };
+
+module.exports = { loginUser, sendOTP, verifyOTP };
