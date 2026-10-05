@@ -63,7 +63,7 @@ const sendOTP=async(req, res) => {
             });
           
             console.log("Brevo OTP sent:", result);
-            
+
         } catch (error) {
             console.error("Brevo OTP failed:", error);
 
@@ -91,6 +91,7 @@ const loginUser=async(req,res)=>{
     try{
         const { email, password } = req.body;
         const cleanEmail = email ? email.trim().toLowerCase() : "";
+        console.log("VERIFY OTP EMAIL:", cleanEmail);
 
 
         console.log(" Login request email:", cleanEmail);
