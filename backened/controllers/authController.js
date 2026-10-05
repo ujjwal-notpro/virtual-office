@@ -13,7 +13,7 @@ const brevo = new BrevoClient({
 
 const sendOTP=async(req, res) => {
     try {
-        const { email, password } = req.body;
+        const {email,password}=req.body;
         const cleanEmail = email ? email.trim().toLowerCase() : "";
 
         const user = await User.findOne({ email: cleanEmail });
