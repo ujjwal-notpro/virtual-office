@@ -91,7 +91,7 @@ const loginUser=async(req,res)=>{
     try{
         const { email, password } = req.body;
         const cleanEmail = email ? email.trim().toLowerCase() : "";
-        console.log("VERIFY OTP EMAIL:", cleanEmail);
+        
 
 
         console.log(" Login request email:", cleanEmail);
