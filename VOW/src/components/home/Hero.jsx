@@ -32,7 +32,7 @@ const Hero = () => {
               className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
             >
               <Link to="/sign-up" className="w-full sm:w-auto">
-                <button className="group relative flex items-center justify-center gap-2 px-8 py-3.5 w-full sm:w-auto text-sm font-bold text-white dark:text-black rounded-xl overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95 bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 shadow-[0_8px_20px_rgba(0,0,0,0.25)] dark:shadow-[0_8px_20px_rgba(255,255,255,0.15)] cursor-pointer">
+                <button className="group relative flex items-center justify-center gap-2 px-8 py-3.5 w-full sm:w-auto text-sm font-bold text-white dark:text-black rounded-xl overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95 bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 cursor-pointer">
                   <span className="absolute inset-0 w-full h-full bg-white/20 dark:bg-black/10 -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
                   Get Started Free <Rocket className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </button>
@@ -46,7 +46,7 @@ const Hero = () => {
               className="absolute top-[15%] left-1/2 -translate-x-1/2 w-64 h-64 sm:w-80 sm:h-80 bg-blue-500/30 dark:bg-blue-600/20 rounded-full blur-[80px] z-0 pointer-events-none"
             />
             <motion.div initial={{ opacity: 0, y: 30, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }} className="relative z-10 w-full flex justify-center">
-              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden p-2 sm:p-2.5 bg-gradient-to-tr from-blue-500/20 via-indigo-500/10 to-transparent dark:from-white/10 dark:via-zinc-800/40 dark:to-transparent border border-slate-200/80 dark:border-zinc-800 shadow-[0_20px_60px_-15px_rgba(59,130,246,0.25)] dark:shadow-[0_25px_65px_-15px_rgba(0,0,0,0.8)] backdrop-blur-sm group">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden p-2 sm:p-2.5  backdrop-blur-sm group">
                 <img src={homeImg} alt="Flow Bit Virtual Office Dashboard" loading="eager" className="w-full h-auto max-h-[480px] object-contain rounded-xl sm:rounded-2xl transition-transform duration-500 group-hover:scale-[1.02]" />
               </div>
             </motion.div>

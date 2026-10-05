@@ -4,10 +4,10 @@ import dashboardPreview from "../../assets/Imageto.PNG";
 import { Zap, CheckCircle2, Layers, MessageSquare, BarChart3, ShieldCheck } from 'lucide-react';
 
 const featureList = [
-  { icon: Layers, color: '#3b82f6', text: 'Unified project & task management' },
-  { icon: MessageSquare, color: '#8b5cf6', text: 'Real-time team chat & threads' },
-  { icon: BarChart3, color: '#06b6d4', text: 'Live performance dashboards' },
-  { icon: ShieldCheck, color: '#22c55e', text: 'Enterprise-grade security & uptime' },
+  { icon: Layers, color: '#1ee065ff', text: 'Unified project & task management' },
+  { icon: MessageSquare, color: '#1ee065ff', text: 'Real-time team chat & threads' },
+  { icon: BarChart3, color: '#1ee065ff', text: 'Live performance dashboards' },
+  { icon: ShieldCheck, color: '#1ee065ff', text: 'Enterprise-grade security & uptime' },
 ];
 
 const FeatureShowcase = () => {
@@ -22,13 +22,13 @@ const FeatureShowcase = () => {
           animate={{ scale: [1, 1.3, 1], opacity: [0.05, 0.12, 0.05] }}
           transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-0 left-1/4 w-[700px] h-[400px] rounded-full blur-[120px]"
-          style={{ background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)' }}
+          style={{ background: 'linear-gradient(135deg, #1ee065ff, #6aef65ff)' }}
         />
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.04, 0.09, 0.04] }}
           transition={{ duration: 12, delay: 3, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute bottom-0 right-1/4 w-[500px] h-[300px] rounded-full blur-[100px]"
-          style={{ background: 'linear-gradient(135deg, #06b6d4, #6366f1)' }}
+          style={{ background: 'linear-gradient(135deg, #1ee065ff, #6aef65ff)' }}
         />
       </div>
 
@@ -47,7 +47,6 @@ const FeatureShowcase = () => {
               color: '#a78bfa',
             }}
           >
-            <Zap size={12} className="animate-pulse" />
             All-in-one platform
           </motion.div>
 
