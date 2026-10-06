@@ -33,7 +33,7 @@ import {
   PanelLeft,
   ChevronRight
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { getStoredUser } from '../../services/api';
 import { connectSocket, getSocket, joinRoom, leaveRoom } from '../../services/socket';
@@ -42,8 +42,10 @@ import IncomingCallModal from '../../components/chat/IncomingCallModal';
 import brandLogo from '../../assets/image.png';
 import { INITIAL_CONVERSATIONS } from './data/conversations';
 import ChatSection from './sections/ChatSection';
+import MeetingsSection from './sections/MeetingsSection';
 import ProfileSection from './sections/ProfileSection';
 import SettingsSection from './sections/SettingsSection';
+import MeetingsDashboard from '../../components/meetings/MeetingsDashboard';
 
 const EMOJI_CATEGORIES = [
   {
@@ -90,6 +92,7 @@ const EMOJI_CATEGORIES = [
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { theme, toggleTheme } = useDarkMode();
   const [activeTab, setActiveTab] = useState('chat'); // 'chat' | 'profile' | 'settings'
   const [conversations, setConversations] = useState(INITIAL_CONVERSATIONS);
@@ -100,6 +103,21 @@ export default function Dashboard() {
   // the socket that sent it. Keep short-lived ids for optimistic messages so an
   // echoed event is not rendered again as an incoming message.
   const outgoingMessageIdsRef = useRef(new Set());
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const roomParam = params.get('room');
+    const tabParam = params.get('tab');
+    if (roomParam || tabParam === 'meetings' || location.pathname === '/meetings' || location.pathname === '/meeting') {
+      setActiveTab('meetings');
+    } else if (tabParam === 'profile' || location.pathname === '/profile') {
+      setActiveTab('profile');
+    } else if (tabParam === 'settings' || location.pathname === '/settings') {
+      setActiveTab('settings');
+    } else if (tabParam === 'chat' || location.pathname === '/chat') {
+      setActiveTab('chat');
+    }
+  }, [location]);
 
   useEffect(() => {
     const now = new Date();
@@ -475,6 +493,18 @@ export default function Dashboard() {
             </button>
 
             <button
+              onClick={() => setActiveTab('meetings')}
+              className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3.5 px-3.5'} py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'meetings'
+                ? 'bg-amber-100/90 dark:bg-amber-950/60 text-amber-950 dark:text-amber-300 shadow-xs border border-amber-300/80 dark:border-amber-600/40 font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/20'
+                }`}
+              title={isSidebarCollapsed ? 'Meetings' : undefined}
+            >
+              <Video className={`w-4 h-4 shrink-0 ${activeTab === 'meetings' ? 'text-amber-600 dark:text-amber-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+              {!isSidebarCollapsed && <span>Meetings</span>}
+            </button>
+
+            <button
               onClick={() => setActiveTab('profile')}
               className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3.5 px-3.5'} py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'profile'
                 ? 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
@@ -567,6 +597,20 @@ export default function Dashboard() {
                   {conversations.reduce((acc, c) => acc + c.unread, 0)}
                 </span>
               )}
+            </button>
+
+            <button
+              onClick={() => {
+                setActiveTab('meetings');
+                setIsMobileSidebarOpen(false);
+              }}
+              className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'meetings'
+                ? 'bg-amber-100/90 dark:bg-amber-950/60 text-amber-950 dark:text-amber-300 shadow-xs border border-amber-300/80 dark:border-amber-600/40 font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/20'
+                }`}
+            >
+              <Video className={`w-4 h-4 ${activeTab === 'meetings' ? 'text-amber-600 dark:text-amber-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+              <span>Meetings</span>
             </button>
 
             <button
@@ -1019,6 +1063,15 @@ export default function Dashboard() {
             </ChatSection>
           )}
 
+          {activeTab === 'meetings' && (
+            <MeetingsSection>
+              <MeetingsDashboard
+                userProfile={profile}
+                onNavigateToProfile={() => setActiveTab('profile')}
+              />
+            </MeetingsSection>
+          )}
+
           {activeTab === 'profile' && (
             <ProfileSection>
               <div className="h-full overflow-y-auto p-4 sm:p-6 md:p-8 max-w-4xl mx-auto">
@@ -1300,6 +1353,16 @@ export default function Dashboard() {
           {conversations.reduce((acc, c) => acc + c.unread, 0) > 0 && (
             <span className="absolute top-1 right-1/4 w-2 h-2 bg-emerald-500 rounded-full" />
           )}
+        </button>
+        <button
+          onClick={() => setActiveTab('meetings')}
+          className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-colors cursor-pointer ${activeTab === 'meetings'
+            ? 'text-amber-600 dark:text-amber-400'
+            : 'text-zinc-500 dark:text-zinc-400'
+            }`}
+        >
+          <Video className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Meetings</span>
         </button>
         <button
           onClick={() => setActiveTab('profile')}

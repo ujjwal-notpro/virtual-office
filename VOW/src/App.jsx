@@ -29,6 +29,8 @@ function App() {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/chat" element={<Dashboard />} />
+        <Route path="/meetings" element={<Dashboard />} />
+        <Route path="/meeting" element={<Dashboard />} />
         <Route path="/profile" element={<Dashboard />} />
         <Route path="/settings" element={<Dashboard />} />
 
