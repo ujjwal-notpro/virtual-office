@@ -37,13 +37,10 @@ const loginUser=async(req,res)=>{
                 message: "Invalid password"
             });
         }
-
-
-        
-
         res.status(200).json({
-            message: "OTP sent successfully",
-            email: user.email
+            message: "Login successful",
+            token:token,
+            user:user
         });
 
     } catch (error) {
