@@ -49,4 +49,4 @@ const loginUser=async(req,res)=>{
         });
     }
 };
-module.exports = { loginUser, sendOTP, verifyOTP };
+module.exports = { loginUser};
