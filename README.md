@@ -113,5 +113,4 @@ Future Enhancements
 - Advanced Analytics
 - Hybrid Office Support
 - Employee Recognition
-Team
-Flowbit is developed as a college group project by a team of 5 members.
+
