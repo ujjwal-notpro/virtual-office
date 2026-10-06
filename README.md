@@ -46,7 +46,7 @@ Flowbit/
     └── requirements.txt
 
 
-Modules
+⚙️Modules
 Frontend
 - User Interface
 - Authentication
@@ -57,7 +57,7 @@ Frontend
 - Collaboration
 
 
-Backend
+⚙️Backend
 - REST APIs
 - User Authentication
 - JWT Authorization
@@ -68,7 +68,7 @@ Backend
 - Email OTP Verification
 
 
-Real-Time Backend
+⚙️Real-Time Backend
 - Socket.IO Communication
 - Room Management
 - User Presence
@@ -77,14 +77,14 @@ Real-Time Backend
 - Screen Sharing
 
 
-Machine Learning
+⚙️Machine Learning
 - ML-based project features
 - Data processing
 - Model integration
 - AI-assisted collaboration features
 
 
-Tech Stack
+🔥Tech Stack
 Module	Technologies
 Frontend	React, Vite
 Backend	Node.js, Express.js
@@ -95,22 +95,78 @@ Real-Time	Socket.IO
 Communication	WebRTC
 Machine Learning	Python, ML
 
-
-Key Features
+✌️Key Features
 - 🔐 Secure Authentication
 - 🏢 Virtual Workspaces
 - 🚪 Interactive Rooms
 - 📋 Task Management
 - 📅 Meeting Management
-- 🎥 Real-Time Video & Audio
+- 💬 Real-Time Chat
+- 🎥 Video & Audio Communication
 - 🖥️ Screen Sharing
-- 💬 Team Collaboration
-- 🤖 ML/AI-Assisted Features
+- 🤖 AI/ML-Assisted Features
+- 👥 Role-Based Team Management
 
-Future Enhancements
+
+👥 User Roles
+Manager
+- Manage workspaces and members
+- Assign roles and tasks
+- Manage rooms
+
+👥Supervisor
+- Monitor team activities
+- Assign tasks
+- Coordinate team members
+
+👥Team Member
+- Join workspaces
+- Communicate with teammates
+- Participate in meetings
+- Collaborate on tasks
+
+
+🔄 System Architecture
+User
+ ↓
+Frontend
+ ↓
+Backend APIs
+ ↓
+Authentication
+ ↓
+Business Logic
+ ↓
+MongoDB
+ ↓
+Real-time communication is handled through:
+ ↓
+Socket.IO + WebRTC
+
+🔐 Security
+- Password hashing using bcrypt
+- JWT-based authentication
+- Protected backend APIs
+- Role-based access structure
+- Environment variables for sensitive configuration
+
+
+🚀 Future Enhancements
 - AI Meeting Summaries
-- AI Task Extraction
-- Advanced Analytics
+- Automatic Task Extraction
+- AI-generated Follow-ups
+- Advanced Team Analytics
 - Hybrid Office Support
 - Employee Recognition
+- Enhanced Collaboration Features
+
+
+🌟 Vision
+Flowbit aims to create a complete digital office where distributed teams can meet, communicate, collaborate, and manage their work in one virtual environment.
+Connect • Collaborate • Manage • Grow 🚀
+  
+
+
+
+
 
