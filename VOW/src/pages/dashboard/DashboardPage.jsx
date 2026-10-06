@@ -103,6 +103,9 @@ export default function Dashboard() {
   // the socket that sent it. Keep short-lived ids for optimistic messages so an
   // echoed event is not rendered again as an incoming message.
   const outgoingMessageIdsRef = useRef(new Set());
+  // Keep a ref of activeChatId so socket handlers always see the latest value
+  const activeChatIdRef = useRef(activeChatId);
+  useEffect(() => { activeChatIdRef.current = activeChatId; }, [activeChatId]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -150,12 +153,9 @@ export default function Dashboard() {
       const handleReceiveMessage = (data) => {
         console.log('[Chat] Received message:', data);
 
-        const currentUser = getStoredUser();
-        const senderId = data.senderId ?? data.sender?.id ?? data.userId;
-        const currentUserId = currentUser?.id ?? currentUser?._id ?? currentUser?.userId;
-        const isOwnEcho =
-          (data.clientMessageId && outgoingMessageIdsRef.current.has(data.clientMessageId)) ||
-          (senderId != null && currentUserId != null && String(senderId) === String(currentUserId));
+        // Only filter out messages we explicitly sent (tracked by clientMessageId).
+        // Avoid comparing userIds since the format can differ between client and server.
+        const isOwnEcho = data.clientMessageId && outgoingMessageIdsRef.current.has(data.clientMessageId);
 
         if (isOwnEcho) return;
 
@@ -166,9 +166,10 @@ export default function Dashboard() {
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
         const roomConversationId = Number(String(data.roomId || '').replace(/^room-/, ''));
+        const currentActiveChatId = activeChatIdRef.current;
         const conversationId = Number.isFinite(roomConversationId) && roomConversationId > 0
           ? roomConversationId
-          : activeChatId;
+          : currentActiveChatId;
 
         setConversations(prev => prev.map(c => {
           if (c.id === conversationId) {
@@ -176,7 +177,7 @@ export default function Dashboard() {
               ...c,
               messages: [...c.messages, incomingMsg],
               time: 'Just now',
-              unread: c.id === activeChatId ? c.unread : c.unread + 1,
+              unread: c.id === currentActiveChatId ? c.unread : c.unread + 1,
             };
           }
           return c;

@@ -445,7 +445,7 @@ export default function CallModal({
           </div>
         </div>
 
-        <div className="h-18 sm:h-22 px-3 sm:px-6 bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800/80 flex items-center justify-center gap-2 sm:gap-4 z-30 overflow-x-auto">
+        <div className="min-h-[4rem] sm:min-h-[5rem] px-3 sm:px-6 py-2 sm:py-3 bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800/80 flex items-center justify-center flex-wrap gap-2 sm:gap-4 z-30">
           <button
             onClick={toggleMute}
             className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all cursor-pointer shrink-0 ${
