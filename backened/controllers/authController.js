@@ -52,40 +52,7 @@ const loginUser=async(req,res)=>{
 };
 
 
-const verifyOTP = async (req, res) => {
-    try {
-        const { email, otp } = req.body;
-        const cleanEmail = email ? email.trim().toLowerCase() : "";
 
-        console.log("VERIFY OTP EMAIL:", cleanEmail);
-
-        const user = await User.findOne({ email: cleanEmail });
-
-        if (!user) {
-            return res.status(404).json({
-                message: "User not found"
-            });
-        }
-
-        if (!user.otp || !user.otpExpiresAt) {
-            return res.status(400).json({
-                message: "OTP not found"
-            });
-        }
-
-        if (new Date() > user.otpExpiresAt) {
-            return res.status(400).json({
-                message: "OTP expired"
-            });
-        }
-
-        const isOTPValid = await bcrypt.compare(otp, user.otp);
-
-        if (!isOTPValid) {
-            return res.status(401).json({
-                message: "Invalid OTP"
-            });
-        }
 
         const token = jwt.sign(
             {
@@ -96,10 +63,7 @@ const verifyOTP = async (req, res) => {
             { expiresIn: "1d" }
         );
 
-        user.otp = undefined;
-        user.otpExpiresAt = undefined;
-
-        await user.save();
+        
 
         res.status(200).json({
             message: "Login successful",
