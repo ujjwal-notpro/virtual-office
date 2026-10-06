@@ -8,8 +8,8 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true,
         unique:true,
-        trim: true,        // 👈 extra space hata dega
-        lowercase: true
+        trim:true,        // 👈 extra space hata dega
+        lowercase:true
     },
     password:{
         type:String,
