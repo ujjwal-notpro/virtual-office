@@ -5,10 +5,7 @@ const bcrypt=require("bcryptjs");
 //const {Resend}=require("resend");
 //const resend=new Resend(process.env.RESEND_API_KEY);
 
-const {BrevoClient}=require("@getbrevo/brevo");
-const brevo = new BrevoClient({
-    apiKey: process.env.BREVO_API_KEY
-});
+
 
 
 const sendOTP=async(req, res) => {
