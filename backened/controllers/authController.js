@@ -38,12 +38,6 @@ const loginUser=async(req,res)=>{
             });
         }
 
-        const otp=crypto.randomInt(100000, 1000000).toString();
-
-        user.otp = await bcrypt.hash(otp, 10);
-        user.otpExpiresAt=new Date(Date.now()+5*60*1000);
-
-        await user.save();
 
         try {
             const result = await brevo.transactionalEmails.sendTransacEmail({
