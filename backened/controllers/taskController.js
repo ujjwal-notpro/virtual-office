@@ -1,8 +1,8 @@
 const Task=require("../models/Task");
+
 const createTask=async(req,res)=>{
     try{
-        const{title,description,status,assignedTo,workspace}=req.body;//frontend se task ki information le rahe hain hm
-        
+        const{title,description,status,assignedTo,workspace}=req.body;
 
         const task=await Task.create({
             title:title,
@@ -10,8 +10,9 @@ const createTask=async(req,res)=>{
             status:status,
             assignedTo:assignedTo,
             workspace:workspace,
-            createdBy:req.user.userId //JWT se currently logg-in user ki ID automatically creator mein save ho jayegi
+            createdBy:req.user.userId
         });
+
         res.status(201).json({
             message:"Task created successfully",
             task:task
@@ -24,19 +25,21 @@ const createTask=async(req,res)=>{
     }
 };
 
-
-const getTasks = async (req, res)=>{
-     try{
-
+const getTasks=async(req,res)=>{
+    try{
         const{workspace}=req.query;
-        const tasks=await Task.find({
-            workspace:workspace
-        });
+
+        const filter=workspace
+            ?{workspace:workspace}
+            :{createdBy:req.user.userId};
+
+        const tasks=await Task.find(filter);
+
         res.status(200).json({
             message:"Tasks fetched successfully",
             tasks:tasks
         });
-        }catch(error) {
+    }catch(error){
         res.status(500).json({
             message:"Failed to fetch tasks",
             error:error.message
@@ -46,21 +49,22 @@ const getTasks = async (req, res)=>{
 
 const updateTask=async(req,res)=>{
     try{
-        const{id}= req.params;//URL se task ki ID lega.
-        const {status}=req.body;//Body se naya status lega.
+        const{id}=req.params;
+        const{status}=req.body;
 
-        const task=await Task.findByIdAndUpdate(id,{status:status },{new:true});
+        const task=await Task.findByIdAndUpdate(id,{status:status},{new:true});
+
         if(!task){
             return res.status(404).json({
                 message:"Task not found"
             });
         }
+
         res.status(200).json({
             message:"Task updated successfully",
             task:task
         });
-        }catch(error){
-
+    }catch(error){
         res.status(500).json({
             message:"Task update failed",
             error:error.message
@@ -70,17 +74,20 @@ const updateTask=async(req,res)=>{
 
 const deleteTask=async(req,res)=>{
     try{
-        const {id}=req.params;
+        const{id}=req.params;
+
         const task=await Task.findByIdAndDelete(id);
+
         if(!task){
             return res.status(404).json({
                 message:"Task not found"
             });
         }
+
         res.status(200).json({
-            message: "Task deleted successfully"
+            message:"Task deleted successfully"
         });
-        }catch(error){
+    }catch(error){
         res.status(500).json({
             message:"Task deletion failed",
             error:error.message
@@ -88,7 +95,4 @@ const deleteTask=async(req,res)=>{
     }
 };
 
-
-
-
-module.exports = {createTask,getTasks,updateTask,deleteTask};
+module.exports={createTask,getTasks,updateTask,deleteTask};
