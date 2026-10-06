@@ -102,7 +102,7 @@ const verifyOTP = async (req, res) => {
         await user.save();
 
         res.status(200).json({
-            message: "OTP verified successfully",
+            message: "Login successful",
             token: token,
             user: user
         });
