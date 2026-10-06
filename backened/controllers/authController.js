@@ -39,37 +39,7 @@ const loginUser=async(req,res)=>{
         }
 
 
-        try {
-            const result = await brevo.transactionalEmails.sendTransacEmail({
-                sender: {
-                    name: "Flowbit",
-                    email: "ayushgupta2170@gmail.com"
-                },
-                to: [
-                    {
-                        email: user.email
-                    }
-                ],
-                subject: "Flowbit Login OTP",
-                htmlContent: `
-                    <h2>Flowbit Login OTP</h2>
-                    <p>Your OTP is:</p>
-                    <h1>${otp}</h1>
-                    <p>This OTP will expire in 5 minutes.</p>
-                `
-            });
-
-            console.log("Brevo email sent:", result);
-
-        } catch (error) {
-            console.error("Brevo email failed:", error);
-            console.error("Brevo Error Details:", error.response?.data || error.message);
-
-            return res.status(500).json({
-                message: "OTP email failed",
-                error: error.response?.data || error.message
-            });
-        }
+        
 
         res.status(200).json({
             message: "OTP sent successfully",
