@@ -97,10 +97,7 @@ const StatsSection = () => {
                   <h3
                     className="text-[40px] md:text-5xl lg:text-6xl font-black mb-2 tracking-tighter"
                     style={{
-                      background: "linear-gradient(to right, #6366f1, #a855f7)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      filter: "drop-shadow(0px 4px 10px rgba(99,102,241,0.2))"
+                      color: "var(--text-primary)",
                     }}
                   >
                     2M+
@@ -132,10 +129,7 @@ const StatsSection = () => {
                   <h3
                     className="text-[40px] md:text-5xl lg:text-6xl font-black mb-2 tracking-tighter"
                     style={{
-                      background: "linear-gradient(to right, #14b8a6, #3b82f6)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      filter: "drop-shadow(0px 4px 10px rgba(20,184,166,0.2))"
+                      color: "var(--text-primary)",
                     }}
                   >
                     98%

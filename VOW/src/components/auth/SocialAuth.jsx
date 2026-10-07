@@ -1,12 +1,37 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { socialLogin } from '../../services/api';
+import { connectSocket } from '../../services/socket';
 
-const SocialAuth = () => {
+const SocialAuth = ({ onSuccess }) => {
+  const navigate = useNavigate();
+
+  const handleSocialClick = (provider) => {
+    try {
+      socialLogin(provider);
+      try {
+        connectSocket();
+      } catch (e) {
+        console.warn('Socket connect:', e);
+      }
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
+    } catch (err) {
+      console.error('Social login error:', err);
+      navigate('/dashboard', { replace: true });
+    }
+  };
+
   return (
     <div className="flex items-center justify-center gap-4 my-2">
       <button
         type="button"
+        title="Sign in with X"
         aria-label="Sign in with X"
-        onClick={() => {}}
+        onClick={() => handleSocialClick('X')}
         className="w-11 h-11 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:border dark:border-zinc-800 dark:text-white flex items-center justify-center shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
       >
         <svg className="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
@@ -16,8 +41,9 @@ const SocialAuth = () => {
 
       <button
         type="button"
+        title="Sign in with Facebook"
         aria-label="Sign in with Facebook"
-        onClick={() => {}}
+        onClick={() => handleSocialClick('Facebook')}
         className="w-11 h-11 rounded-2xl bg-[#1877F2] hover:bg-[#166fe5] text-white flex items-center justify-center shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
       >
         <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -27,8 +53,9 @@ const SocialAuth = () => {
 
       <button
         type="button"
+        title="Sign in with Google"
         aria-label="Sign in with Google"
-        onClick={() => {}}
+        onClick={() => handleSocialClick('Google')}
         className="w-11 h-11 rounded-2xl bg-white hover:bg-slate-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-slate-200/90 dark:border-zinc-800 flex items-center justify-center shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -55,4 +82,3 @@ const SocialAuth = () => {
 };
 
 export default SocialAuth;
-

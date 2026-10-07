@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import AuthInput from '../components/auth/AuthInput';
 import SocialAuth from '../components/auth/SocialAuth';
-import { registerUser } from '../services/api';
+import { registerUser, saveAuth } from '../services/api';
+import { connectSocket } from '../services/socket';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -30,8 +31,8 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.identifier || !formData.fullName || !formData.password) {
-      setErrorMessage('Please fill in all fields');
+    if (!formData.identifier.trim() || !formData.fullName.trim() || !formData.password) {
+      setErrorMessage('Please fill in all required fields');
       return;
     }
     if (!formData.agreeToTerms) {
@@ -43,20 +44,33 @@ const SignUp = () => {
     setErrorMessage('');
 
     try {
-      await registerUser({
-        name: formData.fullName,
-        email: formData.identifier,
-        phone: formData.phone,
+      const email = formData.identifier.trim();
+      const registered = await registerUser({
+        name: formData.fullName.trim(),
+        email,
+        phone: formData.phone.trim(),
         password: formData.password,
         role: 'employee',
       });
 
-      setSuccessMessage('Account created! Redirecting to Sign In...');
+      const token = registered?.token || registered?.accessToken || registered?.data?.token;
+      const user = registered?.user || registered?.data?.user;
+      if (token && user) {
+        saveAuth(token, user);
+      }
+
+      try {
+        connectSocket();
+      } catch (sockErr) {
+        console.warn('Socket connect error:', sockErr);
+      }
+
+      setSuccessMessage('Account created! Taking you to your dashboard...');
       setTimeout(() => {
-        navigate('/sign-in');
-      }, 1500);
+        navigate('/dashboard', { replace: true });
+      }, 200);
     } catch (error) {
-      const msg = error.response?.data?.message || error.response?.data?.error || 'Registration failed. Please try again.';
+      const msg = error.response?.data?.message || error.response?.data?.error || error.message || 'Registration failed. Please try again.';
       setErrorMessage(msg);
     } finally {
       setIsLoading(false);
@@ -111,7 +125,7 @@ const SignUp = () => {
           id="phone"
           name="phone"
           type="tel"
-          placeholder="Phone Number (optional, for SMS OTP)"
+          placeholder="Phone Number (optional)"
           icon={Phone}
           value={formData.phone}
           onChange={handleChange}
@@ -178,7 +192,7 @@ const SignUp = () => {
           </span>
         </div>
 
-        <SocialAuth />
+        <SocialAuth onSuccess={() => navigate('/dashboard', { replace: true })} />
 
         <div className="text-center pt-2 text-[13px] text-slate-600 dark:text-zinc-400 font-medium">
           Joined us before?{' '}

@@ -8,7 +8,21 @@ const AVAILABLE_ROOMS = [
   { id: 'room-wanda', name: 'Design Studio', lead: 'Wanda (UI/UX Designer)', avatar: 'https://plus.unsplash.com/premium_photo-1689564003745-946f35267ffe?w=600&auto=format&fit=crop&q=60' },
 ];
 
-export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserName = 'Amit Kumar' }) {
+// Accepts a plain code ("meet-ab12-345") OR a full invite link (".../dashboard?room=meet-ab12-345")
+const extractMeetingCode = (value) => {
+  const trimmed = value.trim();
+  try {
+    const room = new URL(trimmed).searchParams.get('room');
+    if (room) return room.trim();
+  } catch {
+    // not a URL – fall through
+  }
+  const match = trimmed.match(/[?&]room=([^&\s]+)/);
+  if (match) return decodeURIComponent(match[1]);
+  return trimmed.replace(/\s+/g, '-');
+};
+
+export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserName = 'Amit Kumar', initialCode = '' }) {
   const [joinMode, setJoinMode] = useState('all-rooms'); // 'all-rooms' | 'select-rooms' | 'code'
   const [selectedRoomIds, setSelectedRoomIds] = useState(AVAILABLE_ROOMS.map((r) => r.id));
   const [meetingCode, setMeetingCode] = useState('');
@@ -19,6 +33,13 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
 
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen && initialCode) {
+      setJoinMode('code');
+      setMeetingCode(initialCode);
+    }
+  }, [isOpen, initialCode]);
 
   useEffect(() => {
     if (initialUserName) {
@@ -88,7 +109,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
     e.preventDefault();
 
     if (joinMode === 'code') {
-      const cleanCode = meetingCode.trim().replace(/\s+/g, '-');
+      const cleanCode = extractMeetingCode(meetingCode);
       if (!cleanCode) {
         setError('Please enter a valid meeting code or link');
         return;
@@ -191,11 +212,10 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
             <button
               type="button"
               onClick={() => setJoinMode('all-rooms')}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${
-                joinMode === 'all-rooms'
+              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${joinMode === 'all-rooms'
                   ? 'bg-white dark:bg-zinc-800 text-amber-600 dark:text-amber-400 border border-zinc-200 dark:border-zinc-700'
                   : 'text-zinc-500 hover:text-zinc-800'
-              }`}
+                }`}
             >
               <Layers className="w-3.5 h-3.5" />
               <span>Connect All Rooms</span>
@@ -203,11 +223,10 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
             <button
               type="button"
               onClick={() => setJoinMode('code')}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${
-                joinMode === 'code'
+              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${joinMode === 'code'
                   ? 'bg-white dark:bg-zinc-800 text-amber-600 dark:text-amber-400 border border-zinc-200 dark:border-zinc-700'
                   : 'text-zinc-500 hover:text-zinc-800'
-              }`}
+                }`}
             >
               <Hash className="w-3.5 h-3.5" />
               <span>Room Code</span>
@@ -237,11 +256,10 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                     <div
                       key={room.id}
                       onClick={() => toggleRoomSelect(room.id)}
-                      className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-colors ${
-                        isSelected
+                      className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-colors ${isSelected
                           ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700/60'
                           : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-2 overflow-hidden">
                         <img
@@ -257,11 +275,10 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                         </div>
                       </div>
                       <div
-                        className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
-                          isSelected
+                        className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${isSelected
                             ? 'bg-amber-500 border-amber-500 text-white'
                             : 'border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800'
-                        }`}
+                          }`}
                       >
                         {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                       </div>

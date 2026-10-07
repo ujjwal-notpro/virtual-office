@@ -10,8 +10,9 @@ import JoinMeetingModal from './JoinMeetingModal';
 import CreateRoomModal from './CreateRoomModal';
 import MeetingRoom from './MeetingRoom';
 
-export default function MeetingsDashboard({ userProfile = { name: 'Amit Kumar' }, onNavigateToProfile }) {
-  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+export default function MeetingsDashboard({ userProfile = { name: 'Virtual Office' }, onNavigateToProfile }) {
+  const inviteCode = new URLSearchParams(window.location.search).get('room') || '';
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(!!inviteCode);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [activeMeeting, setActiveMeeting] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -34,8 +35,8 @@ export default function MeetingsDashboard({ userProfile = { name: 'Amit Kumar' }
     });
   };
 
-  const displayName = userProfile?.name || 'Amit Kumar';
-  const displayInitial = displayName.charAt(0).toUpperCase() || 'A';
+  const displayName = userProfile?.name || 'Virtual Office';
+  const displayInitial = displayName.charAt(0).toUpperCase() || 'V';
 
   const handleStartCreatedMeeting = (config) => {
     setIsCreateModalOpen(false);
@@ -71,7 +72,7 @@ export default function MeetingsDashboard({ userProfile = { name: 'Amit Kumar' }
             {getFormattedDate()}
           </span>
           <h1 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-white mt-0.5">
-            {getGreeting()}, {displayName.split(' ')[0]} 👋
+            {getGreeting()}, {displayName.split(' ')[0]}
           </h1>
         </div>
 
@@ -180,6 +181,7 @@ export default function MeetingsDashboard({ userProfile = { name: 'Amit Kumar' }
         onClose={() => setIsJoinModalOpen(false)}
         onJoin={handleStartJoinedMeeting}
         initialUserName={displayName}
+        initialCode={inviteCode}
       />
 
       {/* Create Room Modal */}
