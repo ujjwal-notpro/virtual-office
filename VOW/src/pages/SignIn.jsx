@@ -3,7 +3,6 @@ import { Mail, Lock, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import AuthInput from '../components/auth/AuthInput';
-import SocialAuth from '../components/auth/SocialAuth';
 import { loginAndSave } from '../services/api';
 import { connectSocket } from '../services/socket';
 
@@ -123,14 +122,6 @@ const SignIn = () => {
           </button>
         </div>
 
-        <div className="relative flex items-center justify-center py-2.5">
-          <div className="w-full border-t border-slate-200/90 dark:border-zinc-800" />
-          <span className="absolute px-3 bg-white dark:bg-[#0f0f12] text-[11px] font-bold text-slate-400 dark:text-zinc-500 tracking-wider uppercase">
-            OR
-          </span>
-        </div>
-
-        <SocialAuth onSuccess={() => navigate('/dashboard', { replace: true })} />
 
         <div className="text-center pt-2 text-[13px] text-slate-600 dark:text-zinc-400 font-medium">
           New to Flow Bit?{' '}
