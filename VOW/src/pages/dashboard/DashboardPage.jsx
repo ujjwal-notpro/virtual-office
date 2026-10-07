@@ -97,8 +97,22 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('chat'); // 'chat' | 'profile' | 'settings'
   const [conversations, setConversations] = useState(INITIAL_CONVERSATIONS);
   const [activeChatId, setActiveChatId] = useState(1);
-
+  const storedUser = getStoredUser();
+  const [profile, setProfile] = useState({
+    name: storedUser?.name || 'Workspace Member',
+    role: storedUser?.role ? String(storedUser.role).toUpperCase() : 'EMPLOYEE',
+    email: storedUser?.email || 'user@flowbit.io',
+    phone: storedUser?.phone || '',
+    department: 'Engineering & Product',
+    location: 'Remote',
+    timezone: 'PST (UTC -8)',
+    bio: 'Flow Bit Virtual Workspace member.',
+    status: 'Online'
+  });
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [profileSavedToast, setProfileSavedToast] = useState(false);
   const [currentDateFormatted, setCurrentDateFormatted] = useState('');
+
   // Some realtime servers broadcast a sent event to every room member, including
   // the socket that sent it. Keep short-lived ids for optimistic messages so an
   // echoed event is not rendered again as an incoming message.
@@ -141,6 +155,21 @@ export default function Dashboard() {
     }
 
     const socket = connectSocket();
+    let presenceBc = null;
+    try {
+      presenceBc = new BroadcastChannel('vow_presence_channel');
+      presenceBc.onmessage = (event) => {
+        const { type, data } = event.data || {};
+        if (type === 'incoming-call' && data?.callerName !== profile.name) {
+          setIncomingCall(data);
+        } else if (type === 'call-rejected') {
+          setIncomingCall(null);
+        }
+      };
+    } catch (e) {
+      console.warn('Presence BC error:', e);
+    }
+
     if (socket) {
       const handleIncoming = (data) => {
         console.log('Incoming call received:', data);
@@ -191,13 +220,18 @@ export default function Dashboard() {
       joinRoom(`room-${activeChatId}`);
 
       return () => {
+        if (presenceBc) presenceBc.close();
         socket.off('incoming-call', handleIncoming);
         socket.off('call-rejected', handleRejected);
         socket.off('receive-message', handleReceiveMessage);
         leaveRoom(`room-${activeChatId}`);
       };
     }
-  }, [activeChatId]);
+
+    return () => {
+      if (presenceBc) presenceBc.close();
+    };
+  }, [activeChatId, profile.name]);
 
   const [messageInput, setMessageInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -216,14 +250,22 @@ export default function Dashboard() {
   const handleStartCall = (type) => {
     setCallType(type);
     setIsCallOpen(true);
+    const callData = {
+      roomId: `room-${activeChat.id}`,
+      callerName: profile.name,
+      callerAvatar: '',
+      callType: type,
+    };
+    try {
+      const bc = new BroadcastChannel('vow_presence_channel');
+      bc.postMessage({ type: 'incoming-call', data: callData });
+      bc.close();
+    } catch (e) {
+      console.warn(e);
+    }
     const socket = getSocket();
     if (socket?.connected) {
-      socket.emit('call-user', {
-        roomId: `room-${activeChat.id}`,
-        callerName: profile.name,
-        callerAvatar: '',
-        callType: type,
-      });
+      socket.emit('call-user', callData);
     }
   };
 
@@ -237,6 +279,13 @@ export default function Dashboard() {
 
   const handleDeclineIncomingCall = () => {
     if (incomingCall) {
+      try {
+        const bc = new BroadcastChannel('vow_presence_channel');
+        bc.postMessage({ type: 'call-rejected', data: { roomId: incomingCall.roomId } });
+        bc.close();
+      } catch (e) {
+        console.warn(e);
+      }
       const socket = getSocket();
       if (socket?.connected) {
         socket.emit('reject-call', { roomId: incomingCall.roomId });
@@ -407,20 +456,6 @@ export default function Dashboard() {
     }
     return colorClasses[Math.abs(hash) % colorClasses.length];
   };
-
-  const [profile, setProfile] = useState({
-    name: 'Ujjwal Gupta',
-    role: 'Lead Architect',
-    email: 'ujjwal.gupta@flowbit.io',
-    phone: '+1 (555) 349-2049',
-    department: 'Engineering & Product',
-    location: 'San Francisco, CA (Remote)',
-    timezone: 'PST (UTC -8)',
-    bio: 'Building next-generation distributed virtual workspace platforms and real-time collaboration engines.',
-    status: 'Online'
-  });
-  const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const [profileSavedToast, setProfileSavedToast] = useState(false);
 
   const handleSaveProfile = (e) => {
     e.preventDefault();

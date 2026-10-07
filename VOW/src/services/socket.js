@@ -1,9 +1,7 @@
 import { io } from 'socket.io-client';
 import { getStoredToken } from './api';
 
-const REALTIME_URL = import.meta.env.VITE_REALTIME_URL || (
-  import.meta.env.DEV ? 'http://localhost:8000' : null
-);
+const REALTIME_URL = import.meta.env.VITE_REALTIME_URL || 'https://virtual-office-9t0v.onrender.com';
 
 let socket = null;
 const joinedRooms = new Set();
@@ -15,9 +13,7 @@ export const connectSocket = () => {
   }
 
   if (!REALTIME_URL) {
-    console.error(
-      '[VOW Socket] Missing VITE_REALTIME_URL. Set it to the public URL of the realtime backend before deploying.'
-    );
+    console.warn('[VOW Socket] REALTIME_URL not set');
     return null;
   }
 
@@ -28,10 +24,13 @@ export const connectSocket = () => {
       token: token,
     },
     transports: ['websocket', 'polling'],
+    reconnection: true,
+    reconnectionAttempts: 10,
+    reconnectionDelay: 1000,
   });
 
   socket.on('connect', () => {
-    console.log('[VOW Socket] Connected:', socket.id);
+    console.log('[VOW Socket] Connected to realtime backend:', socket.id);
     joinedRooms.forEach((roomId) => socket.emit('join-room', roomId));
   });
 
@@ -40,13 +39,18 @@ export const connectSocket = () => {
   });
 
   socket.on('connect_error', (error) => {
-    console.error('[VOW Socket] Connection error:', error.message);
+    console.warn('[VOW Socket] Realtime connection warning:', error.message);
   });
 
   return socket;
 };
 
-export const getSocket = () => socket;
+export const getSocket = () => {
+  if (!socket) {
+    return connectSocket();
+  }
+  return socket;
+};
 
 export const disconnectSocket = () => {
   if (socket) {
@@ -57,16 +61,20 @@ export const disconnectSocket = () => {
 };
 
 export const joinRoom = (roomId) => {
+  if (!roomId) return;
   joinedRooms.add(roomId);
-  if (socket?.connected) {
-    socket.emit('join-room', roomId);
+  const s = getSocket();
+  if (s?.connected) {
+    s.emit('join-room', roomId);
   }
 };
 
 export const leaveRoom = (roomId) => {
+  if (!roomId) return;
   joinedRooms.delete(roomId);
-  if (socket?.connected) {
-    socket.emit('leave-room', roomId);
+  const s = getSocket();
+  if (s?.connected) {
+    s.emit('leave-room', roomId);
   }
 };
 
