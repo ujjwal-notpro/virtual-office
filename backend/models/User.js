@@ -1,25 +1,31 @@
 const mongoose=require("mongoose");
+
 const userSchema=new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        required:[true,"Name is required"],
+        trim:true,
+        minlength:[2,"Name must be at least 2 characters"]
     },
     email:{
         type:String,
-        required:true,
+        required:[true,"Email is required"],
         unique:true,
-        trim:true,        // 👈 extra space hata dega
-        lowercase:true
+        trim:true,
+        lowercase:true,
+        match:[
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            "Please enter a valid email"
+        ]
     },
     password:{
         type:String,
-        required:true
+        required:[true,"Password is required"]
     },
     role:{
         type:String,
         default:"employee"
     }
-    
-
 });
+
 module.exports=mongoose.model("User",userSchema);
