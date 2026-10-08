@@ -83,13 +83,13 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500"
+              className="w-full pl-9 pr-3 py-1.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-emerald-800"
             />
           </div>
 
           <button
             onClick={() => setIsJoinModalOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-black rounded-xl text-xs font-semibold cursor-pointer transition-colors shadow-sm"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-semibold cursor-pointer transition-colors shadow-sm"
           >
             <Video className="w-4 h-4" />
             <span>Join Meeting</span>
@@ -97,10 +97,10 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
 
           <div
             onClick={onNavigateToProfile}
-            className="flex items-center gap-1.5 p-1 sm:pr-2 bg-emerald-100 dark:bg-emerald-950/40 border border-emerald-300/60 dark:border-emerald-700/40 rounded-full cursor-pointer"
+            className="flex items-center gap-1.5 p-1 sm:pr-2 bg-emerald-900/15 dark:bg-emerald-950/60 border border-emerald-800/40 dark:border-emerald-700/50 rounded-full cursor-pointer"
             title={displayName}
           >
-            <div className="w-7 h-7 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-bold flex items-center justify-center text-xs">
+            <div className="w-7 h-7 rounded-full bg-emerald-800 dark:bg-emerald-700 text-white font-bold flex items-center justify-center text-xs">
               {displayInitial}
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 hidden sm:block" />
@@ -118,9 +118,9 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
 
             <div
               onClick={() => setIsJoinModalOpen(true)}
-              className="bg-white dark:bg-[#121216] border border-emerald-200 dark:border-emerald-500/20 hover:border-emerald-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px] transition-all hover:shadow-md"
+              className="bg-white dark:bg-[#121216] border border-emerald-800/30 hover:border-emerald-800/60 dark:border-emerald-700/30 dark:hover:border-emerald-600/60 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px] transition-all hover:shadow-md"
             >
-              <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-emerald-900/15 dark:bg-emerald-950/60 border border-emerald-800/30 dark:border-emerald-700/40 text-emerald-800 dark:text-emerald-400 flex items-center justify-center mb-4">
                 <Video className="w-6 h-6" />
               </div>
 
@@ -136,9 +136,9 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
 
             <div
               onClick={() => setIsCreateModalOpen(true)}
-              className="bg-white dark:bg-[#121216] border border-emerald-200 dark:border-emerald-500/20 hover:border-emerald-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px] transition-all hover:shadow-md"
+              className="bg-white dark:bg-[#121216] border border-emerald-800/30 hover:border-emerald-800/60 dark:border-emerald-700/30 dark:hover:border-emerald-600/60 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px] transition-all hover:shadow-md"
             >
-              <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-emerald-900/15 dark:bg-emerald-950/60 border border-emerald-800/30 dark:border-emerald-700/40 text-emerald-800 dark:text-emerald-400 flex items-center justify-center mb-4">
                 <Plus className="w-6 h-6 stroke-[2.5]" />
               </div>
 

@@ -299,15 +299,15 @@ export default function Dashboard() {
                 onClick={() => { setActiveTab(id); setIsMobileSidebarOpen(false); }}
                 className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === id
                   ? id === 'meetings'
-                    ? 'bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 shadow-xs border border-emerald-500/20 dark:border-emerald-500/30 font-semibold'
+                    ? 'bg-emerald-900/15 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 shadow-xs border border-emerald-800/30 dark:border-emerald-700/40 font-semibold'
                     : 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
                   }`}
               >
-                <Icon className={`w-4 h-4 ${activeTab === id ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+                <Icon className={`w-4 h-4 ${activeTab === id ? (id === 'meetings' ? 'text-emerald-800 dark:text-emerald-400' : 'text-emerald-600 dark:text-emerald-400') : 'text-zinc-500 dark:text-zinc-400'}`} />
                 <span>{label}</span>
                 {badge > 0 && (
-                  <span className="ml-auto bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 text-[11px] font-bold px-2 py-0.5 rounded-full">{badge}</span>
+                  <span className="ml-auto bg-emerald-900/20 text-emerald-900 dark:text-emerald-300 border border-emerald-800/30 text-[11px] font-bold px-2 py-0.5 rounded-full">{badge}</span>
                 )}
               </button>
             ))}
