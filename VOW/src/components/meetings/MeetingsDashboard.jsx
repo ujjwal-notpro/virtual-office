@@ -62,9 +62,9 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
 
   return (
     <div className="h-full flex flex-col bg-white dark:bg-[#0c0c0f] text-zinc-900 dark:text-zinc-100 overflow-y-auto">
-      {/* Top Header Bar */}
+
       <header className="shrink-0 bg-white dark:bg-[#0c0c0f] border-b border-zinc-200 dark:border-zinc-800 px-6 sm:px-8 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 z-10">
-        {/* Left: Date & Greeting */}
+
         <div>
           <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">
             {getFormattedDate()}
@@ -74,9 +74,8 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
           </h1>
         </div>
 
-        {/* Right Action Bar */}
         <div className="flex items-center gap-3">
-          {/* Search Bar */}
+
           <div className="relative min-w-[180px] sm:min-w-[220px]">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
             <input
@@ -88,7 +87,6 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
             />
           </div>
 
-          {/* Join Meeting button */}
           <button
             onClick={() => setIsJoinModalOpen(true)}
             className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-black rounded-xl text-xs font-semibold cursor-pointer transition-colors shadow-sm"
@@ -97,7 +95,6 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
             <span>Join Meeting</span>
           </button>
 
-          {/* User Profile Pill */}
           <div
             onClick={onNavigateToProfile}
             className="flex items-center gap-1.5 p-1 sm:pr-2 bg-emerald-100 dark:bg-emerald-950/40 border border-emerald-300/60 dark:border-emerald-700/40 rounded-full cursor-pointer"
@@ -111,16 +108,14 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
         </div>
       </header>
 
-      {/* Main Content Area */}
       <div className="flex-1 p-6 sm:p-8 max-w-5xl w-full mx-auto space-y-6">
         <div>
           <h2 className="text-lg font-bold text-zinc-900 dark:text-white mb-4">
             Quick Actions
           </h2>
 
-          {/* Circled Cards: Join Meeting & Create Room */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Card 1: Join Meeting */}
+
             <div
               onClick={() => setIsJoinModalOpen(true)}
               className="bg-white dark:bg-[#121216] border border-emerald-200 dark:border-emerald-500/20 hover:border-emerald-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px] transition-all hover:shadow-md"
@@ -139,7 +134,6 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
               </div>
             </div>
 
-            {/* Card 2: Create Room */}
             <div
               onClick={() => setIsCreateModalOpen(true)}
               className="bg-white dark:bg-[#121216] border border-emerald-200 dark:border-emerald-500/20 hover:border-emerald-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px] transition-all hover:shadow-md"
@@ -161,7 +155,6 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
         </div>
       </div>
 
-      {/* Join Meeting Modal */}
       <JoinMeetingModal
         isOpen={isJoinModalOpen}
         onClose={() => setIsJoinModalOpen(false)}
@@ -170,7 +163,6 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
         initialCode={inviteCode}
       />
 
-      {/* Create Room Modal */}
       <CreateRoomModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}

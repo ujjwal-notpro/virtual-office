@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const Newsletter = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('');
-  const [statusType, setStatusType] = useState(''); // 'success' or 'error'
+  const [statusType, setStatusType] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -73,10 +73,10 @@ const Newsletter = () => {
               color: 'var(--text-primary)'
             }}
           />
-          <button 
+          <button
             onClick={handleSubmit}
-            className="px-6 py-3 text-sm font-medium hover:opacity-90 transition-opacity whitespace-nowrap btn-hover" 
-            style={{ 
+            className="px-6 py-3 text-sm font-medium hover:opacity-90 transition-opacity whitespace-nowrap btn-hover"
+            style={{
               backgroundColor: 'var(--accent-color)',
               color: 'var(--bg-primary)'
             }}

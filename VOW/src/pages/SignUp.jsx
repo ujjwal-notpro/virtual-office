@@ -184,7 +184,6 @@ const SignUp = () => {
           </button>
         </div>
 
-
         <div className="text-center pt-2 text-[13px] text-slate-600 dark:text-zinc-400 font-medium">
           Joined us before?{' '}
           <Link

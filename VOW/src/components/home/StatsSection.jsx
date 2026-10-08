@@ -3,7 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Users, TrendingUp } from 'lucide-react';
 
 const StatsSection = () => {
-  const sectionRef = useRef(null); // Reference to track when this section scrolls into view
+  const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   return (

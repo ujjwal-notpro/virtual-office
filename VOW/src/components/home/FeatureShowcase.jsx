@@ -223,6 +223,5 @@ const FeatureShowcase = () => {
   );
 };
 
-
 export default FeatureShowcase;
 

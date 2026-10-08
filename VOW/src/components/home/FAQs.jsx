@@ -104,7 +104,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
               animate={{ height: 'auto', opacity: 1, rotateX: 0 }}
               exit={{ height: 0, opacity: 0, rotateX: -15 }}
               transition={{ duration: 0.4, type: "spring", bounce: 0.2 }}
-              style={{ transformOrigin: "top center" }} // 3D Hinge effect from the top
+              style={{ transformOrigin: "top center" }}
               className="relative z-10"
             >
               <div
@@ -151,7 +151,6 @@ const FAQs = () => {
 
       <div className="max-w-4xl mx-auto px-4 md:px-6 relative z-10">
         <div className="text-center mb-12 md:mb-16">
-
 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

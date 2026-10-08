@@ -122,7 +122,6 @@ const SignIn = () => {
           </button>
         </div>
 
-
         <div className="text-center pt-2 text-[13px] text-slate-600 dark:text-zinc-400 font-medium">
           New to Flow Bit?{' '}
           <Link to="/sign-up" className="text-black dark:text-white font-bold hover:underline ml-1">

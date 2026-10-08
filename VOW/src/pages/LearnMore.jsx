@@ -16,9 +16,9 @@ import {
 
 export default function LearnMore() {
   const [activeFAQ, setActiveFAQ] = useState(null);
-  const [hoveredFAQ, setHoveredFAQ] = useState(null); // number | null
-  const [hoveredStep, setHoveredStep] = useState(null); // number | null
-  const [hoveredFeature, setHoveredFeature] = useState(null); // number | null
+  const [hoveredFAQ, setHoveredFAQ] = useState(null);
+  const [hoveredStep, setHoveredStep] = useState(null);
+  const [hoveredFeature, setHoveredFeature] = useState(null);
 
   const workflowSteps = [
     {

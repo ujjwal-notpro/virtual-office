@@ -8,14 +8,13 @@ const AVAILABLE_ROOMS = [
   { id: 'room-wanda', name: 'Design Studio', lead: 'Wanda (UI/UX Designer)' },
 ];
 
-// Accepts a plain code ("meet-ab12-345") OR a full invite link (".../dashboard?room=meet-ab12-345")
 const extractMeetingCode = (value) => {
   const trimmed = value.trim();
   try {
     const room = new URL(trimmed).searchParams.get('room');
     if (room) return room.trim();
   } catch {
-    // not a URL – fall through
+
   }
   const match = trimmed.match(/[?&]room=([^&\s]+)/);
   if (match) return decodeURIComponent(match[1]);
@@ -23,7 +22,7 @@ const extractMeetingCode = (value) => {
 };
 
 export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserName = 'Amit Kumar', initialCode = '' }) {
-  const [joinMode, setJoinMode] = useState('all-rooms'); // 'all-rooms' | 'select-rooms' | 'code'
+  const [joinMode, setJoinMode] = useState('all-rooms');
   const [selectedRoomIds, setSelectedRoomIds] = useState(AVAILABLE_ROOMS.map((r) => r.id));
   const [meetingCode, setMeetingCode] = useState('');
   const [userName, setUserName] = useState(initialUserName);
@@ -146,7 +145,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="w-full max-w-lg bg-white dark:bg-[#121216] border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden text-zinc-900 dark:text-zinc-100 flex flex-col max-h-[90vh]">        {/* Header */}
+      <div className="w-full max-w-lg bg-white dark:bg-[#121216] border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden text-zinc-900 dark:text-zinc-100 flex flex-col max-h-[90vh]">
         <div className="px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black flex items-center justify-center">
@@ -166,7 +165,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4 overflow-y-auto flex-1">
-          {/* Camera preview */}
+
           <div className="relative aspect-video max-h-44 bg-zinc-900 rounded-xl overflow-hidden flex items-center justify-center mx-auto w-full">
             {isVideoOn ? (
               <video
@@ -185,7 +184,6 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
               </div>
             )}
 
-            {/* Controls */}
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/70 px-3 py-1 rounded-xl">
               <button
                 type="button"
@@ -206,7 +204,6 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
             </div>
           </div>
 
-          {/* Join Mode Tabs */}
           <div className="flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl">
             <button
               type="button"
@@ -232,7 +229,6 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
             </button>
           </div>
 
-          {/* All Rooms / Select Rooms Mode */}
           {joinMode === 'all-rooms' ? (
             <div className="space-y-2.5">
               <div className="flex items-center justify-between px-1">
@@ -306,7 +302,6 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
             </div>
           )}
 
-          {/* User Display Name */}
           <div>
             <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
               Your Name
@@ -325,7 +320,6 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
 
           {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
 
-          {/* Footer Buttons */}
           <div className="pt-2 flex items-center justify-end gap-2 shrink-0">
             <button
               type="button"

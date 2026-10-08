@@ -18,7 +18,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Register user permanently on Render backend database
 export const registerUser = async ({ name, email, phone, password, role = 'employee' }) => {
   const cleanEmail = (email || '').trim().toLowerCase();
   const cleanName = (name || '').trim();
@@ -35,7 +34,6 @@ export const registerUser = async ({ name, email, phone, password, role = 'emplo
     const data = response?.data;
     const registeredUser = data?.user || data;
 
-    // Automatically log in the newly registered user from Render to get JWT token
     try {
       const loginRes = await api.post('/auth/login', { email: cleanEmail, password });
       if (loginRes?.data?.token) {
@@ -66,7 +64,6 @@ export const registerUser = async ({ name, email, phone, password, role = 'emplo
   }
 };
 
-// Authenticate user against Render backend database (strict credentials check)
 export const loginUser = async ({ email, password }) => {
   const cleanEmail = (email || '').trim().toLowerCase();
 
@@ -97,7 +94,6 @@ export const saveAuth = (token, user) => {
   window.dispatchEvent(new CustomEvent('vow_auth_change', { detail: { token, user } }));
 };
 
-// Log in with email + password and store the session on success
 export const loginAndSave = async ({ email, password }) => {
   const res = await loginUser({ email, password });
   const token = res?.token;

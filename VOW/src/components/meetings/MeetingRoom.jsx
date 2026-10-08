@@ -28,7 +28,6 @@ const ICE_SERVERS = [
   { urls: 'stun:stun4.l.google.com:19302' },
 ];
 
-// Helper to create a realistic virtual camera & audio stream if hardware camera is busy (e.g. multi-tab testing on 1 webcam)
 function createSyntheticMediaStream(name = 'Guest') {
   const canvas = document.createElement('canvas');
   canvas.width = 640;
@@ -42,18 +41,16 @@ function createSyntheticMediaStream(name = 'Guest') {
 
   const draw = () => {
     frame++;
-    // Dark background
+
     ctx.fillStyle = '#111115';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Subtle ambient glow
     const grad = ctx.createRadialGradient(320, 210, 20, 320, 210, 220);
     grad.addColorStop(0, themeColor + '25');
     grad.addColorStop(1, '#11111500');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Pulsing outer ring
     const radius = 62 + Math.sin(frame * 0.08) * 4;
     ctx.beginPath();
     ctx.arc(320, 200, radius, 0, Math.PI * 2);
@@ -61,25 +58,21 @@ function createSyntheticMediaStream(name = 'Guest') {
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // Center avatar circle
     ctx.beginPath();
     ctx.arc(320, 200, 52, 0, Math.PI * 2);
     ctx.fillStyle = themeColor;
     ctx.fill();
 
-    // Initial letter
     ctx.font = 'bold 44px Inter, system-ui, sans-serif';
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText((name || 'U').charAt(0).toUpperCase(), 320, 200);
 
-    // Name text
     ctx.font = 'bold 20px Inter, system-ui, sans-serif';
     ctx.fillStyle = '#f4f4f5';
     ctx.fillText(name, 320, 290);
 
-    // Live audio visualizer bars
     const barCount = 7;
     const startX = 320 - ((barCount * 12) / 2);
     for (let i = 0; i < barCount; i++) {
@@ -95,14 +88,13 @@ function createSyntheticMediaStream(name = 'Guest') {
   const videoStream = canvas.captureStream(25);
   const videoTrack = videoStream.getVideoTracks()[0];
 
-  // Generate lightweight Web Audio stream so audio negotiation succeeds
   let audioTrack = null;
   try {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const dest = audioCtx.createMediaStreamDestination();
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    gain.gain.value = 0.0001; // Ultra-low baseline tone
+    gain.gain.value = 0.0001;
     osc.connect(gain);
     gain.connect(dest);
     osc.start();
@@ -141,7 +133,7 @@ function RemoteTile({ peer }) {
 
   return (
     <div className="relative rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 flex items-center justify-center min-h-[160px] animate-fadeIn">
-      {/* Video element - always rendered so audio continues */}
+
       <video
         ref={videoRef}
         autoPlay
@@ -164,7 +156,6 @@ function RemoteTile({ peer }) {
         </div>
       )}
 
-      {/* Info Badge */}
       <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none z-10">
         <div className="bg-black/75 backdrop-blur-sm px-2.5 py-1 rounded-lg text-xs font-medium text-white shadow">
           {peer.name || 'Guest'}
@@ -200,7 +191,6 @@ export default function MeetingRoom({
     isVideoOn: initialVideo = true,
   } = meetingConfig;
 
-  // Unique session ID for this tab / peer instance
   const myPeerIdRef = useRef(
     `peer_${Math.random().toString(36).substring(2, 9)}_${Date.now()}`
   );
@@ -210,13 +200,13 @@ export default function MeetingRoom({
   const [isVideoOff, setIsVideoOff] = useState(!initialVideo);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [isHandRaised, setIsHandRaised] = useState(false);
-  const [activeTabPanel, setActiveTabPanel] = useState(null); // 'chat' | 'participants' | null
+  const [activeTabPanel, setActiveTabPanel] = useState(null);
   const [meetingDuration, setMeetingDuration] = useState(0);
   const [copiedLink, setCopiedLink] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState('connecting'); // connecting | connected
+  const [connectionStatus, setConnectionStatus] = useState('connecting');
   const [mediaReady, setMediaReady] = useState(false);
-  const [remotePeers, setRemotePeers] = useState({}); // peerId -> { id, name, stream, isMuted, isVideoOff, isHandRaised, connState }
+  const [remotePeers, setRemotePeers] = useState({});
   const [chatMessages, setChatMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [joinNotification, setJoinNotification] = useState(null);
@@ -227,7 +217,7 @@ export default function MeetingRoom({
   const screenStreamRef = useRef(null);
   const roomContainerRef = useRef(null);
   const chatBottomRef = useRef(null);
-  const peersRef = useRef(new Map()); // peerId -> { pc, pendingIce: [], remoteStream, name }
+  const peersRef = useRef(new Map());
   const broadcastChannelRef = useRef(null);
   const stateRef = useRef({ isMuted, isVideoOff, isHandRaised, isScreenSharing, userName, mediaReady: false });
 
@@ -256,13 +246,9 @@ export default function MeetingRoom({
     setTimeout(() => setJoinNotification(null), 3500);
   };
 
-  // ---------------------------------------------------------------------------
-  // Dual-Layer Signaling & WebRTC Engine
-  // ---------------------------------------------------------------------------
   useEffect(() => {
     let cancelled = false;
 
-    // 1. Initialize BroadcastChannel
     const channelName = `vow_channel_${cleanCode}`;
     let bc = null;
     try {
@@ -272,7 +258,6 @@ export default function MeetingRoom({
       console.warn('BroadcastChannel not supported:', e);
     }
 
-    // 2. Initialize Socket.IO connection
     const socket = connectSocket();
 
     const emitSignal = (payload) => {
@@ -342,7 +327,6 @@ export default function MeetingRoom({
       };
       peersRef.current.set(targetPeerId, entry);
 
-      // Attach our media stream tracks
       const localStream = localStreamRef.current;
       if (localStream) {
         localStream.getTracks().forEach((track) => {
@@ -441,7 +425,6 @@ export default function MeetingRoom({
       }
     };
 
-    // Main Signal Dispatcher
     const handleIncomingMessage = async (msg) => {
       if (!msg || msg.sender === myPeerId) return;
 
@@ -458,7 +441,6 @@ export default function MeetingRoom({
         });
         notifyPeerEvent(user?.name || 'Guest', 'joined');
 
-        // Respond with welcome
         emitSignal({
           action: 'welcome',
           target: sender,
@@ -470,7 +452,6 @@ export default function MeetingRoom({
           },
         });
 
-        // Lexicographical initiator
         if (myPeerId > sender) {
           await startOffer(sender, user?.name);
         }
@@ -569,7 +550,6 @@ export default function MeetingRoom({
       socket.on('meeting:signal', handleIncomingMessage);
     }
 
-    // Media Initialization with resilient fallback
     async function initMediaAndSignaling() {
       let stream = null;
       try {
@@ -584,7 +564,7 @@ export default function MeetingRoom({
         } catch (err2) {
           console.warn('Audio only also locked:', err2);
         }
-        // If no hardware video track obtained, generate high-quality fallback stream
+
         if (!stream || stream.getVideoTracks().length === 0) {
           stream = createSyntheticMediaStream(userName);
         }
@@ -608,7 +588,6 @@ export default function MeetingRoom({
       setMediaReady(true);
       setConnectionStatus('connected');
 
-      // Announce arrival
       emitSignal({
         action: 'hello',
         user: {
@@ -633,7 +612,6 @@ export default function MeetingRoom({
 
     initMediaAndSignaling();
 
-    // Periodic heartbeat / peer sync announcement every 3s
     const heartbeat = setInterval(() => {
       if (!cancelled) {
         emitSignal({
@@ -681,35 +659,30 @@ export default function MeetingRoom({
     };
   }, [cleanCode, roomId, myPeerId, userName]);
 
-  // Preview attachment
   useEffect(() => {
     if (localVideoRef.current && localStreamRef.current) {
       localVideoRef.current.srcObject = localStreamRef.current;
     }
   }, [mediaReady, isVideoOff]);
 
-  // Screen share preview attachment
   useEffect(() => {
     if (isScreenSharing && screenVideoRef.current && screenStreamRef.current) {
       screenVideoRef.current.srcObject = screenStreamRef.current;
     }
   }, [isScreenSharing]);
 
-  // Mic toggle
   useEffect(() => {
     localStreamRef.current?.getAudioTracks().forEach((t) => {
       t.enabled = !isMuted;
     });
   }, [isMuted]);
 
-  // Video toggle
   useEffect(() => {
     localStreamRef.current?.getVideoTracks().forEach((t) => {
       t.enabled = !isVideoOff;
     });
   }, [isVideoOff]);
 
-  // State broadcast
   useEffect(() => {
     const payload = {
       action: 'state',
@@ -838,7 +811,7 @@ export default function MeetingRoom({
       ref={roomContainerRef}
       className="relative w-full h-full flex flex-col bg-zinc-950 text-white select-none overflow-hidden"
     >
-      {/* Join/Leave Toast Notification */}
+
       {joinNotification && (
         <div className="absolute top-16 left-6 z-50 bg-zinc-900/95 border border-emerald-500/40 text-white px-4 py-2.5 rounded-xl shadow-2xl backdrop-blur-md flex items-center gap-2.5 animate-fadeIn">
           <div className="w-6 h-6 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-xs">
@@ -851,7 +824,6 @@ export default function MeetingRoom({
         </div>
       )}
 
-      {/* Top Navbar */}
       <header className="h-14 shrink-0 bg-zinc-900 border-b border-zinc-800 px-4 sm:px-6 flex items-center justify-between z-20">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-bold flex items-center justify-center text-xs shadow-sm">
@@ -873,7 +845,7 @@ export default function MeetingRoom({
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Copy Link */}
+
           <button
             onClick={copyMeetingLink}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium cursor-pointer transition-colors shadow-sm"
@@ -892,7 +864,6 @@ export default function MeetingRoom({
             )}
           </button>
 
-          {/* Leave */}
           <button
             onClick={onLeave}
             className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold text-xs cursor-pointer shadow-md transition-all active:scale-95"
@@ -903,10 +874,9 @@ export default function MeetingRoom({
         </div>
       </header>
 
-      {/* Main Content Area */}
       <div className="flex-1 flex overflow-hidden relative">
         <div className="flex-1 p-4 overflow-y-auto flex flex-col justify-center items-center">
-          {/* Screen Share Preview */}
+
           {isScreenSharing && (
             <div className="w-full max-w-4xl aspect-video mb-3 rounded-xl overflow-hidden bg-black border border-zinc-700 relative shadow-2xl">
               <video
@@ -922,7 +892,6 @@ export default function MeetingRoom({
             </div>
           )}
 
-          {/* Responsive Multi-Peer Video Grid */}
           <div
             className={`w-full max-w-5xl grid gap-3 h-full max-h-[75vh] auto-rows-fr ${allParticipantsCount <= 1
                 ? 'grid-cols-1'
@@ -935,7 +904,7 @@ export default function MeetingRoom({
                       : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
               }`}
           >
-            {/* Local User Tile */}
+
             <div className="relative rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 flex items-center justify-center min-h-[160px]">
               <video
                 ref={localVideoRef}
@@ -954,7 +923,6 @@ export default function MeetingRoom({
                 </div>
               )}
 
-              {/* Name Tag & Badges */}
               <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none z-10">
                 <div className="bg-black/75 backdrop-blur-sm px-2.5 py-1 rounded-lg text-xs font-medium text-white flex items-center gap-1.5 shadow">
                   <span>{userName} (You)</span>
@@ -976,14 +944,12 @@ export default function MeetingRoom({
               </div>
             </div>
 
-            {/* Remote Participants Tiles (Real WebRTC Video & Audio Streams) */}
             {remoteList.map((peer) => (
               <RemoteTile key={peer.id} peer={peer} />
             ))}
           </div>
         </div>
 
-        {/* Side Panels */}
         {activeTabPanel && (
           <aside className="w-72 sm:w-80 border-l border-zinc-800 bg-zinc-900 flex flex-col h-full z-20">
             <div className="p-3.5 border-b border-zinc-800 flex items-center justify-between">
@@ -1009,7 +975,6 @@ export default function MeetingRoom({
               </button>
             </div>
 
-            {/* Chat Panel */}
             {activeTabPanel === 'chat' && (
               <div className="flex-1 flex flex-col overflow-hidden">
                 <div className="flex-1 overflow-y-auto p-3 space-y-2.5">
@@ -1061,7 +1026,6 @@ export default function MeetingRoom({
               </div>
             )}
 
-            {/* Participants Panel */}
             {activeTabPanel === 'participants' && (
               <div className="flex-1 overflow-y-auto p-3 space-y-2">
                 <div className="flex items-center justify-between p-2 rounded-lg bg-zinc-800 border border-zinc-700">
@@ -1109,10 +1073,9 @@ export default function MeetingRoom({
         )}
       </div>
 
-      {/* Bottom Control Bar */}
       <footer className="h-16 shrink-0 bg-zinc-900 border-t border-zinc-800 px-4 flex items-center justify-center z-20">
         <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 px-3 py-2 rounded-xl shadow-lg">
-          {/* Mic */}
+
           <button
             onClick={toggleMic}
             className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isMuted ? 'bg-red-500 text-white' : 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black'
@@ -1122,7 +1085,6 @@ export default function MeetingRoom({
             {isMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
           </button>
 
-          {/* Video */}
           <button
             onClick={toggleVideo}
             className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isVideoOff ? 'bg-red-500 text-white' : 'bg-zinc-800 text-white hover:bg-zinc-700'
@@ -1132,7 +1094,6 @@ export default function MeetingRoom({
             {isVideoOff ? <VideoOff className="w-4 h-4" /> : <Video className="w-4 h-4" />}
           </button>
 
-          {/* Screen Share */}
           <button
             onClick={toggleScreenShare}
             className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isScreenSharing ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'
@@ -1142,7 +1103,6 @@ export default function MeetingRoom({
             <ScreenShare className="w-4 h-4" />
           </button>
 
-          {/* Hand Raise */}
           <button
             onClick={() => setIsHandRaised(!isHandRaised)}
             className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isHandRaised ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'
@@ -1154,7 +1114,6 @@ export default function MeetingRoom({
 
           <div className="w-px h-5 bg-zinc-800 mx-1" />
 
-          {/* Chat Toggle */}
           <button
             onClick={() => setActiveTabPanel(activeTabPanel === 'chat' ? null : 'chat')}
             className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${activeTabPanel === 'chat' ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'
@@ -1164,7 +1123,6 @@ export default function MeetingRoom({
             <MessageSquare className="w-4 h-4" />
           </button>
 
-          {/* Participants */}
           <button
             onClick={() => setActiveTabPanel(activeTabPanel === 'participants' ? null : 'participants')}
             className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${activeTabPanel === 'participants' ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'
@@ -1174,7 +1132,6 @@ export default function MeetingRoom({
             <Users className="w-4 h-4" />
           </button>
 
-          {/* Fullscreen */}
           <button
             onClick={toggleFullscreen}
             className="p-2.5 rounded-lg bg-zinc-800 text-white hover:bg-zinc-700 cursor-pointer hidden sm:block transition-colors"

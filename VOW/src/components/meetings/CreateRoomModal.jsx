@@ -88,7 +88,7 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
       <div className="w-full max-w-md bg-white dark:bg-[#121216] border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden text-zinc-900 dark:text-zinc-100">
-        {/* Header */}
+
         <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black flex items-center justify-center">
@@ -105,7 +105,7 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
-          {/* Camera preview */}
+
           <div className="relative aspect-video bg-zinc-900 rounded-xl overflow-hidden flex items-center justify-center">
             {isVideoOn ? (
               <video
@@ -124,7 +124,6 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
               </div>
             )}
 
-            {/* Toggle controls */}
             <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/70 px-3 py-1.5 rounded-xl">
               <button
                 type="button"
@@ -145,7 +144,6 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
             </div>
           </div>
 
-          {/* Form details */}
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
@@ -209,7 +207,6 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
             </div>
           </div>
 
-          {/* Buttons */}
           <div className="pt-2 flex items-center justify-end gap-2">
             <button
               type="button"

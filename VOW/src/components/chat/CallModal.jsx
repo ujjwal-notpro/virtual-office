@@ -19,7 +19,7 @@ import { getSocket } from '../../services/socket';
 export default function CallModal({
   isOpen,
   onClose,
-  callType = 'video', // 'video' | 'audio'
+  callType = 'video',
   recipient = { name: 'Teammate', avatar: '', role: 'Member' },
   currentUser = { name: 'You' }
 }) {
@@ -28,7 +28,7 @@ export default function CallModal({
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [isSpeakerMuted, setIsSpeakerMuted] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
-  const [callStatus, setCallStatus] = useState('Connecting...'); // 'Connecting...' | 'Ringing...' | 'Connected'
+  const [callStatus, setCallStatus] = useState('Connecting...');
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [remoteUserJoined, setRemoteUserJoined] = useState(false);
 

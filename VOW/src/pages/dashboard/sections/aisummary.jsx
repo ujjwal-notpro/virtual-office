@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 const AISummary = () => {
   return (
-    <div>
-      <h2>Flow bit AI Summary</h2>
-    </div>
-  )
-}
+    <div className="h-full w-full p-6">
 
-export default AISummary
+    </div>
+  );
+};
+
+export default AISummary;

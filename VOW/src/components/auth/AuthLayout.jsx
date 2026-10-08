@@ -120,4 +120,3 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/', 
 
 export default AuthLayout;
 
-
