@@ -15,7 +15,6 @@ const loginUser=async(req,res)=>{
 
         const cleanEmail=email.trim().toLowerCase();
 
-<<<<<<< HEAD
         const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if(!emailRegex.test(cleanEmail)){
@@ -24,18 +23,6 @@ const loginUser=async(req,res)=>{
             });
         }
 
-=======
-        //  Gmail validation
-        const emailRegex=/^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-
-        if(!emailRegex.test(cleanEmail)){
-            return res.status(400).json({
-                message:"Please enter a valid Gmail address"
-            });
-        }
-
-        //  Find user
->>>>>>> ayush
         const user=await User.findOne({
             email:cleanEmail
         });
