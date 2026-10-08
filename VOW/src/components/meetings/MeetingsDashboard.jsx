@@ -3,7 +3,6 @@ import {
   Video,
   Plus,
   Search,
-  Bell,
   ChevronDown,
 } from 'lucide-react';
 import JoinMeetingModal from './JoinMeetingModal';
@@ -16,7 +15,6 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [activeMeeting, setActiveMeeting] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [notificationCount, setNotificationCount] = useState(1);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -86,26 +84,14 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-amber-500"
+              className="w-full pl-9 pr-3 py-1.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500"
             />
           </div>
-
-          {/* Notification Bell */}
-          <button
-            onClick={() => setNotificationCount(0)}
-            className="relative p-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-xl cursor-pointer"
-            title="Notifications"
-          >
-            <Bell className="w-4 h-4" />
-            {notificationCount > 0 && (
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-amber-500" />
-            )}
-          </button>
 
           {/* Join Meeting button */}
           <button
             onClick={() => setIsJoinModalOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-amber-500 text-white rounded-xl text-xs font-semibold cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-black rounded-xl text-xs font-semibold cursor-pointer transition-colors shadow-sm"
           >
             <Video className="w-4 h-4" />
             <span>Join Meeting</span>
@@ -114,10 +100,10 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
           {/* User Profile Pill */}
           <div
             onClick={onNavigateToProfile}
-            className="flex items-center gap-1.5 p-1 sm:pr-2 bg-amber-100 dark:bg-amber-950/40 border border-amber-300/60 dark:border-amber-700/40 rounded-full cursor-pointer"
+            className="flex items-center gap-1.5 p-1 sm:pr-2 bg-emerald-100 dark:bg-emerald-950/40 border border-emerald-300/60 dark:border-emerald-700/40 rounded-full cursor-pointer"
             title={displayName}
           >
-            <div className="w-7 h-7 rounded-full bg-amber-500 text-white font-bold flex items-center justify-center text-xs">
+            <div className="w-7 h-7 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-bold flex items-center justify-center text-xs">
               {displayInitial}
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 hidden sm:block" />
@@ -137,9 +123,9 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
             {/* Card 1: Join Meeting */}
             <div
               onClick={() => setIsJoinModalOpen(true)}
-              className="bg-white dark:bg-[#121216] border border-amber-200 dark:border-amber-500/20 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px]"
+              className="bg-white dark:bg-[#121216] border border-emerald-200 dark:border-emerald-500/20 hover:border-emerald-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px] transition-all hover:shadow-md"
             >
-              <div className="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/40 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
                 <Video className="w-6 h-6" />
               </div>
 
@@ -156,9 +142,9 @@ export default function MeetingsDashboard({ userProfile = { name: 'Virtual Offic
             {/* Card 2: Create Room */}
             <div
               onClick={() => setIsCreateModalOpen(true)}
-              className="bg-white dark:bg-[#121216] border border-amber-200 dark:border-amber-500/20 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px]"
+              className="bg-white dark:bg-[#121216] border border-emerald-200 dark:border-emerald-500/20 hover:border-emerald-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between min-h-[140px] transition-all hover:shadow-md"
             >
-              <div className="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/40 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
                 <Plus className="w-6 h-6 stroke-[2.5]" />
               </div>
 

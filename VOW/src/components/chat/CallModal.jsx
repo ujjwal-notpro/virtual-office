@@ -385,15 +385,9 @@ export default function CallModal({
             <div className="text-center space-y-6 animate-fadeIn z-10">
               <div className="relative mx-auto w-32 h-32">
                 <div className="absolute inset-0 rounded-full bg-emerald-500/20 animate-ping opacity-60" />
-                <div className="absolute -inset-3 rounded-full bg-emerald-500/10 animate-pulse" />
-                <img
-                  src={
-                    recipient.avatar ||
-                    'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?w=600&auto=format&fit=crop&q=60'
-                  }
-                  alt={recipient.name}
-                  className="relative w-full h-full rounded-full object-cover border-4 border-zinc-800 shadow-2xl ring-2 ring-emerald-500/50"
-                />
+                <div className="relative w-full h-full rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-extrabold text-4xl flex items-center justify-center border-4 border-zinc-800 shadow-2xl ring-2 ring-emerald-500/50">
+                  {(recipient.name || 'U').trim().charAt(0).toUpperCase()}
+                </div>
                 <span className="absolute bottom-1 right-1 p-1.5 rounded-full bg-emerald-500 ring-4 ring-zinc-950">
                   <Sparkles className="w-3.5 h-3.5 text-black" />
                 </span>

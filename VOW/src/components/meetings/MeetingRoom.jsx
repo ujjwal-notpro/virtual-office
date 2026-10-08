@@ -171,7 +171,7 @@ function RemoteTile({ peer }) {
         </div>
         <div className="flex items-center gap-1">
           {peer.isHandRaised && (
-            <div className="w-6 h-6 rounded-lg bg-amber-500 text-zinc-950 flex items-center justify-center shadow">
+            <div className="w-6 h-6 rounded-lg bg-emerald-500 text-white flex items-center justify-center shadow">
               <Hand className="w-3.5 h-3.5" />
             </div>
           )}
@@ -840,12 +840,12 @@ export default function MeetingRoom({
     >
       {/* Join/Leave Toast Notification */}
       {joinNotification && (
-        <div className="absolute top-16 left-6 z-50 bg-zinc-900/95 border border-amber-500/40 text-white px-4 py-2.5 rounded-xl shadow-2xl backdrop-blur-md flex items-center gap-2.5 animate-fadeIn">
-          <div className="w-6 h-6 rounded-full bg-amber-500 text-zinc-950 font-bold flex items-center justify-center text-xs">
+        <div className="absolute top-16 left-6 z-50 bg-zinc-900/95 border border-emerald-500/40 text-white px-4 py-2.5 rounded-xl shadow-2xl backdrop-blur-md flex items-center gap-2.5 animate-fadeIn">
+          <div className="w-6 h-6 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-xs">
             <UserPlus className="w-3.5 h-3.5" />
           </div>
           <div className="text-xs">
-            <span className="font-bold text-amber-400">{joinNotification.name}</span>{' '}
+            <span className="font-bold text-emerald-400">{joinNotification.name}</span>{' '}
             {joinNotification.type === 'joined' ? 'joined the call' : 'left the call'}
           </div>
         </div>
@@ -854,13 +854,13 @@ export default function MeetingRoom({
       {/* Top Navbar */}
       <header className="h-14 shrink-0 bg-zinc-900 border-b border-zinc-800 px-4 sm:px-6 flex items-center justify-between z-20">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-amber-500 text-zinc-950 font-bold flex items-center justify-center text-xs shadow-sm">
+          <div className="w-8 h-8 rounded-lg bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-bold flex items-center justify-center text-xs shadow-sm">
             <Layers className="w-4 h-4" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-bold text-white truncate max-w-[200px] sm:max-w-md">{roomTopic}</h2>
-              <span className="text-[10px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full">
                 {allParticipantsCount} in call
               </span>
             </div>
@@ -947,7 +947,7 @@ export default function MeetingRoom({
               />
               {isVideoOff && (
                 <div className="flex flex-col items-center gap-2 z-10">
-                  <div className="w-16 h-16 rounded-full bg-amber-500 text-zinc-950 font-bold text-xl flex items-center justify-center shadow-lg">
+                  <div className="w-16 h-16 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-bold text-xl flex items-center justify-center shadow-lg">
                     {userName ? userName.charAt(0).toUpperCase() : 'Y'}
                   </div>
                   <span className="text-xs text-zinc-300 font-medium">{userName} (You)</span>
@@ -962,7 +962,7 @@ export default function MeetingRoom({
 
                 <div className="flex items-center gap-1">
                   {isHandRaised && (
-                    <div className="w-6 h-6 rounded-lg bg-amber-500 text-zinc-950 flex items-center justify-center shadow">
+                    <div className="w-6 h-6 rounded-lg bg-emerald-500 text-white flex items-center justify-center shadow">
                       <Hand className="w-3.5 h-3.5" />
                     </div>
                   )}
@@ -990,13 +990,13 @@ export default function MeetingRoom({
               <div className="flex items-center gap-2">
                 {activeTabPanel === 'chat' && (
                   <>
-                    <MessageSquare className="w-4 h-4 text-amber-400" />
+                    <MessageSquare className="w-4 h-4 text-emerald-400" />
                     <h3 className="font-bold text-xs text-white">In-Call Messages</h3>
                   </>
                 )}
                 {activeTabPanel === 'participants' && (
                   <>
-                    <Users className="w-4 h-4 text-amber-400" />
+                    <Users className="w-4 h-4 text-emerald-400" />
                     <h3 className="font-bold text-xs text-white">Participants ({allParticipantsCount})</h3>
                   </>
                 )}
@@ -1029,7 +1029,7 @@ export default function MeetingRoom({
                       </div>
                       <div
                         className={`px-3 py-1.5 rounded-xl text-xs max-w-[85%] ${msg.isMe
-                            ? 'bg-amber-500 text-zinc-950 font-medium'
+                            ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-semibold'
                             : 'bg-zinc-800 text-zinc-100 border border-zinc-700'
                           }`}
                       >
@@ -1052,7 +1052,7 @@ export default function MeetingRoom({
                     <button
                       type="submit"
                       disabled={!inputMessage.trim()}
-                      className="p-1 bg-amber-500 disabled:opacity-40 text-zinc-950 rounded cursor-pointer transition-opacity"
+                      className="p-1 bg-emerald-600 dark:bg-emerald-500 disabled:opacity-40 text-white dark:text-black rounded cursor-pointer transition-opacity"
                     >
                       <Send className="w-3 h-3" />
                     </button>
@@ -1066,13 +1066,13 @@ export default function MeetingRoom({
               <div className="flex-1 overflow-y-auto p-3 space-y-2">
                 <div className="flex items-center justify-between p-2 rounded-lg bg-zinc-800 border border-zinc-700">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-full bg-amber-500 text-zinc-950 font-bold flex items-center justify-center text-xs">
+                    <div className="w-7 h-7 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-bold flex items-center justify-center text-xs">
                       {userName ? userName.charAt(0).toUpperCase() : 'Y'}
                     </div>
                     <div>
                       <div className="text-xs font-bold text-white flex items-center gap-1">
                         <span>{userName}</span>
-                        <span className="text-[10px] text-amber-400">(You)</span>
+                        <span className="text-[10px] text-emerald-400">(You)</span>
                       </div>
                       <span className="text-[10px] text-zinc-400">{connectionStatus === 'connected' ? 'Connected' : 'Connecting...'}</span>
                     </div>
@@ -1115,7 +1115,7 @@ export default function MeetingRoom({
           {/* Mic */}
           <button
             onClick={toggleMic}
-            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isMuted ? 'bg-red-500 text-white' : 'bg-amber-500 text-zinc-950'
+            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isMuted ? 'bg-red-500 text-white' : 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black'
               }`}
             title={isMuted ? 'Unmute Mic' : 'Mute Mic'}
           >
@@ -1135,7 +1135,7 @@ export default function MeetingRoom({
           {/* Screen Share */}
           <button
             onClick={toggleScreenShare}
-            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isScreenSharing ? 'bg-amber-500 text-zinc-950' : 'bg-zinc-800 text-white hover:bg-zinc-700'
+            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isScreenSharing ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'
               }`}
             title={isScreenSharing ? 'Stop Screen Share' : 'Share Screen'}
           >
@@ -1145,7 +1145,7 @@ export default function MeetingRoom({
           {/* Hand Raise */}
           <button
             onClick={() => setIsHandRaised(!isHandRaised)}
-            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isHandRaised ? 'bg-amber-500 text-zinc-950' : 'bg-zinc-800 text-white hover:bg-zinc-700'
+            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${isHandRaised ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'
               }`}
             title={isHandRaised ? 'Lower Hand' : 'Raise Hand'}
           >
@@ -1157,7 +1157,7 @@ export default function MeetingRoom({
           {/* Chat Toggle */}
           <button
             onClick={() => setActiveTabPanel(activeTabPanel === 'chat' ? null : 'chat')}
-            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${activeTabPanel === 'chat' ? 'bg-amber-500 text-zinc-950' : 'bg-zinc-800 text-white hover:bg-zinc-700'
+            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${activeTabPanel === 'chat' ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'
               }`}
             title="Chat"
           >
@@ -1167,7 +1167,7 @@ export default function MeetingRoom({
           {/* Participants */}
           <button
             onClick={() => setActiveTabPanel(activeTabPanel === 'participants' ? null : 'participants')}
-            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${activeTabPanel === 'participants' ? 'bg-amber-500 text-zinc-950' : 'bg-zinc-800 text-white hover:bg-zinc-700'
+            className={`p-2.5 rounded-lg font-bold cursor-pointer transition-colors ${activeTabPanel === 'participants' ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'
               }`}
             title="Participants"
           >

@@ -91,14 +91,14 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
         {/* Header */}
         <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black flex items-center justify-center">
               <Plus className="w-4 h-4 stroke-[2.5]" />
             </div>
             <h3 className="text-base font-bold text-zinc-900 dark:text-white">Create Room</h3>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-white rounded-lg"
+            className="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-white rounded-lg cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -117,7 +117,7 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
               />
             ) : (
               <div className="flex flex-col items-center gap-2 text-zinc-400">
-                <div className="w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold">
+                <div className="w-12 h-12 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black flex items-center justify-center font-bold">
                   {userName ? userName.charAt(0).toUpperCase() : 'H'}
                 </div>
                 <span className="text-xs">Camera is off</span>
@@ -129,7 +129,7 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
               <button
                 type="button"
                 onClick={() => setIsMicOn(!isMicOn)}
-                className={`p-1.5 rounded-lg text-white ${isMicOn ? 'bg-amber-500' : 'bg-red-500'}`}
+                className={`p-1.5 rounded-lg text-white cursor-pointer ${isMicOn ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-red-500'}`}
                 title={isMicOn ? 'Mute Mic' : 'Unmute Mic'}
               >
                 {isMicOn ? <Mic className="w-4 h-4" /> : <MicOff className="w-4 h-4" />}
@@ -137,7 +137,7 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
               <button
                 type="button"
                 onClick={() => setIsVideoOn(!isVideoOn)}
-                className={`p-1.5 rounded-lg text-white ${isVideoOn ? 'bg-amber-500' : 'bg-red-500'}`}
+                className={`p-1.5 rounded-lg text-white cursor-pointer ${isVideoOn ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-red-500'}`}
                 title={isVideoOn ? 'Turn off camera' : 'Turn on camera'}
               >
                 {isVideoOn ? <Video className="w-4 h-4" /> : <VideoOff className="w-4 h-4" />}
@@ -157,7 +157,7 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
                 value={roomTopic}
                 onChange={(e) => setRoomTopic(e.target.value)}
                 autoFocus
-                className="w-full px-3.5 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500"
               />
             </div>
 
@@ -170,7 +170,7 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
                   type="text"
                   value={meetingCode}
                   onChange={(e) => setMeetingCode(e.target.value)}
-                  className="flex-1 px-3.5 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs font-mono text-zinc-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  className="flex-1 px-3.5 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs font-mono text-zinc-900 dark:text-white focus:outline-none focus:border-emerald-500"
                 />
                 <button
                   type="button"
@@ -203,7 +203,7 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
                   placeholder="Enter your name"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-amber-500"
+                  className="w-full pl-9 pr-3 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500"
                 />
               </div>
             </div>
@@ -214,13 +214,13 @@ export default function CreateRoomModal({ isOpen, onClose, onCreate, initialUser
             <button
               type="button"
               onClick={onClose}
-              className="px-3.5 py-2 rounded-xl text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+              className="px-3.5 py-2 rounded-xl text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-amber-500 hover:bg-amber-600 text-white flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-black flex items-center gap-1.5 cursor-pointer shadow-sm transition-colors"
             >
               <span>Start Meeting</span>
               <ArrowRight className="w-3.5 h-3.5" />

@@ -8,14 +8,12 @@ import {
   Moon,
   Search,
   Send,
-  Paperclip,
   Smile,
   Phone,
   Video,
   MoreVertical,
   Check,
   CheckCheck,
-  Shield,
   Camera,
   Edit3,
   Save,
@@ -464,8 +462,6 @@ export default function Dashboard() {
     setTimeout(() => setProfileSavedToast(false), 3000);
   };
 
-  const [isCompactView, setIsCompactView] = useState(false);
-
   const handleLogout = () => {
     navigate('/sign-in');
   };
@@ -531,12 +527,12 @@ export default function Dashboard() {
             <button
               onClick={() => setActiveTab('meetings')}
               className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3.5 px-3.5'} py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'meetings'
-                ? 'bg-amber-100/90 dark:bg-amber-950/60 text-amber-950 dark:text-amber-300 shadow-xs border border-amber-300/80 dark:border-amber-600/40 font-semibold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/20'
+                ? 'bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 shadow-xs border border-emerald-500/20 dark:border-emerald-500/30 font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20'
                 }`}
               title={isSidebarCollapsed ? 'Meetings' : undefined}
             >
-              <Video className={`w-4 h-4 shrink-0 ${activeTab === 'meetings' ? 'text-amber-600 dark:text-amber-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+              <Video className={`w-4 h-4 shrink-0 ${activeTab === 'meetings' ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
               {!isSidebarCollapsed && <span>Meetings</span>}
             </button>
 
@@ -641,11 +637,11 @@ export default function Dashboard() {
                 setIsMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === 'meetings'
-                ? 'bg-amber-100/90 dark:bg-amber-950/60 text-amber-950 dark:text-amber-300 shadow-xs border border-amber-300/80 dark:border-amber-600/40 font-semibold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/20'
+                ? 'bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 shadow-xs border border-emerald-500/20 dark:border-emerald-500/30 font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20'
                 }`}
             >
-              <Video className={`w-4 h-4 ${activeTab === 'meetings' ? 'text-amber-600 dark:text-amber-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+              <Video className={`w-4 h-4 ${activeTab === 'meetings' ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
               <span>Meetings</span>
             </button>
 
@@ -773,14 +769,10 @@ export default function Dashboard() {
                             }`}
                         >
                           <div className="relative shrink-0">
-                            <img
-                              src={chat.avatar}
-                              alt={chat.name}
-                              className="w-10 h-10 rounded-full object-cover ring-1 ring-zinc-300 dark:ring-zinc-700"
-                            />
-                            <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ring-2 ring-white dark:ring-[#0c0c0f] ${chat.status === 'online' ? 'bg-emerald-500' :
-                              chat.status === 'away' ? 'bg-amber-500' : 'bg-zinc-400 dark:bg-zinc-500'
-                              }`} />
+                            <div className={`w-10 h-10 rounded-full ${getAvatarBgColor(chat.name)} text-white font-bold flex items-center justify-center text-sm `}>
+                              {getAvatarInitial(chat.name)}
+                            </div>
+
                           </div>
 
                           <div className="flex-1 min-w-0">
@@ -789,10 +781,14 @@ export default function Dashboard() {
                               <span className="text-[10px] text-zinc-400 dark:text-zinc-500">{chat.time}</span>
                             </div>
                             <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
-                              {chat.messages[chat.messages.length - 1]?.attachment ? (
-                                `📎 [${chat.messages[chat.messages.length - 1].attachment.ext}] ${chat.messages[chat.messages.length - 1].attachment.name}`
+                              {chat.messages && chat.messages.length > 0 ? (
+                                chat.messages[chat.messages.length - 1]?.attachment ? (
+                                  `📎 [${chat.messages[chat.messages.length - 1].attachment.ext}] ${chat.messages[chat.messages.length - 1].attachment.name}`
+                                ) : (
+                                  chat.messages[chat.messages.length - 1]?.text || chat.role
+                                )
                               ) : (
-                                chat.messages[chat.messages.length - 1]?.text || chat.role
+                                chat.role || 'No messages yet'
                               )}
                             </p>
                           </div>
@@ -828,11 +824,9 @@ export default function Dashboard() {
                       </button>
 
                       <div className="relative">
-                        <img
-                          src={activeChat.avatar}
-                          alt={activeChat.name}
-                          className="w-9 h-9 rounded-full object-cover ring-1 ring-zinc-300 dark:ring-zinc-700"
-                        />
+                        <div className={`w-9 h-9 rounded-full ${getAvatarBgColor(activeChat.name)} text-white font-bold flex items-center justify-center text-xs`}>
+                          {getAvatarInitial(activeChat.name)}
+                        </div>
                         <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ring-2 ring-white dark:ring-[#0c0c0f] ${activeChat.status === 'online' ? 'bg-emerald-500' :
                           activeChat.status === 'away' ? 'bg-amber-500' : 'bg-zinc-400 dark:bg-zinc-500'
                           }`} />
@@ -876,7 +870,21 @@ export default function Dashboard() {
                       </span>
                     </div>
 
-                    {activeChat.messages.map((msg) => {
+                    {(!activeChat?.messages || activeChat.messages.length === 0) && (
+                      <div className="flex flex-col items-center justify-center py-16 text-center space-y-3">
+                        <div className={`w-14 h-14 rounded-full ${getAvatarBgColor(activeChat?.name || 'User')} text-white font-bold flex items-center justify-center text-xl`}>
+                          {getAvatarInitial(activeChat?.name || 'U')}
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-zinc-900 dark:text-white">{activeChat?.name}</h4>
+                          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                            No messages yet. Send a message to start chatting!
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {(activeChat?.messages || []).map((msg) => {
                       const isMe = msg.sender === 'me';
                       return (
                         <div
@@ -884,11 +892,9 @@ export default function Dashboard() {
                           className={`flex items-end gap-2.5 ${isMe ? 'justify-end' : 'justify-start'}`}
                         >
                           {!isMe && (
-                            <img
-                              src={activeChat.avatar}
-                              alt=""
-                              className="w-7 h-7 rounded-full object-cover ring-1 ring-zinc-300 dark:ring-zinc-700 mb-1"
-                            />
+                            <div className={`w-7 h-7 rounded-full ${getAvatarBgColor(activeChat.name)} text-white font-bold flex items-center justify-center text-[10px] mb-1 shrink-0`}>
+                              {getAvatarInitial(activeChat.name)}
+                            </div>
                           )}
 
                           <div className={`max-w-md rounded-2xl p-2.5 text-xs shadow-xs ${isMe
@@ -1025,48 +1031,11 @@ export default function Dashboard() {
                       </div>
                     </div>
                   )}
-                  {isAttachmentMenuOpen && (
-                    <div
-                      ref={attachmentMenuRef}
-                      className="absolute bottom-16 left-4 w-52 rounded-2xl bg-white dark:bg-[#14141a] border border-zinc-200 dark:border-zinc-800 shadow-2xl p-2 z-50 space-y-1 animate-fadeIn"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => fileInputRef.current?.click()}
-                        className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-                      >
-                        <div className="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                          <FileText className="w-4 h-4" />
-                        </div>
-                        <span>Document / File</span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => fileInputRef.current?.click()}
-                        className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-                      >
-                        <div className="w-7 h-7 rounded-lg bg-violet-500/20 text-violet-600 dark:text-violet-400 flex items-center justify-center">
-                          <ImageIcon className="w-4 h-4" />
-                        </div>
-                        <span>Photos & Videos</span>
-                      </button>
-                    </div>
-                  )}
-
                   <form
                     onSubmit={handleSendMessage}
                     className="p-4 border-t border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] flex items-center gap-3 transition-colors duration-300"
                   >
                     <div className="flex items-center gap-1 text-zinc-500 dark:text-zinc-400 relative">
-                      <button
-                        type="button"
-                        onClick={() => setIsAttachmentMenuOpen(!isAttachmentMenuOpen)}
-                        className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white rounded-xl transition-colors cursor-pointer"
-                        title="Attach Document or Media"
-                      >
-                        <Paperclip className="w-4 h-4" />
-                      </button>
                       <button
                         type="button"
                         onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}
@@ -1258,37 +1227,6 @@ export default function Dashboard() {
                       </div>
                     )}
                   </div>
-
-                  <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 shadow-sm dark:shadow-none transition-colors duration-300">
-                    <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
-                      <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      Security & Authentication
-                    </h3>
-
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-3 border-b border-zinc-200 dark:border-zinc-800 text-xs">
-                      <div>
-                        <h4 className="font-semibold text-zinc-900 dark:text-white">Password</h4>
-                        <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Last changed 3 weeks ago</p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => navigate('/reset-password')}
-                        className="px-3.5 py-1.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-white font-medium transition-colors cursor-pointer self-start sm:self-auto"
-                      >
-                        Change Password
-                      </button>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-3 text-xs">
-                      <div>
-                        <h4 className="font-semibold text-zinc-900 dark:text-white">Two-Factor Authentication</h4>
-                        <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Enhanced security with authenticator app</p>
-                      </div>
-                      <span className="px-2.5 py-1 bg-emerald-500/15 dark:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 rounded-md font-bold text-[10px] self-start sm:self-auto">
-                        Enabled
-                      </span>
-                    </div>
-                  </div>
                 </form>
               </div>
             </ProfileSection>
@@ -1303,70 +1241,53 @@ export default function Dashboard() {
                 </div>
 
                 <div className="space-y-4">
-                    <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 shadow-sm dark:shadow-none transition-colors duration-300">
-                      <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-4">Interface Theme</h3>
+                  <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 shadow-sm dark:shadow-none transition-colors duration-300">
+                    <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-4">Interface Theme</h3>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div
-                          onClick={() => theme !== 'dark' && toggleTheme()}
-                          className={`p-4 rounded-xl border cursor-pointer transition-all ${theme === 'dark'
-                            ? 'bg-zinc-800/80 border-emerald-500/80 ring-1 ring-emerald-500/40 text-white'
-                            : 'bg-zinc-50 dark:bg-[#15151b] border-zinc-300 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700'
-                            }`}
-                        >
-                          <div className="flex items-center justify-between mb-3">
-                            <div className="w-8 h-8 rounded-lg bg-black border border-zinc-800 flex items-center justify-center">
-                              <Moon className="w-4 h-4 text-emerald-400" />
-                            </div>
-                            {theme === 'dark' && (
-                              <span className="w-4 h-4 rounded-full bg-emerald-500 text-black flex items-center justify-center">
-                                <Check className="w-2.5 h-2.5 stroke-[3]" />
-                              </span>
-                            )}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div
+                        onClick={() => theme !== 'dark' && toggleTheme()}
+                        className={`p-4 rounded-xl border cursor-pointer transition-all ${theme === 'dark'
+                          ? 'bg-zinc-800/80 border-emerald-500/80 ring-1 ring-emerald-500/40 text-white'
+                          : 'bg-zinc-50 dark:bg-[#15151b] border-zinc-300 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700'
+                          }`}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="w-8 h-8 rounded-lg bg-black border border-zinc-800 flex items-center justify-center">
+                            <Moon className="w-4 h-4 text-emerald-400" />
                           </div>
-                          <h4 className="text-xs font-bold text-zinc-900 dark:text-white">Pure Dark Mode</h4>
-                          <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">Optimized high contrast deep black palette</p>
+                          {theme === 'dark' && (
+                            <span className="w-4 h-4 rounded-full bg-emerald-500 text-black flex items-center justify-center">
+                              <Check className="w-2.5 h-2.5 stroke-[3]" />
+                            </span>
+                          )}
                         </div>
+                        <h4 className="text-xs font-bold text-zinc-900 dark:text-white">Pure Dark Mode</h4>
+                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">Optimized high contrast deep black palette</p>
+                      </div>
 
-                        <div
-                          onClick={() => theme !== 'light' && toggleTheme()}
-                          className={`p-4 rounded-xl border cursor-pointer transition-all ${theme === 'light'
-                            ? 'bg-zinc-100 border-emerald-600 ring-1 ring-emerald-600/40'
-                            : 'bg-zinc-50 dark:bg-[#15151b] border-zinc-300 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700'
-                            }`}
-                        >
-                          <div className="flex items-center justify-between mb-3">
-                            <div className="w-8 h-8 rounded-lg bg-zinc-200 flex items-center justify-center">
-                              <Sun className="w-4 h-4 text-amber-600" />
-                            </div>
-                            {theme === 'light' && (
-                              <span className="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center">
-                                <Check className="w-2.5 h-2.5 stroke-[3]" />
-                              </span>
-                            )}
+                      <div
+                        onClick={() => theme !== 'light' && toggleTheme()}
+                        className={`p-4 rounded-xl border cursor-pointer transition-all ${theme === 'light'
+                          ? 'bg-zinc-100 border-emerald-600 ring-1 ring-emerald-600/40'
+                          : 'bg-zinc-50 dark:bg-[#15151b] border-zinc-300 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700'
+                          }`}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="w-8 h-8 rounded-lg bg-zinc-200 flex items-center justify-center">
+                            <Sun className="w-4 h-4 text-amber-600" />
                           </div>
-                          <h4 className="text-xs font-bold text-zinc-900 dark:text-white">Bright Light Mode</h4>
-                          <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">Crisp modern light workspace</p>
+                          {theme === 'light' && (
+                            <span className="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center">
+                              <Check className="w-2.5 h-2.5 stroke-[3]" />
+                            </span>
+                          )}
                         </div>
+                        <h4 className="text-xs font-bold text-zinc-900 dark:text-white">Bright Light Mode</h4>
+                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">Crisp modern light workspace</p>
                       </div>
                     </div>
-
-                    <div className="bg-white dark:bg-[#0f0f14] border border-zinc-200 dark:border-[#22222c] rounded-2xl p-6 shadow-sm dark:shadow-none transition-colors duration-300">
-                      <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-2">Display Density</h3>
-                      <div className="flex items-center justify-between py-2 text-xs">
-                        <div>
-                          <h4 className="font-semibold text-zinc-900 dark:text-white">Compact Mode</h4>
-                          <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Reduce paddings and list heights for higher density</p>
-                        </div>
-                        <button
-                          onClick={() => setIsCompactView((value) => !value)}
-                          className={`w-11 h-6 rounded-full p-0.5 flex items-center transition-colors cursor-pointer ${isCompactView ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-800'
-                            }`}
-                        >
-                          <div className={`w-5 h-5 rounded-full bg-white transition-transform ${isCompactView ? 'translate-x-5' : 'translate-x-0'}`} />
-                        </button>
-                      </div>
-                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -1393,7 +1314,7 @@ export default function Dashboard() {
         <button
           onClick={() => setActiveTab('meetings')}
           className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-colors cursor-pointer ${activeTab === 'meetings'
-            ? 'text-amber-600 dark:text-amber-400'
+            ? 'text-emerald-600 dark:text-emerald-400'
             : 'text-zinc-500 dark:text-zinc-400'
             }`}
         >

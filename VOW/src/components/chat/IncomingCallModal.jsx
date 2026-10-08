@@ -18,14 +18,9 @@ export default function IncomingCallModal({
         <div className="relative mx-auto w-24 h-24 pt-2">
           <div className="absolute inset-0 rounded-full bg-emerald-500/20 animate-ping opacity-75" />
           <div className="absolute -inset-2 rounded-full bg-emerald-500/10 animate-pulse" />
-          <img
-            src={
-              incomingCall.callerAvatar ||
-              'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?w=600&auto=format&fit=crop&q=60'
-            }
-            alt={incomingCall.callerName}
-            className="relative w-full h-full rounded-full object-cover border-4 border-zinc-800 shadow-xl"
-          />
+          <div className="relative w-full h-full rounded-full bg-gradient-to-tr from-amber-600 to-amber-500 text-white font-extrabold text-3xl flex items-center justify-center border-4 border-zinc-800 shadow-xl">
+            {(incomingCall.callerName || 'U').trim().charAt(0).toUpperCase()}
+          </div>
           <span className="absolute bottom-0 right-0 p-1.5 rounded-full bg-emerald-500 ring-4 ring-zinc-950 text-black">
             {incomingCall.callType === 'video' ? (
               <Video className="w-3.5 h-3.5" />

@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 import { getStoredToken } from './api';
 
-const REALTIME_URL = import.meta.env.VITE_REALTIME_URL || 'https://virtual-office-2.onrender.com';
+const REALTIME_URL = import.meta.env.VITE_REALTIME_URL || 'https://virtual-office-3.onrender.com';
 
 let socket = null;
 const joinedRooms = new Set();

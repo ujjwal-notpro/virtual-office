@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Video, VideoOff, Mic, MicOff, X, ArrowRight, Hash, User, Layers, Check, Users } from 'lucide-react';
 
 const AVAILABLE_ROOMS = [
-  { id: 'room-krishna', name: 'Product Team', lead: 'Krishna (Product Lead)', avatar: 'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?w=600&auto=format&fit=crop&q=60' },
-  { id: 'room-yashraj', name: 'Engineering Team', lead: 'Yashraj (Tech Lead)', avatar: 'https://images.unsplash.com/photo-1740252117012-bb53ad05e370?w=600&auto=format&fit=crop&q=60' },
-  { id: 'room-devops', name: 'DevOps & Infrastructure', lead: 'Infrastructure Team', avatar: 'https://images.unsplash.com/photo-1624561172888-ac93c696e10c?w=600&auto=format&fit=crop&q=60' },
-  { id: 'room-wanda', name: 'Design Studio', lead: 'Wanda (UI/UX Designer)', avatar: 'https://plus.unsplash.com/premium_photo-1689564003745-946f35267ffe?w=600&auto=format&fit=crop&q=60' },
+  { id: 'room-krishna', name: 'Product Team', lead: 'Krishna (Product Lead)' },
+  { id: 'room-yashraj', name: 'Engineering Team', lead: 'Yashraj (Tech Lead)' },
+  { id: 'room-devops', name: 'DevOps & Infrastructure', lead: 'Infrastructure Team' },
+  { id: 'room-wanda', name: 'Design Studio', lead: 'Wanda (UI/UX Designer)' },
 ];
 
 // Accepts a plain code ("meet-ab12-345") OR a full invite link (".../dashboard?room=meet-ab12-345")
@@ -146,11 +146,10 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="w-full max-w-lg bg-white dark:bg-[#121216] border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden text-zinc-900 dark:text-zinc-100 flex flex-col max-h-[90vh]">
-        {/* Header */}
+      <div className="w-full max-w-lg bg-white dark:bg-[#121216] border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden text-zinc-900 dark:text-zinc-100 flex flex-col max-h-[90vh]">        {/* Header */}
         <div className="px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black flex items-center justify-center">
               <Video className="w-4 h-4" />
             </div>
             <div>
@@ -179,7 +178,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
               />
             ) : (
               <div className="flex flex-col items-center gap-1.5 text-zinc-400">
-                <div className="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-sm">
+                <div className="w-10 h-10 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black flex items-center justify-center font-bold text-sm">
                   {userName ? userName.charAt(0).toUpperCase() : 'U'}
                 </div>
                 <span className="text-xs">Camera is off</span>
@@ -191,7 +190,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
               <button
                 type="button"
                 onClick={() => setIsMicOn(!isMicOn)}
-                className={`p-1.5 rounded-lg text-white cursor-pointer ${isMicOn ? 'bg-amber-500' : 'bg-red-500'}`}
+                className={`p-1.5 rounded-lg text-white cursor-pointer ${isMicOn ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-red-500'}`}
                 title={isMicOn ? 'Mute Mic' : 'Unmute Mic'}
               >
                 {isMicOn ? <Mic className="w-3.5 h-3.5" /> : <MicOff className="w-3.5 h-3.5" />}
@@ -199,7 +198,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
               <button
                 type="button"
                 onClick={() => setIsVideoOn(!isVideoOn)}
-                className={`p-1.5 rounded-lg text-white cursor-pointer ${isVideoOn ? 'bg-amber-500' : 'bg-red-500'}`}
+                className={`p-1.5 rounded-lg text-white cursor-pointer ${isVideoOn ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-red-500'}`}
                 title={isVideoOn ? 'Turn off camera' : 'Turn on camera'}
               >
                 {isVideoOn ? <Video className="w-3.5 h-3.5" /> : <VideoOff className="w-3.5 h-3.5" />}
@@ -213,8 +212,8 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
               type="button"
               onClick={() => setJoinMode('all-rooms')}
               className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${joinMode === 'all-rooms'
-                  ? 'bg-white dark:bg-zinc-800 text-amber-600 dark:text-amber-400 border border-zinc-200 dark:border-zinc-700'
-                  : 'text-zinc-500 hover:text-zinc-800'
+                ? 'bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-zinc-200 dark:border-zinc-700 shadow-xs'
+                : 'text-zinc-500 hover:text-zinc-800'
                 }`}
             >
               <Layers className="w-3.5 h-3.5" />
@@ -224,8 +223,8 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
               type="button"
               onClick={() => setJoinMode('code')}
               className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${joinMode === 'code'
-                  ? 'bg-white dark:bg-zinc-800 text-amber-600 dark:text-amber-400 border border-zinc-200 dark:border-zinc-700'
-                  : 'text-zinc-500 hover:text-zinc-800'
+                ? 'bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-zinc-200 dark:border-zinc-700 shadow-xs'
+                : 'text-zinc-500 hover:text-zinc-800'
                 }`}
             >
               <Hash className="w-3.5 h-3.5" />
@@ -243,7 +242,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                 <button
                   type="button"
                   onClick={handleSelectAllRooms}
-                  className="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline cursor-pointer"
+                  className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
                 >
                   {selectedRoomIds.length === AVAILABLE_ROOMS.length ? 'Deselect All' : 'Select All Rooms'}
                 </button>
@@ -257,16 +256,14 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                       key={room.id}
                       onClick={() => toggleRoomSelect(room.id)}
                       className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-colors ${isSelected
-                          ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700/60'
-                          : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-700/60'
+                        : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800'
                         }`}
                     >
                       <div className="flex items-center gap-2 overflow-hidden">
-                        <img
-                          src={room.avatar}
-                          alt={room.name}
-                          className="w-7 h-7 rounded-full object-cover shrink-0"
-                        />
+                        <div className="w-7 h-7 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
+                          {(room.name || 'R').charAt(0).toUpperCase()}
+                        </div>
                         <div className="truncate">
                           <h4 className="text-xs font-bold text-zinc-900 dark:text-white truncate">
                             {room.name}
@@ -276,8 +273,8 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                       </div>
                       <div
                         className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${isSelected
-                            ? 'bg-amber-500 border-amber-500 text-white'
-                            : 'border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800'
+                          ? 'bg-emerald-600 dark:bg-emerald-500 border-emerald-600 dark:border-emerald-500 text-white dark:text-black'
+                          : 'border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800'
                           }`}
                       >
                         {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
@@ -303,7 +300,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                     if (error) setError('');
                   }}
                   autoFocus
-                  className="w-full pl-9 pr-3 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-amber-500"
+                  className="w-full pl-9 pr-3 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500"
                 />
               </div>
             </div>
@@ -321,7 +318,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                 placeholder="Enter your name"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-amber-500"
+                className="w-full pl-9 pr-3 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
@@ -339,7 +336,7 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-amber-500 hover:bg-amber-600 text-white flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-black flex items-center gap-1.5 cursor-pointer shadow-sm transition-colors"
             >
               <Users className="w-3.5 h-3.5" />
               <span>
