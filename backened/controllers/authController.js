@@ -6,6 +6,7 @@ const loginUser=async(req,res)=>{
     try{
         const{email,password}=req.body;
 
+        // Required fields validation
         if(!email||!password){
             return res.status(400).json({
                 message:"Email and password are required"
@@ -14,6 +15,16 @@ const loginUser=async(req,res)=>{
 
         const cleanEmail=email.trim().toLowerCase();
 
+        //  Gmail validation
+        const emailRegex=/^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+        if(!emailRegex.test(cleanEmail)){
+            return res.status(400).json({
+                message:"Please enter a valid Gmail address"
+            });
+        }
+
+        //  Find user
         const user=await User.findOne({
             email:cleanEmail
         });
@@ -24,6 +35,7 @@ const loginUser=async(req,res)=>{
             });
         }
 
+        //  Check password
         const isPasswordCorrect=await bcrypt.compare(
             password,
             user.password
@@ -35,6 +47,7 @@ const loginUser=async(req,res)=>{
             });
         }
 
+        //  Generate JWT token
         const token=jwt.sign(
             {
                 userId:user._id,
@@ -44,6 +57,7 @@ const loginUser=async(req,res)=>{
             {expiresIn:"1d"}
         );
 
+        //  Send response without password
         res.status(200).json({
             message:"Login successful",
             token:token,
