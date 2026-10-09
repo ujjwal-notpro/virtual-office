@@ -64,9 +64,9 @@ const SignUp = () => {
         console.warn('Socket connect error:', sockErr);
       }
 
-      setSuccessMessage('Account created! Taking you to your dashboard...');
+      setSuccessMessage('Account created! Taking you to your meetings...');
       setTimeout(() => {
-        navigate('/dashboard', { replace: true });
+        navigate('/dashboard?tab=meetings', { replace: true });
       }, 200);
     } catch (error) {
       const msg = error.response?.data?.message || error.response?.data?.error || error.message || 'Registration failed. Please try again.';

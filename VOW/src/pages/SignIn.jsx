@@ -41,9 +41,9 @@ const SignIn = () => {
         console.warn('Socket connect error:', sockErr);
       }
 
-      setSuccessMessage('Login successful! Redirecting to dashboard...');
+      setSuccessMessage('Login successful! Redirecting to meetings...');
       setTimeout(() => {
-        navigate('/dashboard', { replace: true });
+        navigate('/dashboard?tab=meetings', { replace: true });
       }, 200);
     } catch (error) {
       const msg =

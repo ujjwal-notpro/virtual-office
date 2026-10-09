@@ -25,7 +25,7 @@ export default function Dashboard() {
   const location = useLocation();
   const { theme, toggleTheme } = useDarkMode();
 
-  const [activeTab, setActiveTab] = useState('chat');
+  const [activeTab, setActiveTab] = useState('meetings');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -63,14 +63,16 @@ export default function Dashboard() {
     const tabParam = params.get('tab');
     if (roomParam || tabParam === 'meetings' || location.pathname === '/meetings' || location.pathname === '/meeting') {
       setActiveTab('meetings');
+    } else if (tabParam === 'chat' || location.pathname === '/chat') {
+      setActiveTab('chat');
     } else if (tabParam === 'profile' || location.pathname === '/profile') {
       setActiveTab('profile');
     } else if (tabParam === 'settings' || location.pathname === '/settings') {
       setActiveTab('settings');
     } else if (tabParam === 'chatbot' || tabParam === 'aisummary' || location.pathname === '/chatbot' || location.pathname === '/aisummary') {
       setActiveTab('chatbot');
-    } else if (tabParam === 'chat' || location.pathname === '/chat') {
-      setActiveTab('chat');
+    } else {
+      setActiveTab('meetings');
     }
   }, [location]);
 
