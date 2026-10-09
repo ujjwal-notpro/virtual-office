@@ -41,13 +41,9 @@ const Hero = () => {
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center relative">
-            <motion.div
-              animate={{ scale: [1, 1.25, 1], opacity: [0.25, 0.55, 0.25] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-[15%] left-1/2 -translate-x-1/2 w-64 h-64 sm:w-80 sm:h-80 bg-blue-500/30 dark:bg-blue-600/20 rounded-full blur-[80px] z-0 pointer-events-none"
-            />
             <motion.div initial={{ opacity: 0, y: 30, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }} className="relative z-10 w-full flex justify-center">
-              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden p-2 sm:p-2.5  backdrop-blur-sm group">
-                <img src={homeImg} alt="Flow Bit Virtual Office Dashboard" loading="eager" className="w-full h-auto max-h-[480px] object-contain rounded-xl sm:rounded-2xl transition-transform duration-500 group-hover:scale-[1.02]" />
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden p-2 sm:p-2.5 group">
+                <img src={homeImg} alt="Flow Bit Virtual Office Dashboard" loading="eager" className="w-full h-auto max-h-[480px] object-contain rounded-xl sm:rounded-2xl transition-transform duration-500 group-hover:scale-[1.01]" />
               </div>
             </motion.div>
           </div>
