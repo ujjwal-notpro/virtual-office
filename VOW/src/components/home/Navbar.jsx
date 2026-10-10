@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Sun, Moon, Home, CreditCard, Mail, LogIn, ArrowRight } from 'lucide-react';
+import { Home, Mail, LogIn, ArrowRight, Menu, X } from 'lucide-react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDarkMode } from "../../hooks/useDarkMode";
 import brandLogo from '../../assets/image.png';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useDarkMode();
   const location = useLocation();
   const [activeSection, setActiveSection] = useState('home');
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   useEffect(() => {
     if (location.pathname !== "/") {
       setActiveSection("");
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const scrollToSection = (e, sectionId) => {
     e.preventDefault();
+    setMobileMenuOpen(false);
     if (location.pathname !== "/") {
       navigate(`/#${sectionId}`);
       return;
@@ -28,155 +36,197 @@ const Navbar = () => {
     }
   };
 
+  const navLinks = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'contact', label: 'Contact', icon: Mail },
+  ];
+
   return (
     <header
-      className="w-full sticky top-0 z-50"
-      style={{ backgroundColor: 'var(--bg-primary)' }}
+      className="w-full sticky top-0 z-50 transition-all duration-500"
+      style={{
+        backgroundColor: scrolled ? 'rgba(0,0,0,0.95)' : '#000000',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+      }}
     >
-      <div
-        className="hidden md:flex max-w-7xl mx-auto px-6 h-20 items-center justify-between border-b"
-        style={{ borderColor: 'var(--border-color)' }}
-      >
-        <div className="gap-20 flex items-center">
-          <div className="flex items-center gap-2.5 text-2xl font-bold text-black dark:text-white">
-            <img src={brandLogo} alt="Flow Bit logo" className="w-8 h-8 object-contain" />
-            <span>Flow Bit</span>
+      <div className="hidden md:flex max-w-7xl mx-auto px-8 h-20 items-center justify-between">
+        <div className="flex items-center gap-14">
+         
+          <div
+            className="flex items-center gap-2.5 cursor-pointer group"
+            onClick={() => navigate('/')}
+          >
+            <div
+              className="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden"
+              style={{ border: '1.5px solid rgba(255,255,255,0.2)' }}
+            >
+              <img src={brandLogo} alt="Flow Bit logo" className="w-7 h-7 object-contain" />
+            </div>
+            <span
+              className="text-xl tracking-tight transition-colors duration-300"
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontWeight: 700,
+                color: '#ffffff',
+              }}
+            >
+              Flow Bit
+            </span>
           </div>
 
-          <nav
-            className="flex items-center gap-1 p-1.5 rounded-2xl"
-            style={{
-              background: "linear-gradient(145deg, rgba(128, 128, 128, 0.05) 0%, rgba(128, 128, 128, 0.01) 100%)",
-              border: "1px solid rgba(128, 128, 128, 0.15)",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.03)",
-              backdropFilter: "blur(10px)"
-            }}
-          >
-            <a
-              href="#home"
-              onClick={(e) => scrollToSection(e, 'home')}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/10"
-              style={{
-                backgroundColor: activeSection === 'home' ? (theme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(51, 102, 255, 0.1)') : '',
-                color: activeSection === 'home' ? 'var(--accent-color)' : 'var(--text-secondary)',
-              }}
-            >
-              <Home className="w-4 h-4 transition-transform group-hover:scale-110" />
-              Home
-            </a>
-
-            <a
-              href="#contact"
-              onClick={(e) => scrollToSection(e, 'contact')}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 group hover:bg-black/5 dark:hover:bg-white/10"
-              style={{
-                backgroundColor: activeSection === 'contact' ? (theme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(51, 102, 255, 0.1)') : '',
-                color: activeSection === 'contact' ? 'var(--accent-color)' : 'var(--text-secondary)',
-              }}
-            >
-              <Mail className="w-4 h-4 transition-transform group-hover:scale-110" />
-              Contact
-            </a>
+          <nav className="flex items-center gap-1">
+            {navLinks.map(({ id, label }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => scrollToSection(e, id)}
+                className="relative px-5 py-2 text-[13px] font-medium tracking-wide uppercase transition-all duration-300"
+                style={{
+                  color: activeSection === id ? '#ffffff' : 'rgba(255,255,255,0.55)',
+                  letterSpacing: '0.08em',
+                }}
+                onMouseEnter={(e) => e.target.style.color = '#ffffff'}
+                onMouseLeave={(e) => {
+                  if (activeSection !== id) e.target.style.color = 'rgba(255,255,255,0.55)';
+                }}
+              >
+                {label}
+                {activeSection === id && (
+                  <span
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-[2px] rounded-full"
+                    style={{ backgroundColor: '#ffffff' }}
+                  />
+                )}
+              </a>
+            ))}
           </nav>
         </div>
 
-        <div className="flex items-center gap-4">
-          <button
-            onClick={toggleTheme}
-            className="w-9 h-9 flex items-center justify-center rounded-md hover:opacity-70 btn-hover"
-            aria-label="Toggle theme"
-          >
-            {theme === 'light' ? (
-              <Sun className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
-            ) : (
-              <Moon className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
-            )}
-          </button>
-
+        <div className="flex items-center gap-3">
           <button
             onClick={() => navigate("/sign-in")}
-            className="flex items-center gap-2 text-sm font-semibold transition-all hover:opacity-70 bg-black rounded-xl px-3 py-3"
+            className="flex items-center gap-2 px-5 py-2.5 text-[13px] font-semibold tracking-wide rounded-full transition-all duration-300 cursor-pointer"
+            style={{
+              border: '1px solid rgba(255,255,255,0.2)',
+              color: '#ffffff',
+              backgroundColor: 'transparent',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+            }}
           >
-            <LogIn className="w-4 h-4 text-white" />
-            <span className='text-white'>Sign In</span>
+            <LogIn className="w-3.5 h-3.5" />
+            Sign In
           </button>
 
           <button
             onClick={() => navigate("/sign-up")}
-            className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl hover:-translate-y-0.5 transition-all duration-300 bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black shadow-[0_4px_14px_0_rgba(0,0,0,0.2)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.15)] cursor-pointer"
+            className="flex items-center gap-2 px-6 py-2.5 text-[13px] font-semibold tracking-wide rounded-full transition-all duration-300 cursor-pointer"
+            style={{
+              backgroundColor: '#ffffff',
+              color: '#000000',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.85)';
+              e.currentTarget.style.transform = 'translateY(-1px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#ffffff';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
           >
             Start Free
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
 
       <div className="md:hidden">
-        <div className="flex items-center justify-between px-6 py-5">
-          <div className="flex items-center gap-2 text-[23px] font-bold tracking-tight text-black dark:text-white">
-            <img src={brandLogo} alt="Flow Bit logo" className="w-8 h-8 object-contain" />
-            <span>Flow Bit</span>
+        <div className="flex items-center justify-between px-5 py-4">
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => navigate('/')}
+          >
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden"
+              style={{ border: '1.5px solid rgba(255,255,255,0.2)' }}
+            >
+              <img src={brandLogo} alt="Flow Bit logo" className="w-6 h-6 object-contain" />
+            </div>
+            <span
+              className="text-lg tracking-tight"
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontWeight: 700,
+                color: '#ffffff',
+              }}
+            >
+              Flow Bit
+            </span>
           </div>
+
           <div className="flex items-center gap-2">
             <button
-              onClick={() => navigate("/sign-in")}
-              className="flex items-center gap-2 text-sm font-semibold whitespace-nowrap transition-all hover:opacity-70 text-black dark:text-white"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer"
+              style={{ border: '1px solid rgba(255,255,255,0.15)' }}
             >
-              <LogIn className="w-4 h-4" />
-              Sign In
+              {mobileMenuOpen ? (
+                <X className="w-4 h-4 text-white" />
+              ) : (
+                <Menu className="w-4 h-4 text-white" />
+              )}
             </button>
           </div>
-
         </div>
 
-        <div className="flex justify-center px-4 py-5 pb-3">
-          <nav
-            className="flex items-center gap-4 px-4 py-2.5 rounded-[15px] border overflow-x-auto w-full"
-            style={{
-              borderColor: 'var(--border-color)',
-              backgroundColor: 'var(--bg-primary)',
-            }}
+        {mobileMenuOpen && (
+          <div
+            className="px-5 pb-6 space-y-3 animate-fadeIn"
+            style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
           >
-            <a
-              href="#home"
-              onClick={(e) => scrollToSection(e, "home")}
-              className="text-sm font-medium whitespace-nowrap border-b-2 pb-0.5 transition-all"
-              style={{
-                color:
-                  activeSection === "home"
-                    ? "var(--accent-color)"
-                    : "var(--text-secondary)",
-                borderColor:
-                  activeSection === "home"
-                    ? "var(--accent-color)"
-                    : "transparent",
-              }}
-            >
-              Home
-            </a>
-
-            <a
-              href="#contact"
-              onClick={(e) => scrollToSection(e, "contact")}
-              className="text-sm font-medium whitespace-nowrap border-b-2 pb-0.5 transition-all"
-              style={{
-                color:
-                  activeSection === "contact"
-                    ? "var(--accent-color)"
-                    : "var(--text-secondary)",
-                borderColor:
-                  activeSection === "contact"
-                    ? "var(--accent-color)"
-                    : "transparent",
-              }}
-            >
-              Contact
-            </a>
-
-          </nav>
-        </div>
+            {navLinks.map(({ id, label, icon: Icon }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => scrollToSection(e, id)}
+                className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all"
+                style={{
+                  color: activeSection === id ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                  backgroundColor: activeSection === id ? 'rgba(255,255,255,0.08)' : 'transparent',
+                }}
+              >
+                <Icon className="w-4 h-4" />
+                {label}
+              </a>
+            ))}
+            <div className="flex gap-2 pt-2">
+              <button
+                onClick={() => { navigate("/sign-in"); setMobileMenuOpen(false); }}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold rounded-full cursor-pointer"
+                style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff' }}
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                Sign In
+              </button>
+              <button
+                onClick={() => { navigate("/sign-up"); setMobileMenuOpen(false); }}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold rounded-full cursor-pointer"
+                style={{ backgroundColor: '#ffffff', color: '#000000' }}
+              >
+                Start Free
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-
     </header>
   );
 };

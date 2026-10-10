@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, MessageCircleQuestion } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const faqData = [
   {
     question: "What is FlowBit and how does it help my team?",
     answer: "FlowBit is an all-in-one workspace that brings together project management, real-time chat, video meetings, document collaboration, attendance tracking, and performance analytics. Instead of juggling multiple tools, your team gets everything in a single, unified platform — so nothing falls through the cracks."
-
   },
   {
     question: "Does FlowBit support video meetings?",
@@ -36,60 +35,43 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="mb-4"
+      transition={{ duration: 0.4, delay: (index % 3) * 0.05 }}
     >
-      <motion.div
-        className="rounded-2xl border relative overflow-hidden"
+      <div
+        className="rounded-2xl transition-all duration-300 overflow-hidden"
         style={{
-          backgroundColor: 'var(--card-bg)',
-          borderColor: isOpen ? 'var(--accent-color)' : 'var(--border-color)',
+          backgroundColor: isOpen ? '#1a1a1a' : 'rgba(0,0,0,0.02)',
+          border: `1px solid ${isOpen ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'}`,
         }}
       >
-        {isOpen && (
-          <div
-            className="absolute inset-0 opacity-10 pointer-events-none"
-            style={{ background: 'linear-gradient(120deg, #6366f1, transparent)' }}
-          />
-        )}
-
         <button
           id={itemId}
           aria-expanded={isOpen}
           aria-controls={contentId}
           onClick={() => onToggle(index)}
-          className="w-full relative z-10 flex items-center justify-between p-5 md:p-6 text-left group cursor-pointer"
+          className="w-full flex items-center justify-between py-4 px-5 md:py-4.5 md:px-6 text-left group cursor-pointer transition-all duration-300"
         >
-          <div className="flex items-center gap-4">
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300"
-              style={{
-                background: isOpen ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : 'var(--bg-secondary)',
-                color: isOpen ? '#ffffff' : 'var(--text-secondary)'
-              }}
-            >
-              <MessageCircleQuestion size={18} />
-            </div>
-            <span
-              className="text-[15px] md:text-base font-bold pr-4 leading-relaxed transition-colors duration-200"
-              style={{ color: isOpen ? 'var(--text-primary)' : 'var(--text-secondary)' }}
-            >
-              {faq.question}
-            </span>
-          </div>
+          <span
+            className="text-sm md:text-base font-semibold pr-4 leading-relaxed transition-colors duration-300"
+            style={{ color: isOpen ? '#ffffff' : '#111827' }}
+          >
+            {faq.question}
+          </span>
 
           <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
-            style={{ background: 'var(--bg-secondary)' }}
+            className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
+            style={{
+              backgroundColor: isOpen ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
+            }}
           >
             <ChevronDown
               size={16}
-              style={{ color: isOpen ? 'var(--accent-color)' : 'var(--text-secondary)' }}
+              style={{ color: isOpen ? '#ffffff' : '#4b5563' }}
             />
           </motion.div>
         </button>
@@ -100,23 +82,21 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
               id={contentId}
               role="region"
               aria-labelledby={itemId}
-              initial={{ height: 0, opacity: 0, rotateX: -15 }}
-              animate={{ height: 'auto', opacity: 1, rotateX: 0 }}
-              exit={{ height: 0, opacity: 0, rotateX: -15 }}
-              transition={{ duration: 0.4, type: "spring", bounce: 0.2 }}
-              style={{ transformOrigin: "top center" }}
-              className="relative z-10"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, type: "spring", bounce: 0.2 }}
+              className="overflow-hidden"
             >
               <div
-                className="text-[14px] md:text-[15px] leading-relaxed pb-6 px-5 md:px-6 md:pl-20 pr-8"
-                style={{ color: 'var(--text-secondary)' }}
+                className="text-sm leading-relaxed pb-5 px-5 md:px-6 pt-1 text-white/70"
               >
                 {faq.answer}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };
@@ -128,45 +108,33 @@ const FAQs = () => {
     setOpenIndex((prev) => (prev === index ? null : index));
   };
 
+  const leftCol = faqData.filter((_, idx) => idx % 2 === 0);
+  const rightCol = faqData.filter((_, idx) => idx % 2 !== 0);
+
   return (
     <section
       id="faqs"
-      className="w-full py-16 md:py-28 relative overflow-hidden"
-      style={{ backgroundColor: 'var(--bg-primary)' }}
+      className="w-full relative overflow-hidden"
+      style={{ backgroundColor: '#f5f3f0' }}
     >
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.03, 0.06, 0.03] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/4 left-10 w-96 h-96 rounded-full blur-[100px]"
-          style={{ background: '#6366f1' }}
-        />
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.03, 0.05, 0.03] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          className="absolute bottom-1/4 right-10 w-[500px] h-[500px] rounded-full blur-[120px]"
-          style={{ background: '#ec4899' }}
-        />
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4 md:px-6 relative z-10">
+      <div className="max-w-5xl mx-auto px-5 md:px-8 py-20 md:py-32 relative z-10">
         <div className="text-center mb-12 md:mb-16">
-
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[34px] md:text-4xl lg:text-5xl font-black mb-5 tracking-tight"
-            style={{ color: 'var(--text-primary)' }}
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              fontWeight: 700,
+              fontStyle: 'normal',
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+              color: '#111827',
+            }}
           >
-            Frequently{' '}
-            <span
-              className="text-transparent bg-clip-text"
-              style={{ backgroundImage: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)' }}
-            >
-              Asked Questions
-            </span>
+            Frequently Asked Questions
           </motion.h2>
 
           <motion.p
@@ -174,23 +142,42 @@ const FAQs = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[15px] md:text-lg leading-relaxed max-w-2xl mx-auto"
-            style={{ color: 'var(--text-secondary)' }}
+            className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto mt-4 text-neutral-600"
           >
             Everything you need to know about FlowBit. Can't find the answer you're looking for? Feel free to contact our support team.
           </motion.p>
         </div>
 
-        <div className="flex flex-col gap-2">
-          {faqData.map((faq, index) => (
-            <FAQItem
-              key={index}
-              faq={faq}
-              index={index}
-              isOpen={openIndex === index}
-              onToggle={handleToggle}
-            />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+          <div className="flex flex-col gap-4">
+            {leftCol.map((faq, i) => {
+              const actualIndex = i * 2;
+              return (
+                <FAQItem
+                  key={actualIndex}
+                  faq={faq}
+                  index={actualIndex}
+                  isOpen={openIndex === actualIndex}
+                  onToggle={handleToggle}
+                />
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col gap-4">
+            {rightCol.map((faq, i) => {
+              const actualIndex = i * 2 + 1;
+              return (
+                <FAQItem
+                  key={actualIndex}
+                  faq={faq}
+                  index={actualIndex}
+                  isOpen={openIndex === actualIndex}
+                  onToggle={handleToggle}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
