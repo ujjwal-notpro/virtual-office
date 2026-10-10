@@ -20,7 +20,7 @@ const loginUser=async(req,res)=>{
 
         if(!emailRegex.test(cleanEmail)){
             return res.status(400).json({
-                message:"Please enter a valid Gmail address"
+                message:"Please enter a valid email address"
             });
         }
 

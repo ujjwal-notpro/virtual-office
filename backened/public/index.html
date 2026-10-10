@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flowbit | Real-Time Office</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#101827;color:#f1f5f9}
+header{padding:18px 24px;background:#182235;border-bottom:1px solid #334155;display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;color:#60a5fa;font-size:25px}
+#status{font-size:13px;color:#4ade80}
+main{max-width:1200px;margin:25px auto;padding:0 16px;display:grid;grid-template-columns:280px 1fr;gap:18px}
+.panel{background:#182235;border:1px solid #334155;border-radius:12px;padding:20px;min-width:0}
+h2{font-size:18px;margin-top:0}
+label{display:block;font-size:13px;color:#cbd5e1;margin:14px 0 6px}
+input,button{padding:12px;border-radius:7px;font-size:14px}
+input{background:#0f172a;border:1px solid #475569;color:white;width:100%}
+button{border:0;background:#3b82f6;color:white;font-weight:bold;cursor:pointer;margin-top:10px}
+button:disabled{opacity:.5;cursor:not-allowed}
+#leaveBtn{background:#475569}
+#participants{padding-left:20px;color:#cbd5e1;overflow-wrap:anywhere}
+#participants li{margin-bottom:10px}
+.callBtn{margin:4px 0 0 4px;padding:7px;font-size:12px}
+#messages{height:240px;overflow-y:auto;background:#0f172a;border-radius:8px;padding:12px;margin-bottom:12px}
+.message{padding:10px;margin:8px 0;background:#25334a;border-radius:8px;overflow-wrap:anywhere}
+.message small{display:block;color:#93c5fd;margin-bottom:5px}
+#chatForm{display:flex;gap:8px}
+#messageInput{flex:1;min-width:0}
+#chatForm button{width:100px;margin:0}
+#notice{font-size:13px;color:#fbbf24;min-height:18px}
+#videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:15px}
+.videoBox{background:#0f172a;border-radius:9px;padding:8px;min-width:0}
+.videoBox video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#020617;border-radius:7px}
+.videoBox p{font-size:13px;margin:7px 0 0;overflow-wrap:anywhere}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.controls button{margin:0}
+#callStatus{font-size:13px;color:#fbbf24;min-height:18px}
+.hint{font-size:12px;color:#94a3b8}
+@media(max-width:700px){main{grid-template-columns:1fr}header{padding:16px}#messages{height:220px}}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>Flowbit</h1>
+  <span id="status">Connecting...</span>
+</header>
+
+<main>
+<section class="panel">
+  <h2>Join Workspace Room</h2>
+
+  <label for="userName">Your name</label>
+  <input id="userName" placeholder="Enter your name" value="User">
+
+  <label for="roomId">Room ID</label>
+  <input id="roomId" placeholder="Enter room ID" value="room101">
+
+  <button id="joinBtn" disabled>Join Room</button>
+  <button id="leaveBtn" disabled>Leave Room</button>
+
+  <p id="notice">Connecting to server...</p>
+  <hr>
+
+  <h2>Participants</h2>
+  <p class="hint">Call button se kisi participant ko call karo.</p>
+  <ul id="participants"></ul>
+</section>
+
+<section class="panel">
+  <h2>Video Meeting</h2>
+
+  <div id="videos">
+    <div class="videoBox">
+      <video id="localVideo" autoplay playsinline muted></video>
+      <p>You (Local Video)</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="cameraBtn" disabled>Start Camera</button>
+    <button id="micBtn" disabled>Mute Mic</button>
+    <button id="stopCameraBtn" disabled>Stop Camera</button>
+  </div>
+
+  <p id="callStatus">Room join karke camera start karo.</p>
+
+  <hr>
+  <h2>Team Chat</h2>
+
+  <div id="messages"></div>
+
+  <form id="chatForm">
+    <input id="messageInput" placeholder="Type a message..." autocomplete="off" disabled>
+    <button id="sendBtn" disabled>Send</button>
+  </form>
+
+  <p class="hint">Chat history abhi database mein save nahi hoti.</p>
+</section>
+</main>
+
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+
+<script>
+if (typeof io === "undefined") {
+  document.getElementById("status").textContent = "Socket.IO client failed to load";
+  throw new Error("Socket.IO client is missing");
+}
+
+const socket = io("http://localhost:3000");
+
+const $ = id => document.getElementById(id);
+
+const statusEl = $("status");
+const notice = $("notice");
+const joinBtn = $("joinBtn");
+const leaveBtn = $("leaveBtn");
+const userName = $("userName");
+const roomInput = $("roomId");
+const participantsEl = $("participants");
+const messagesEl = $("messages");
+const messageInput = $("messageInput");
+const sendBtn = $("sendBtn");
+const localVideo = $("localVideo");
+const cameraBtn = $("cameraBtn");
+const micBtn = $("micBtn");
+const stopCameraBtn = $("stopCameraBtn");
+const callStatus = $("callStatus");
+const videosEl = $("videos");
+
+let currentRoom = "";
+let currentName = "";
+let localStream = null;
+let micMuted = false;
+
+// Ek peer connection per remote participant
+const peers = new Map();
+const pendingCandidates = new Map();
+
+socket.on("connect", () => {
+  statusEl.textContent = "Connected";
+  statusEl.style.color = "#4ade80";
+  notice.textContent = "Server connected. Room join karo.";
+  joinBtn.disabled = false;
+});
+
+socket.on("disconnect", () => {
+  statusEl.textContent = "Disconnected";
+  statusEl.style.color = "#f87171";
+  notice.textContent = "Server connection lost.";
+  joinBtn.disabled = true;
+  leaveBtn.disabled = true;
+  messageInput.disabled = true;
+  sendBtn.disabled = true;
+  cameraBtn.disabled = true;
+  micBtn.disabled = true;
+  stopCameraBtn.disabled = true;
+  cleanupCall();
+  participantsEl.replaceChildren();
+});
+
+socket.on("connect_error", error => {
+  statusEl.textContent = "Connection failed";
+  notice.textContent = error.message;
+});
+
+function addMessage(sender, content, time = new Date()) {
+  const box = document.createElement("div");
+  box.className = "message";
+
+  const who = document.createElement("small");
+  who.textContent = sender;
+
+  const text = document.createElement("div");
+  text.textContent = content;
+
+  const timestamp = document.createElement("small");
+  timestamp.textContent = new Date(time).toLocaleTimeString();
+
+  box.append(who, text, timestamp);
+  messagesEl.appendChild(box);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function createVideoBox(id) {
+  let box = document.getElementById("video-" + id);
+  if (box) return box.querySelector("video");
+
+  box = document.createElement("div");
+  box.className = "videoBox";
+  box.id = "video-" + id;
+
+  const video = document.createElement("video");
+  video.autoplay = true;
+  video.playsInline = true;
+
+  const label = document.createElement("p");
+  label.textContent = "Participant: " + id;
+
+  box.append(video, label);
+  videosEl.appendChild(box);
+  return video;
+}
+
+function removePeer(id) {
+  const pc = peers.get(id);
+
+  if (pc) {
+    pc.onicecandidate = null;
+    pc.ontrack = null;
+    pc.close();
+    peers.delete(id);
+  }
+
+  pendingCandidates.delete(id);
+
+  const box = document.getElementById("video-" + id);
+  if (box) box.remove();
+}
+
+function cleanupCall() {
+  for (const id of [...peers.keys()]) {
+    removePeer(id);
+  }
+
+  if (localStream) {
+    localStream.getTracks().forEach(track => track.stop());
+    localStream = null;
+  }
+
+  localVideo.srcObject = null;
+  cameraBtn.textContent = "Start Camera";
+  micBtn.textContent = "Mute Mic";
+  micMuted = false;
+}
+
+async function startCamera() {
+  if (localStream) return true;
+
+  if (!navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia) {
+    callStatus.textContent =
+      "Camera API unavailable. localhost ya HTTPS use karo.";
+    return false;
+  }
+
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true
+    });
+
+    localVideo.srcObject = localStream;
+
+    cameraBtn.textContent = "Camera On";
+    micBtn.disabled = false;
+    stopCameraBtn.disabled = false;
+    callStatus.textContent = "Camera aur microphone ready hain.";
+
+    return true;
+  } catch (error) {
+    callStatus.textContent =
+      "Camera/mic error: " + error.message +
+      ". Browser permissions check karo.";
+    return false;
+  }
+}
+
+function createPeer(targetId) {
+  if (peers.has(targetId)) return peers.get(targetId);
+
+  const pc = new RTCPeerConnection({
+    iceServers: [
+      { urls: "stun:stun.l.google.com:19302" }
+    ]
+  });
+
+  peers.set(targetId, pc);
+  pendingCandidates.set(targetId, []);
+
+  if (localStream) {
+    localStream.getTracks().forEach(track => {
+      pc.addTrack(track, localStream);
+    });
+  }
+
+  pc.onicecandidate = event => {
+    if (event.candidate) {
+      socket.emit("ice-candidate", {
+        target: targetId,
+        candidate: event.candidate
+      });
+    }
+  };
+
+  pc.ontrack = event => {
+    const remoteVideo = createVideoBox(targetId);
+    if (event.streams && event.streams[0]) {
+      remoteVideo.srcObject = event.streams[0];
+    }
+  };
+
+  pc.onconnectionstatechange = () => {
+    if (pc.connectionState === "failed") {
+      callStatus.textContent =
+        "Video connection failed. Network/STUN-TURN settings check karo.";
+    } else if (pc.connectionState === "connected") {
+      callStatus.textContent = "Video call connected!";
+    }
+  };
+
+  return pc;
+}
+
+async function callParticipant(targetId) {
+  if (!currentRoom) {
+    callStatus.textContent = "Pehle room join karo.";
+    return;
+  }
+
+  if (targetId === socket.id) return;
+
+  if (!(await startCamera())) return;
+
+  try {
+    const pc = createPeer(targetId);
+    const offer = await pc.createOffer();
+    await pc.setLocalDescription(offer);
+
+    socket.emit("offer", {
+      target: targetId,
+      offer: pc.localDescription
+    });
+
+    callStatus.textContent = "Calling participant " + targetId + "...";
+  } catch (error) {
+    callStatus.textContent = "Call start nahi hui: " + error.message;
+  }
+}
+
+cameraBtn.addEventListener("click", async () => {
+  if (!currentRoom) {
+    callStatus.textContent = "Pehle room join karo.";
+    return;
+  }
+  await startCamera();
+});
+
+micBtn.addEventListener("click", () => {
+  if (!localStream) return;
+
+  micMuted = !micMuted;
+  localStream.getAudioTracks().forEach(track => {
+    track.enabled = !micMuted;
+  });
+
+  micBtn.textContent = micMuted ? "Unmute Mic" : "Mute Mic";
+});
+
+stopCameraBtn.addEventListener("click", () => {
+  // Existing remote calls close karne se pehle unhe remove karo.
+  cleanupCall();
+  callStatus.textContent = "Camera aur calls band kar diye.";
+});
+
+joinBtn.addEventListener("click", () => {
+  const name = userName.value.trim();
+  const room = roomInput.value.trim();
+
+  if (!name || !room) {
+    notice.textContent = "Name aur Room ID enter karo.";
+    return;
+  }
+
+  if (currentRoom) {
+    socket.emit("leave-room", currentRoom);
+    cleanupCall();
+  }
+
+  currentName = name;
+  currentRoom = room;
+
+  messagesEl.replaceChildren();
+  participantsEl.replaceChildren();
+
+  socket.emit("join-room", currentRoom);
+
+  joinBtn.disabled = true;
+  leaveBtn.disabled = false;
+  messageInput.disabled = false;
+  sendBtn.disabled = false;
+  cameraBtn.disabled = false;
+
+  notice.textContent = "Joined room: " + currentRoom;
+});
+
+leaveBtn.addEventListener("click", () => {
+  if (!currentRoom) return;
+
+  socket.emit("leave-room", currentRoom);
+  currentRoom = "";
+
+  cleanupCall();
+  participantsEl.replaceChildren();
+
+  joinBtn.disabled = false;
+  leaveBtn.disabled = true;
+  messageInput.disabled = true;
+  sendBtn.disabled = true;
+  cameraBtn.disabled = true;
+  micBtn.disabled = true;
+  stopCameraBtn.disabled = true;
+
+  notice.textContent = "Room se leave kar diya.";
+});
+
+$("chatForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const message = messageInput.value.trim();
+  if (!currentRoom || !message) return;
+
+  socket.emit("send-message", {
+    roomId: currentRoom,
+    message
+  });
+
+  messageInput.value = "";
+});
+
+socket.on("room-participants", data => {
+  if (!data || data.roomId !== currentRoom) return;
+
+  participantsEl.replaceChildren();
+
+  data.participants.forEach(id => {
+    const item = document.createElement("li");
+    const label = document.createElement("span");
+
+    label.textContent = id + (id === socket.id ? " (You)" : "");
+    item.appendChild(label);
+
+    if (id !== socket.id) {
+      const callBtn = document.createElement("button");
+      callBtn.className = "callBtn";
+      callBtn.textContent = "Call";
+      callBtn.addEventListener("click", () => callParticipant(id));
+      item.appendChild(callBtn);
+    }
+
+    participantsEl.appendChild(item);
+  });
+});
+
+socket.on("user-joined", () => {
+  if (currentRoom) notice.textContent = "A user joined the room.";
+});
+
+socket.on("user-left", data => {
+  if (data && data.id) removePeer(data.id);
+  if (currentRoom) notice.textContent = "A user left the room.";
+});
+
+socket.on("receive-message", data => {
+  if (!data || data.roomId !== currentRoom) return;
+
+  const sender = data.sender === socket.id
+    ? currentName + " (You)"
+    : "User " + data.sender;
+
+  addMessage(sender, data.message, data.timestamp);
+});
+
+socket.on("offer", async data => {
+  if (!data || !data.sender || !data.offer) return;
+
+  if (!currentRoom) {
+    callStatus.textContent = "Incoming call: pehle same room join karo.";
+    return;
+  }
+
+  try {
+    if (!(await startCamera())) return;
+
+    const pc = createPeer(data.sender);
+
+    await pc.setRemoteDescription(
+      new RTCSessionDescription(data.offer)
+    );
+
+    const queued = pendingCandidates.get(data.sender) || [];
+    for (const candidate of queued) {
+      await pc.addIceCandidate(new RTCIceCandidate(candidate));
+    }
+    pendingCandidates.set(data.sender, []);
+
+    const answer = await pc.createAnswer();
+    await pc.setLocalDescription(answer);
+
+    socket.emit("answer", {
+      target: data.sender,
+      answer: pc.localDescription
+    });
+
+    callStatus.textContent = "Incoming video call accepted.";
+  } catch (error) {
+    callStatus.textContent = "Call answer error: " + error.message;
+  }
+});
+
+socket.on("answer", async data => {
+  if (!data || !data.sender || !data.answer) return;
+
+  const pc = peers.get(data.sender);
+  if (!pc) return;
+
+  try {
+    await pc.setRemoteDescription(
+      new RTCSessionDescription(data.answer)
+    );
+
+    const queued = pendingCandidates.get(data.sender) || [];
+    for (const candidate of queued) {
+      await pc.addIceCandidate(new RTCIceCandidate(candidate));
+    }
+    pendingCandidates.set(data.sender, []);
+
+    callStatus.textContent = "Call answer received.";
+  } catch (error) {
+    callStatus.textContent = "Answer error: " + error.message;
+  }
+});
+
+socket.on("ice-candidate", async data => {
+  if (!data || !data.sender || !data.candidate) return;
+
+  const pc = peers.get(data.sender);
+  if (!pc) return;
+
+  try {
+    if (pc.remoteDescription) {
+      await pc.addIceCandidate(new RTCIceCandidate(data.candidate));
+    } else {
+      if (!pendingCandidates.has(data.sender)) {
+        pendingCandidates.set(data.sender, []);
+      }
+      pendingCandidates.get(data.sender).push(data.candidate);
+    }
+  } catch (error) {
+    console.error("ICE candidate error:", error);
+  }
+});
+
+socket.on("error-message", data => {
+  callStatus.textContent = data.message;
+  notice.textContent = data.message;
+});
+</script>
+</body>
+</html>
