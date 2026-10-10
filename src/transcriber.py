@@ -1,29 +1,32 @@
-import requests
+import whisper
+import tempfile
+import os
 from src.config import Config
 
+# Load the model only once when this module is imported
+print(f"Loading Whisper model: {Config.WHISPER_MODEL}...")
+model = whisper.load_model(Config.WHISPER_MODEL)
+print("Whisper model loaded successfully.")
 
 def transcribe_audio(audio_bytes):
-    headers = {
-        "Authorization": f"Bearer {Config.HF_API_TOKEN}",
-        "Content-Type": "audio/mpeg"
-    }
+    """
+    Transcribes audio bytes to text using a local Whisper model.
+    """
+    # Create a temporary file to store the audio bytes
+    # Whisper needs a file path, not bytes
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_file:
+        temp_file.write(audio_bytes)
+        temp_file_path = temp_file.name
 
-    response = requests.post(
-        Config.WHISPER_MODEL_URL,
-        headers=headers,
-        data=audio_bytes
-    )
+    try:
+        # Perform transcription
+        result = model.transcribe(temp_file_path)
+        return result["text"].strip()
 
-    result = response.json()
+    except Exception as e:
+        raise Exception(f"Transcription failed: {str(e)}")
 
-    if "text" in result:
-        text = result["text"]
-        return text.strip()
-    elif "error" in result:
-        error = result["error"]
-        if "loading" in str(error).lower():
-            raise Exception("Model is loading, wait 20-30 seconds and try again")
-        else:
-            raise Exception(f"API error: {error}")
-    else:
-        raise Exception(f"Unexpected response: {result}")
+    finally:
+        # Ensure temporary file is deleted
+        if os.path.exists(temp_file_path):
+            os.remove(temp_file_path)

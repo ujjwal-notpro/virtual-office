@@ -1,35 +1,44 @@
-import requests
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from src.config import Config
 
+# Load the model and tokenizer only once
+print(f"Loading Summarizer model: {Config.SUMMARIZER_MODEL}...")
+# Use cpu for now, as cuda check failed
+model = AutoModelForSeq2SeqLM.from_pretrained(Config.SUMMARIZER_MODEL)
+tokenizer = AutoTokenizer.from_pretrained(Config.SUMMARIZER_MODEL)
+print("Summarizer loaded successfully.")
 
 def summarize_text(transcript):
-    response = requests.post(
-        Config.SUMMARIZER_MODEL_URL,
-        headers=Config.HF_HEADERS,
-        json={
-            "inputs": transcript,
-            "parameters": {
-                "max_length": 200,
-                "min_length": 30,
-                "do_sample": False
-            }
-        }
-    )
+    """
+    Summarizes text using a local BART model.
+    """
+    try:
+        # Prepare inputs
+        inputs = tokenizer(
+            transcript,
+            return_tensors='pt',
+            max_length=1024,
+            truncation=True
+        )
 
-    result = response.json()
+        # Generate summary
+        summary_ids = model.generate(
+            inputs['input_ids'],
+            num_beams=4,
+            max_length=200,
+            min_length=30,
+            early_stopping=True
+        )
 
-    if isinstance(result, list) and len(result) > 0:
-        summary = result[0].get("summary_text", "No summary generated")
+        summary = tokenizer.decode(
+            summary_ids[0],
+            skip_special_tokens=True
+        )
+
         return format_notes(summary, transcript)
-    elif isinstance(result, dict) and "error" in result:
-        error = result["error"]
-        if "loading" in error.lower():
-            raise Exception("Model is loading, wait and try again")
-        else:
-            raise Exception(f"API error: {error}")
-    else:
-        raise Exception(f"Unexpected response: {result}")
 
+    except Exception as e:
+        raise Exception(f"Summarization failed: {str(e)}")
 
 def format_notes(summary, transcript):
     words = transcript.split()
