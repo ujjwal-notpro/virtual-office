@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, User, Lock, ArrowRight, Phone } from 'lucide-react';
+import { Mail, User, Lock, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import AuthInput from '../components/auth/AuthInput';
@@ -11,7 +11,6 @@ const SignUp = () => {
   const [formData, setFormData] = useState({
     identifier: '',
     fullName: '',
-    phone: '',
     password: '',
     agreeToTerms: false,
   });
@@ -47,7 +46,6 @@ const SignUp = () => {
       const registered = await registerUser({
         name: formData.fullName.trim(),
         email,
-        phone: formData.phone.trim(),
         password: formData.password,
         role: 'employee',
       });
@@ -118,17 +116,6 @@ const SignUp = () => {
           onChange={handleChange}
           required
           autoComplete="name"
-        />
-
-        <AuthInput
-          id="phone"
-          name="phone"
-          type="tel"
-          placeholder="Phone Number (optional)"
-          icon={Phone}
-          value={formData.phone}
-          onChange={handleChange}
-          autoComplete="tel"
         />
 
         <AuthInput
