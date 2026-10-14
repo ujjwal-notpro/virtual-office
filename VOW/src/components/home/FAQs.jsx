@@ -144,7 +144,7 @@ const FAQs = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto mt-4 text-neutral-600"
           >
-            Everything you need to know about FlowBit. Can't find the answer you're looking for? Feel free to contact our support team.
+            Everything you need to know about FlowBit. Can't find the answer you are looking for? Feel free to contact our support team.
           </motion.p>
         </div>
 
