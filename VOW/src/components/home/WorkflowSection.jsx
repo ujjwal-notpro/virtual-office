@@ -54,12 +54,7 @@ const WorkflowSection = () => {
                   key={item.key}
                   className="flex items-center gap-3"
                 >
-                  <div
-                    className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: 'rgba(22,163,74,0.1)' }}
-                  >
-                    <CheckCircle2 size={14} style={{ color: '#16a34a' }} />
-                  </div>
+                  <CheckCircle2 size={18} style={{ color: '#000000', flexShrink: 0 }} />
                   <span className="text-sm font-medium" style={{ color: '#374151' }}>
                     {item.text}
                   </span>

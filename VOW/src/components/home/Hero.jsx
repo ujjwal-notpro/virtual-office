@@ -1,26 +1,13 @@
-import { ArrowRight, Zap } from 'lucide-react';
 import dashboardImg from '../../assets/Screenshot 2026-10-09 170539.png';
 
 const Hero = () => {
   return (
     <section
       id="home"
-      className="relative px-4 pb-20 pt-16 sm:px-6 sm:pt-24"
+      className="relative px-4 pb-20 pt-28 sm:px-6 sm:pt-36"
     >
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div className="space-y-8">
-          <div
-            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium"
-            style={{
-              border: '1px solid rgba(22,163,74,0.2)',
-              backgroundColor: 'rgba(22,163,74,0.05)',
-              color: '#16a34a',
-            }}
-          >
-            <Zap className="w-4 h-4" />
-            Virtual Office Platform
-          </div>
-
           <div className="space-y-4">
             <h1
               className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
@@ -59,19 +46,6 @@ const Hero = () => {
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
-            <a
-              href="/sign-up"
-              className="inline-flex items-center justify-center gap-2 font-medium rounded-md h-12 px-8 text-base transition-all duration-200"
-              style={{
-                backgroundColor: '#16a34a',
-                color: '#ffffff',
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#15803d'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#16a34a'}
-            >
-              Start for free
-              <ArrowRight className="w-4 h-4" />
-            </a>
             <a
               href="#showcase"
               className="inline-flex items-center justify-center gap-2 font-medium rounded-md h-12 px-8 text-base transition-all duration-200"

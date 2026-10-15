@@ -14,11 +14,6 @@ const footerText = {
   footer_tagline: 'Your Virtual Office, Anywhere.',
   'connect with us': 'Connect with us',
   'add your email here': 'Add your email here',
-  copyright: 'All rights reserved.',
-  privacyPolicy: 'Privacy Policy',
-  termsOfService: 'Terms of Service',
-  cookieSettings: 'Cookie Settings',
-  accessibility: 'Accessibility',
 };
 
 const Footer = () => {
@@ -47,8 +42,8 @@ const Footer = () => {
         borderTop: '1px solid rgba(0,0,0,0.05)',
       }}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10 mb-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
               <img src={brandLogo} alt="Flow Bit logo" className="w-6 h-6 object-contain" />
@@ -128,32 +123,6 @@ const Footer = () => {
                 {status}
               </p>
             )}
-          </div>
-        </div>
-
-        <div
-          className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6"
-          style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}
-        >
-          <p className="text-xs" style={{ color: '#9ca3af' }}>
-            © 2026{' '}
-            <span className="font-medium" style={{ color: '#6b7280' }}>FlowBit, Inc.</span>
-            {' '}{t("copyright")}
-          </p>
-
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs" style={{ color: '#9ca3af' }}>
-            {[t("privacyPolicy"), t("termsOfService"), t("cookieSettings"), t("accessibility")].map((link, i, arr) => (
-              <React.Fragment key={link}>
-                <span
-                  className="cursor-pointer transition-colors duration-200"
-                  onMouseEnter={(e) => e.target.style.color = '#111827'}
-                  onMouseLeave={(e) => e.target.style.color = '#9ca3af'}
-                >
-                  {link}
-                </span>
-                {i < arr.length - 1 && <span style={{ opacity: 0.3 }}>·</span>}
-              </React.Fragment>
-            ))}
           </div>
         </div>
       </div>

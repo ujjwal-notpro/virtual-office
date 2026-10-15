@@ -73,7 +73,7 @@ const FeatureShowcase = () => {
           ))}
         </div>
 
-        <div className="mb-20">
+        <div id="workspace" className="mb-20 scroll-mt-24">
           <div className="text-center mb-10 md:mb-12">
             <h3
               className="text-2xl font-bold tracking-tight sm:text-3xl"
@@ -131,7 +131,6 @@ const FeatureShowcase = () => {
             className="rounded-3xl px-8 py-14 text-center relative overflow-hidden sm:px-12"
             style={{
               background: 'linear-gradient(135deg, #16a34a, #10b981)',
-              boxShadow: '0 25px 60px rgba(22,163,74,0.25)',
             }}
           >
             <h3
@@ -158,19 +157,6 @@ const FeatureShowcase = () => {
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
               >
                 Get started free
-              </a>
-              <a
-                href="/sign-in"
-                className="inline-flex items-center gap-2 px-8 h-12 rounded-md text-sm font-medium transition-all duration-200"
-                style={{
-                  border: '1px solid rgba(255,255,255,0.3)',
-                  backgroundColor: 'transparent',
-                  color: '#ffffff',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-              >
-                Sign in
               </a>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Home, Mail, LogIn, ArrowRight, Menu, X } from 'lucide-react';
+import { Home, Mail, LogIn, ArrowRight, Menu, X, Layers, Sparkles, HelpCircle } from 'lucide-react';
 import { useNavigate, useLocation } from "react-router-dom";
 import brandLogo from '../../assets/image.png';
 
@@ -13,12 +13,42 @@ const Navbar = () => {
   useEffect(() => {
     if (location.pathname !== "/") {
       setActiveSection("");
+    } else if (location.hash) {
+      const id = location.hash.replace('#', '');
+      if (id === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const el = document.getElementById(id);
+        if (el) {
+          setTimeout(() => {
+            const y = el.getBoundingClientRect().top + window.pageYOffset - 72;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }, 150);
+        }
+      }
     }
-  }, [location.pathname]);
+  }, [location]);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+      if (window.scrollY < 100) {
+        setActiveSection('home');
+        return;
+      }
+      const sections = ['contact', 'faqs', 'showcase', 'workspace'];
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 200) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -30,65 +60,77 @@ const Navbar = () => {
       return;
     }
     setActiveSection(sectionId);
+    if (sectionId === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const y = element.getBoundingClientRect().top + window.pageYOffset - 72;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
   const navLinks = [
     { id: 'home', label: 'Home', icon: Home },
+    { id: 'showcase', label: 'Features', icon: Sparkles },
+    { id: 'workspace', label: 'Work Space', icon: Layers },
+    { id: 'faqs', label: 'FAQs', icon: HelpCircle },
     { id: 'contact', label: 'Contact', icon: Mail },
   ];
 
   return (
     <header
-      className="w-full sticky top-0 z-50 transition-all duration-300"
+      className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${scrolled
+        ? 'bg-white/95 shadow-xs border-b border-black/5'
+        : 'bg-white/80 border-b border-black/5'
+        }`}
       style={{
-        backgroundColor: 'rgba(255,255,255,0.70)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px solid rgba(0,0,0,0.05)',
       }}
     >
       <div className="hidden md:flex max-w-6xl mx-auto px-4 sm:px-6 h-16 items-center justify-between">
-        <div className="flex items-center gap-10">
-          <div
-            className="flex items-center gap-2.5 cursor-pointer"
-            onClick={() => navigate('/')}
+        <div
+          className="flex items-center gap-2.5 cursor-pointer shrink-0"
+          onClick={() => {
+            if (location.pathname !== '/') navigate('/');
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
+          <img src={brandLogo} alt="Flow Bit logo" className="w-8 h-8 object-contain" />
+          <span
+            className="text-lg font-semibold tracking-tight"
+            style={{ color: '#111827' }}
           >
-            <img src={brandLogo} alt="Flow Bit logo" className="w-8 h-8 object-contain" />
-            <span
-              className="text-lg font-semibold tracking-tight"
-              style={{ color: '#111827' }}
-            >
-              Flow Bit
-            </span>
-          </div>
-
-          <nav className="flex items-center gap-8">
-            {navLinks.map(({ id, label }) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                onClick={(e) => scrollToSection(e, id)}
-                className="text-sm transition-colors duration-200"
-                style={{
-                  color: activeSection === id ? '#111827' : '#6b7280',
-                  fontWeight: activeSection === id ? 500 : 400,
-                }}
-                onMouseEnter={(e) => e.target.style.color = '#111827'}
-                onMouseLeave={(e) => {
-                  if (activeSection !== id) e.target.style.color = '#6b7280';
-                }}
-              >
-                {label}
-              </a>
-            ))}
-          </nav>
+            Flow Bit
+          </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <nav className="flex items-center gap-6 lg:gap-8">
+          {navLinks.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              onClick={(e) => scrollToSection(e, id)}
+              className="text-sm transition-colors duration-200 outline-none focus:outline-none"
+              style={{
+                color: activeSection === id ? '#070707ff' : '#6b7280',
+                fontWeight: activeSection === id ? 600 : 400,
+              }}
+              onMouseEnter={(e) => {
+                if (activeSection !== id) e.target.style.color = '#070707ff';
+              }}
+              onMouseLeave={(e) => {
+                if (activeSection !== id) e.target.style.color = '#6b7280';
+              }}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={() => navigate("/sign-in")}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200 cursor-pointer"
