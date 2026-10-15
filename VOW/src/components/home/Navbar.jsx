@@ -43,61 +43,46 @@ const Navbar = () => {
 
   return (
     <header
-      className="w-full sticky top-0 z-50 transition-all duration-500"
+      className="w-full sticky top-0 z-50 transition-all duration-300"
       style={{
-        backgroundColor: scrolled ? 'rgba(0,0,0,0.95)' : '#000000',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+        backgroundColor: 'rgba(255,255,255,0.70)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: '1px solid rgba(0,0,0,0.05)',
       }}
     >
-      <div className="hidden md:flex max-w-7xl mx-auto px-8 h-20 items-center justify-between">
-        <div className="flex items-center gap-14">
-         
+      <div className="hidden md:flex max-w-6xl mx-auto px-4 sm:px-6 h-16 items-center justify-between">
+        <div className="flex items-center gap-10">
           <div
-            className="flex items-center gap-2.5 cursor-pointer group"
+            className="flex items-center gap-2.5 cursor-pointer"
             onClick={() => navigate('/')}
           >
-            <div
-              className="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden"
-              style={{ border: '1.5px solid rgba(255,255,255,0.2)' }}
-            >
-              <img src={brandLogo} alt="Flow Bit logo" className="w-7 h-7 object-contain" />
-            </div>
+            <img src={brandLogo} alt="Flow Bit logo" className="w-8 h-8 object-contain" />
             <span
-              className="text-xl tracking-tight transition-colors duration-300"
-              style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontWeight: 700,
-                color: '#ffffff',
-              }}
+              className="text-lg font-semibold tracking-tight"
+              style={{ color: '#111827' }}
             >
               Flow Bit
             </span>
           </div>
 
-          <nav className="flex items-center gap-1">
+          <nav className="flex items-center gap-8">
             {navLinks.map(({ id, label }) => (
               <a
                 key={id}
                 href={`#${id}`}
                 onClick={(e) => scrollToSection(e, id)}
-                className="relative px-5 py-2 text-[13px] font-medium tracking-wide uppercase transition-all duration-300"
+                className="text-sm transition-colors duration-200"
                 style={{
-                  color: activeSection === id ? '#ffffff' : 'rgba(255,255,255,0.55)',
-                  letterSpacing: '0.08em',
+                  color: activeSection === id ? '#111827' : '#6b7280',
+                  fontWeight: activeSection === id ? 500 : 400,
                 }}
-                onMouseEnter={(e) => e.target.style.color = '#ffffff'}
+                onMouseEnter={(e) => e.target.style.color = '#111827'}
                 onMouseLeave={(e) => {
-                  if (activeSection !== id) e.target.style.color = 'rgba(255,255,255,0.55)';
+                  if (activeSection !== id) e.target.style.color = '#6b7280';
                 }}
               >
                 {label}
-                {activeSection === id && (
-                  <span
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-[2px] rounded-full"
-                    style={{ backgroundColor: '#ffffff' }}
-                  />
-                )}
               </a>
             ))}
           </nav>
@@ -106,100 +91,84 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate("/sign-in")}
-            className="flex items-center gap-2 px-5 py-2.5 text-[13px] font-semibold tracking-wide rounded-full transition-all duration-300 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200 cursor-pointer"
             style={{
-              border: '1px solid rgba(255,255,255,0.2)',
-              color: '#ffffff',
+              color: '#374151',
               backgroundColor: 'transparent',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
+              e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.04)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
             }}
           >
-            <LogIn className="w-3.5 h-3.5" />
-            Sign In
+            Sign in
           </button>
 
           <button
             onClick={() => navigate("/sign-up")}
-            className="flex items-center gap-2 px-6 py-2.5 text-[13px] font-semibold tracking-wide rounded-full transition-all duration-300 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer"
             style={{
-              backgroundColor: '#ffffff',
-              color: '#000000',
+              backgroundColor: '#16a34a',
+              color: '#ffffff',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.85)';
-              e.currentTarget.style.transform = 'translateY(-1px)';
+              e.currentTarget.style.backgroundColor = '#15803d';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#ffffff';
-              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.backgroundColor = '#16a34a';
             }}
           >
-            Start Free
-            <ArrowRight className="w-3.5 h-3.5" />
+            Get started
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>
 
       <div className="md:hidden">
-        <div className="flex items-center justify-between px-5 py-4">
+        <div className="flex items-center justify-between px-4 h-16">
           <div
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => navigate('/')}
           >
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden"
-              style={{ border: '1.5px solid rgba(255,255,255,0.2)' }}
-            >
-              <img src={brandLogo} alt="Flow Bit logo" className="w-6 h-6 object-contain" />
-            </div>
+            <img src={brandLogo} alt="Flow Bit logo" className="w-7 h-7 object-contain" />
             <span
-              className="text-lg tracking-tight"
-              style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontWeight: 700,
-                color: '#ffffff',
-              }}
+              className="text-base font-semibold tracking-tight"
+              style={{ color: '#111827' }}
             >
               Flow Bit
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer"
-              style={{ border: '1px solid rgba(255,255,255,0.15)' }}
-            >
-              {mobileMenuOpen ? (
-                <X className="w-4 h-4 text-white" />
-              ) : (
-                <Menu className="w-4 h-4 text-white" />
-              )}
-            </button>
-          </div>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="w-10 h-10 flex items-center justify-center rounded-md cursor-pointer"
+            style={{ border: '1px solid rgba(0,0,0,0.1)' }}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-5 h-5" style={{ color: '#374151' }} />
+            ) : (
+              <Menu className="w-5 h-5" style={{ color: '#374151' }} />
+            )}
+          </button>
         </div>
 
         {mobileMenuOpen && (
           <div
-            className="px-5 pb-6 space-y-3 animate-fadeIn"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
+            className="px-4 pb-4 space-y-1"
+            style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}
           >
             {navLinks.map(({ id, label, icon: Icon }) => (
               <a
                 key={id}
                 href={`#${id}`}
                 onClick={(e) => scrollToSection(e, id)}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all"
                 style={{
-                  color: activeSection === id ? '#ffffff' : 'rgba(255,255,255,0.5)',
-                  backgroundColor: activeSection === id ? 'rgba(255,255,255,0.08)' : 'transparent',
+                  color: activeSection === id ? '#111827' : '#6b7280',
+                  backgroundColor: activeSection === id ? 'rgba(22,163,74,0.06)' : 'transparent',
                 }}
               >
                 <Icon className="w-4 h-4" />
@@ -209,18 +178,18 @@ const Navbar = () => {
             <div className="flex gap-2 pt-2">
               <button
                 onClick={() => { navigate("/sign-in"); setMobileMenuOpen(false); }}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold rounded-full cursor-pointer"
-                style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff' }}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-md cursor-pointer"
+                style={{ border: '1px solid rgba(0,0,0,0.12)', color: '#374151' }}
               >
                 <LogIn className="w-3.5 h-3.5" />
                 Sign In
               </button>
               <button
                 onClick={() => { navigate("/sign-up"); setMobileMenuOpen(false); }}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold rounded-full cursor-pointer"
-                style={{ backgroundColor: '#ffffff', color: '#000000' }}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-md cursor-pointer"
+                style={{ backgroundColor: '#16a34a', color: '#ffffff' }}
               >
-                Start Free
+                Get started
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>

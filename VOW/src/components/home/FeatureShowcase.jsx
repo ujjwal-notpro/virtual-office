@@ -26,7 +26,6 @@ const FeatureShowcase = () => {
       className="px-4 py-20 sm:px-6"
     >
       <div className="mx-auto max-w-6xl">
-        {/* Features grid */}
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <h2
             className="text-3xl font-bold tracking-tight sm:text-4xl"
@@ -74,7 +73,6 @@ const FeatureShowcase = () => {
           ))}
         </div>
 
-        {/* Workspace gallery */}
         <div className="mb-20">
           <div className="text-center mb-10 md:mb-12">
             <h3
@@ -128,7 +126,6 @@ const FeatureShowcase = () => {
           </div>
         </div>
 
-        {/* CTA banner */}
         <div className="w-full max-w-4xl mx-auto">
           <div
             className="rounded-3xl px-8 py-14 text-center relative overflow-hidden sm:px-12"

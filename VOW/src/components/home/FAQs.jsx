@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 const faqData = [
@@ -34,70 +33,58 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
   const contentId = `faq-content-${index}`;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: (index % 3) * 0.05 }}
+    <div
+      className="rounded-2xl overflow-hidden transition-all duration-300"
+      style={{
+        backgroundColor: '#ffffff',
+        border: `1px solid ${isOpen ? 'rgba(22,163,74,0.2)' : 'rgba(0,0,0,0.05)'}`,
+        boxShadow: isOpen ? '0 4px 20px rgba(22,163,74,0.06)' : '0 1px 3px rgba(0,0,0,0.04)',
+      }}
     >
-      <div
-        className="rounded-2xl transition-all duration-300 overflow-hidden"
-        style={{
-          backgroundColor: isOpen ? '#1a1a1a' : 'rgba(0,0,0,0.02)',
-          border: `1px solid ${isOpen ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'}`,
-        }}
+      <button
+        id={itemId}
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        onClick={() => onToggle(index)}
+        className="w-full flex items-center justify-between py-4 px-5 md:px-6 text-left cursor-pointer transition-all duration-300"
       >
-        <button
-          id={itemId}
-          aria-expanded={isOpen}
-          aria-controls={contentId}
-          onClick={() => onToggle(index)}
-          className="w-full flex items-center justify-between py-4 px-5 md:py-4.5 md:px-6 text-left group cursor-pointer transition-all duration-300"
+        <span
+          className="text-sm md:text-base font-semibold pr-4 leading-relaxed"
+          style={{ color: '#111827' }}
         >
-          <span
-            className="text-sm md:text-base font-semibold pr-4 leading-relaxed transition-colors duration-300"
-            style={{ color: isOpen ? '#ffffff' : '#111827' }}
-          >
-            {faq.question}
-          </span>
+          {faq.question}
+        </span>
 
-          <motion.div
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
-            style={{
-              backgroundColor: isOpen ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
-            }}
-          >
-            <ChevronDown
-              size={16}
-              style={{ color: isOpen ? '#ffffff' : '#4b5563' }}
-            />
-          </motion.div>
-        </button>
+        <div
+          className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
+          style={{
+            backgroundColor: isOpen ? 'rgba(22,163,74,0.1)' : 'rgba(0,0,0,0.04)',
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
+        >
+          <ChevronDown
+            size={16}
+            style={{ color: isOpen ? '#16a34a' : '#6b7280' }}
+          />
+        </div>
+      </button>
 
-        <AnimatePresence initial={false}>
-          {isOpen && (
-            <motion.div
-              id={contentId}
-              role="region"
-              aria-labelledby={itemId}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.35, type: "spring", bounce: 0.2 }}
-              className="overflow-hidden"
-            >
-              <div
-                className="text-sm leading-relaxed pb-5 px-5 md:px-6 pt-1 text-white/70"
-              >
-                {faq.answer}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
+      {isOpen && (
+        <div
+          id={contentId}
+          role="region"
+          aria-labelledby={itemId}
+          className="overflow-hidden"
+        >
+          <div
+            className="text-sm leading-relaxed pb-5 px-5 md:px-6 pt-1"
+            style={{ color: '#6b7280' }}
+          >
+            {faq.answer}
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -114,38 +101,22 @@ const FAQs = () => {
   return (
     <section
       id="faqs"
-      className="w-full relative overflow-hidden"
-      style={{ backgroundColor: '#f5f3f0' }}
+      className="px-4 py-20 sm:px-6"
     >
-      <div className="max-w-5xl mx-auto px-5 md:px-8 py-20 md:py-32 relative z-10">
+      <div className="mx-auto max-w-5xl">
         <div className="text-center mb-12 md:mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              fontWeight: 700,
-              fontStyle: 'normal',
-              lineHeight: 1.15,
-              letterSpacing: '-0.02em',
-              color: '#111827',
-            }}
+          <h2
+            className="text-3xl font-bold tracking-tight sm:text-4xl"
+            style={{ color: '#111827' }}
           >
             Frequently Asked Questions
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto mt-4 text-neutral-600"
+          </h2>
+          <p
+            className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto mt-4"
+            style={{ color: '#6b7280' }}
           >
             Everything you need to know about FlowBit. Can't find the answer you are looking for? Feel free to contact our support team.
-          </motion.p>
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">

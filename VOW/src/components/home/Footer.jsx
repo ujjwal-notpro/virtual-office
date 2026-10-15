@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import brandLogo from '../../assets/image.png';
 import {
   Send,
@@ -42,46 +41,20 @@ const Footer = () => {
   return (
     <footer
       id="contact"
-      className="w-full relative overflow-hidden"
-      style={{ backgroundColor: '#000000' }}
+      className="w-full"
+      style={{
+        backgroundColor: '#ffffff',
+        borderTop: '1px solid rgba(0,0,0,0.05)',
+      }}
     >
-      <div className="absolute top-0 left-0 right-0 h-40 pointer-events-none overflow-hidden opacity-10">
-        <svg width="100%" height="160" viewBox="0 0 1200 160" fill="none" preserveAspectRatio="none">
-          {[...Array(6)].map((_, i) => (
-            <path
-              key={i}
-              d={`M0 ${20 + i * 22} Q300 ${10 + i * 18 + Math.sin(i) * 12} 600 ${25 + i * 20} T1200 ${15 + i * 24}`}
-              stroke="rgba(255,255,255,0.3)"
-              strokeWidth="0.5"
-              fill="none"
-            />
-          ))}
-        </svg>
-      </div>
-
-      <div
-        className="w-full h-[1px]"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)' }}
-      />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 pt-16 pb-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10 mb-14">
-       
-          <div className="space-y-5">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10 mb-10">
+          <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden"
-                style={{ border: '1.5px solid rgba(255,255,255,0.15)' }}
-              >
-                <img src={brandLogo} alt="Flow Bit logo" className="w-7 h-7 object-contain" />
-              </div>
+              <img src={brandLogo} alt="Flow Bit logo" className="w-6 h-6 object-contain" />
               <span
-                className="text-xl tracking-tight"
-                style={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontWeight: 700,
-                  color: '#ffffff',
-                }}
+                className="text-sm font-medium"
+                style={{ color: '#111827' }}
               >
                 Flow Bit
               </span>
@@ -89,12 +62,12 @@ const Footer = () => {
 
             <p
               className="text-sm leading-relaxed max-w-sm"
-              style={{ color: 'rgba(255,255,255,0.45)' }}
+              style={{ color: '#6b7280' }}
             >
               {t("footer_tagline")}
             </p>
 
-            <div className="flex flex-wrap gap-y-3 gap-x-8 md:gap-x-10 pt-1">
+            <div className="flex flex-wrap gap-y-3 gap-x-6 pt-1">
               {[
                 { icon: Mail, text: 'hello@FlowBit.io' },
                 { icon: Phone, text: '+1 (800) 123-4567' },
@@ -102,9 +75,10 @@ const Footer = () => {
               ].map(({ icon: Icon, text }) => (
                 <div
                   key={text}
-                  className="flex items-center gap-2.5 text-sm text-white/70"
+                  className="flex items-center gap-2 text-sm"
+                  style={{ color: '#6b7280' }}
                 >
-                  <Icon size={16} className="text-white/80 flex-shrink-0" />
+                  <Icon size={14} style={{ color: '#9ca3af' }} className="flex-shrink-0" />
                   {text}
                 </div>
               ))}
@@ -112,7 +86,7 @@ const Footer = () => {
           </div>
 
           <div className="w-full md:w-auto md:min-w-[320px] space-y-3">
-            <p className="text-sm font-bold uppercase tracking-wider text-white">
+            <p className="text-sm font-semibold" style={{ color: '#111827' }}>
               {t("connect with us")}
             </p>
             <form onSubmit={handleSubmit} className="flex gap-2">
@@ -121,64 +95,63 @@ const Footer = () => {
                 placeholder={t("add your email here")}
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="flex-1 h-11 px-4 rounded-full text-sm focus:outline-none transition-all duration-300"
+                className="flex-1 h-10 px-4 rounded-md text-sm focus:outline-none transition-all duration-200"
                 style={{
-                  background: 'rgba(255,255,255,0.06)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  color: '#ffffff',
+                  background: '#f9fafb',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  color: '#111827',
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = 'rgba(255,255,255,0.3)';
-                  e.target.style.background = 'rgba(255,255,255,0.08)';
+                  e.target.style.borderColor = '#16a34a';
+                  e.target.style.boxShadow = '0 0 0 3px rgba(22,163,74,0.1)';
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = 'rgba(255,255,255,0.1)';
-                  e.target.style.background = 'rgba(255,255,255,0.06)';
+                  e.target.style.borderColor = 'rgba(0,0,0,0.1)';
+                  e.target.style.boxShadow = 'none';
                 }}
               />
-              <motion.button
+              <button
                 type="submit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                className="h-11 w-11 flex items-center justify-center rounded-full flex-shrink-0 cursor-pointer transition-all duration-300"
+                className="h-10 w-10 flex items-center justify-center rounded-md flex-shrink-0 cursor-pointer transition-all duration-200"
                 style={{
-                  background: '#ffffff',
-                  color: '#000000',
+                  background: '#16a34a',
+                  color: '#ffffff',
                 }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#15803d'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#16a34a'}
               >
-                <Send size={15} />
-              </motion.button>
+                <Send size={14} />
+              </button>
             </form>
             {status && (
-              <p className="text-xs" style={{ color: status.includes('✓') ? '#4ade80' : '#f43f5e' }}>
+              <p className="text-xs" style={{ color: status.includes('✓') ? '#16a34a' : '#ef4444' }}>
                 {status}
               </p>
             )}
           </div>
         </div>
 
-      
         <div
           className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+          style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}
         >
-          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
+          <p className="text-xs" style={{ color: '#9ca3af' }}>
             © 2026{' '}
-            <span className="font-semibold" style={{ color: 'rgba(255,255,255,0.7)' }}>FlowBit, Inc.</span>
+            <span className="font-medium" style={{ color: '#6b7280' }}>FlowBit, Inc.</span>
             {' '}{t("copyright")}
           </p>
 
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs" style={{ color: '#9ca3af' }}>
             {[t("privacyPolicy"), t("termsOfService"), t("cookieSettings"), t("accessibility")].map((link, i, arr) => (
               <React.Fragment key={link}>
                 <span
                   className="cursor-pointer transition-colors duration-200"
-                  onMouseEnter={(e) => e.target.style.color = '#ffffff'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255,255,255,0.35)'}
+                  onMouseEnter={(e) => e.target.style.color = '#111827'}
+                  onMouseLeave={(e) => e.target.style.color = '#9ca3af'}
                 >
                   {link}
                 </span>
-                {i < arr.length - 1 && <span style={{ opacity: 0.2 }}>·</span>}
+                {i < arr.length - 1 && <span style={{ opacity: 0.3 }}>·</span>}
               </React.Fragment>
             ))}
           </div>
