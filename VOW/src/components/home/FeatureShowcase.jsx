@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import meetingImg from '../../assets/Screenshot 2026-10-09 170539.png';
 import chatImg from '../../assets/Screenshot 2026-10-09 170613.png';
 import profileImg from '../../assets/Screenshot 2026-10-09 170708.png';
@@ -7,10 +6,10 @@ import aiNotesImg from '../../assets/Screenshot 2026-10-09 170742.png';
 import { Layers, MessageSquare, BarChart3, ShieldCheck, ArrowRight } from 'lucide-react';
 
 const featureList = [
-  { icon: Layers, text: 'Unified project & task management' },
-  { icon: MessageSquare, text: 'Real-time team chat & threads' },
-  { icon: BarChart3, text: 'Live performance dashboards' },
-  { icon: ShieldCheck, text: 'Enterprise-grade security & uptime' },
+  { icon: Layers, title: 'Unified Platform', text: 'Unified project & task management' },
+  { icon: MessageSquare, title: 'Team Chat', text: 'Real-time team chat & threads' },
+  { icon: BarChart3, title: 'Analytics', text: 'Live performance dashboards' },
+  { icon: ShieldCheck, title: 'Security', text: 'Enterprise-grade security & uptime' },
 ];
 
 const workspaceItems = [
@@ -24,209 +23,164 @@ const FeatureShowcase = () => {
   return (
     <section
       id="showcase"
-      className="w-full relative overflow-hidden"
-      style={{ backgroundColor: '#f5f3f0' }}
+      className="px-4 py-20 sm:px-6"
     >
-      <div className="max-w-7xl mx-auto px-5 md:px-8 py-20 md:py-32 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-20 md:mb-28 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="space-y-8"
+      <div className="mx-auto max-w-6xl">
+        {/* Features grid */}
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <h2
+            className="text-3xl font-bold tracking-tight sm:text-4xl"
+            style={{ color: '#111827' }}
           >
-            <h2
-              style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: 'clamp(2.25rem, 4vw, 3.25rem)',
-                fontWeight: 700,
-                fontStyle: 'italic',
-                lineHeight: 1.15,
-                letterSpacing: '-0.02em',
-                color: '#111827',
-              }}
-            >
-              Included In Your
-              <br />
-              Office Platform
-            </h2>
-
-            <p className="text-base leading-relaxed max-w-md text-neutral-600">
-              FlowBit streamlines your workflow from planning to execution. Manage projects,
-              tasks, chats, meetings, documents, attendance, and performance — all inside one
-              seamless and modern platform built to scale with your team.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 pt-2">
-              {featureList.map(({ icon: Icon, text }, i) => (
-                <motion.div
-                  key={text}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
-                  className="flex items-start gap-3 p-4 rounded-xl transition-all duration-300"
-                  style={{
-                    backgroundColor: 'rgba(0,0,0,0.03)',
-                    border: '1px solid rgba(0,0,0,0.06)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#ffffff';
-                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.03)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                >
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{
-                      backgroundColor: '#1a1a1a',
-                    }}
-                  >
-                    <Icon size={14} style={{ color: '#ffffff' }} />
-                  </div>
-                  <span className="text-sm font-medium leading-snug pt-1 text-neutral-800">
-                    {text}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="relative flex items-center"
-          >
-            <div
-              className="relative rounded-2xl overflow-hidden w-full group shadow-2xl"
-              style={{
-                border: '1px solid rgba(0,0,0,0.1)',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
-              }}
-            >
-              <img
-                src={aiNotesImg}
-                alt="FlowBit AI Meeting Notes Generator"
-                loading="lazy"
-                className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.02]"
-              />
-            </div>
-          </motion.div>
+            Included In Your Office Platform
+          </h2>
+          <p className="mt-4" style={{ color: '#6b7280' }}>
+            FlowBit streamlines your workflow from planning to execution. Manage projects,
+            tasks, chats, meetings, documents, attendance, and performance — all inside one
+            seamless and modern platform built to scale with your team.
+          </p>
         </div>
 
-        <div
-          className="w-full h-[1px] mb-20 md:mb-28"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent)' }}
-        />
-
-        <div className="w-full mb-20 md:mb-28">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-10 md:mb-12"
-          >
-            <h3
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-20">
+          {featureList.map(({ icon: Icon, title, text }) => (
+            <article
+              key={title}
+              className="group rounded-2xl p-6 transition-all duration-300"
               style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
-                fontWeight: 700,
-                fontStyle: 'italic',
-                lineHeight: 1.2,
-                color: '#111827',
+                backgroundColor: '#ffffff',
+                border: '1px solid rgba(0,0,0,0.05)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 12px 40px rgba(22,163,74,0.08)';
+                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)';
+                e.currentTarget.style.borderColor = 'rgba(0,0,0,0.05)';
+              }}
+            >
+              <div
+                className="mb-4 inline-flex w-11 h-11 items-center justify-center rounded-xl transition-colors duration-300"
+                style={{ backgroundColor: 'rgba(22,163,74,0.1)', color: '#16a34a' }}
+              >
+                <Icon className="w-5 h-5" />
+              </div>
+              <h3 className="mb-2 font-semibold" style={{ color: '#111827' }}>{title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: '#6b7280' }}>{text}</p>
+            </article>
+          ))}
+        </div>
+
+        {/* Workspace gallery */}
+        <div className="mb-20">
+          <div className="text-center mb-10 md:mb-12">
+            <h3
+              className="text-2xl font-bold tracking-tight sm:text-3xl"
+              style={{ color: '#111827' }}
             >
               See Your Working Space
             </h3>
-            <p className="text-sm mt-2 text-neutral-600 max-w-lg mx-auto">
+            <p className="text-sm mt-2 max-w-lg mx-auto" style={{ color: '#6b7280' }}>
               Explore the core workspaces built to power day-to-day collaboration across teams.
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {workspaceItems.map((item, i) => (
-              <motion.div
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {workspaceItems.map((item) => (
+              <div
                 key={item.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
-                className="group flex flex-col bg-white rounded-2xl p-4 sm:p-5 border border-black/5 shadow-sm hover:shadow-xl transition-all duration-300"
+                className="group flex flex-col rounded-2xl p-4 sm:p-5 transition-all duration-300"
+                style={{
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0,0,0,0.05)',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.08)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)';
+                }}
               >
-                <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-neutral-100 mb-3.5">
+                <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-3.5" style={{ backgroundColor: '#f3f4f6' }}>
                   <img
                     src={item.img}
                     alt={`FlowBit ${item.label} interface preview`}
                     loading="lazy"
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover object-top"
                   />
                 </div>
                 <div className="w-full text-left pt-1">
-                  <h4 className="text-sm font-semibold text-neutral-900 group-hover:text-black">
+                  <h4 className="text-sm font-semibold" style={{ color: '#111827' }}>
                     {item.label}
                   </h4>
-                  <p className="text-xs text-neutral-600 mt-1.5 leading-relaxed line-clamp-2">
+                  <p className="text-xs mt-1.5 leading-relaxed line-clamp-2" style={{ color: '#6b7280' }}>
                     {item.desc}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="w-full max-w-4xl mx-auto"
-        >
+        {/* CTA banner */}
+        <div className="w-full max-w-4xl mx-auto">
           <div
-            className="rounded-3xl p-10 md:p-16 text-center relative overflow-hidden shadow-2xl"
+            className="rounded-3xl px-8 py-14 text-center relative overflow-hidden sm:px-12"
             style={{
-              backgroundColor: '#1a1a1a',
-              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'linear-gradient(135deg, #16a34a, #10b981)',
+              boxShadow: '0 25px 60px rgba(22,163,74,0.25)',
             }}
           >
             <h3
-              className="mb-4 text-white"
-              style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
-                fontWeight: 700,
-                fontStyle: 'italic',
-                lineHeight: 1.2,
-              }}
+              className="text-3xl font-bold tracking-tight sm:text-4xl mb-4"
+              style={{ color: '#ffffff' }}
             >
               Ready To Try FlowBit?
             </h3>
-            <p className="text-sm md:text-base leading-relaxed mb-8 max-w-md mx-auto text-white/70">
+            <p
+              className="text-sm md:text-base leading-relaxed mb-8 max-w-md mx-auto"
+              style={{ color: 'rgba(255,255,255,0.85)' }}
+            >
               Experience the full platform with your team. Seamless real-time meetings, chat, and AI tools built for productivity.
             </p>
-            <a
-              href="/sign-in"
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 shadow-md hover:shadow-lg hover:bg-neutral-100"
-              style={{
-                backgroundColor: '#ffffff',
-                color: '#000000',
-              }}
-            >
-              <span>Launch Workspace</span>
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </a>
+            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <a
+                href="/sign-up"
+                className="inline-flex items-center gap-2 px-8 h-12 rounded-md text-sm font-medium transition-all duration-200"
+                style={{
+                  backgroundColor: '#ffffff',
+                  color: '#16a34a',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.9)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
+              >
+                Get started free
+              </a>
+              <a
+                href="/sign-in"
+                className="inline-flex items-center gap-2 px-8 h-12 rounded-md text-sm font-medium transition-all duration-200"
+                style={{
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  backgroundColor: 'transparent',
+                  color: '#ffffff',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
+                Sign in
+              </a>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 };
 
 export default FeatureShowcase;
-
