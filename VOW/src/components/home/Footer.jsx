@@ -38,8 +38,8 @@ const Footer = () => {
       id="contact"
       className="w-full"
       style={{
-        backgroundColor: '#ffffff',
-        borderTop: '1px solid rgba(0,0,0,0.05)',
+        backgroundColor: '#245F73',
+        borderTop: '1px solid rgba(242,240,239,0.1)',
       }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
@@ -49,7 +49,7 @@ const Footer = () => {
               <img src={brandLogo} alt="Flow Bit logo" className="w-6 h-6 object-contain" />
               <span
                 className="text-sm font-medium"
-                style={{ color: '#111827' }}
+                style={{ color: '#F2F0EF' }}
               >
                 Flow Bit
               </span>
@@ -57,7 +57,7 @@ const Footer = () => {
 
             <p
               className="text-sm leading-relaxed max-w-sm"
-              style={{ color: '#6b7280' }}
+              style={{ color: 'rgba(242,240,239,0.7)' }}
             >
               {t("footer_tagline")}
             </p>
@@ -71,9 +71,9 @@ const Footer = () => {
                 <div
                   key={text}
                   className="flex items-center gap-2 text-sm"
-                  style={{ color: '#6b7280' }}
+                  style={{ color: 'rgba(242,240,239,0.6)' }}
                 >
-                  <Icon size={14} style={{ color: '#9ca3af' }} className="flex-shrink-0" />
+                  <Icon size={14} style={{ color: '#BBBDBC' }} className="flex-shrink-0" />
                   {text}
                 </div>
               ))}
@@ -81,7 +81,7 @@ const Footer = () => {
           </div>
 
           <div className="w-full md:w-auto md:min-w-[320px] space-y-3">
-            <p className="text-sm font-semibold" style={{ color: '#111827' }}>
+            <p className="text-sm font-semibold" style={{ color: '#F2F0EF' }}>
               {t("connect with us")}
             </p>
             <form onSubmit={handleSubmit} className="flex gap-2">
@@ -92,16 +92,16 @@ const Footer = () => {
                 onChange={e => setEmail(e.target.value)}
                 className="flex-1 h-10 px-4 rounded-md text-sm focus:outline-none transition-all duration-200"
                 style={{
-                  background: '#f9fafb',
-                  border: '1px solid rgba(0,0,0,0.1)',
-                  color: '#111827',
+                  background: 'rgba(242,240,239,0.1)',
+                  border: '1px solid rgba(242,240,239,0.2)',
+                  color: '#F2F0EF',
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#16a34a';
-                  e.target.style.boxShadow = '0 0 0 3px rgba(22,163,74,0.1)';
+                  e.target.style.borderColor = '#733E24';
+                  e.target.style.boxShadow = '0 0 0 3px rgba(115,62,36,0.2)';
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = 'rgba(0,0,0,0.1)';
+                  e.target.style.borderColor = 'rgba(242,240,239,0.2)';
                   e.target.style.boxShadow = 'none';
                 }}
               />
@@ -109,17 +109,17 @@ const Footer = () => {
                 type="submit"
                 className="h-10 w-10 flex items-center justify-center rounded-md flex-shrink-0 cursor-pointer transition-all duration-200"
                 style={{
-                  background: '#16a34a',
-                  color: '#ffffff',
+                  background: '#733E24',
+                  color: '#F2F0EF',
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#15803d'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#16a34a'}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#5e3220'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#733E24'}
               >
                 <Send size={14} />
               </button>
             </form>
             {status && (
-              <p className="text-xs" style={{ color: status.includes('✓') ? '#16a34a' : '#ef4444' }}>
+              <p className="text-xs" style={{ color: status.includes('✓') ? '#BBBDBC' : '#ef4444' }}>
                 {status}
               </p>
             )}

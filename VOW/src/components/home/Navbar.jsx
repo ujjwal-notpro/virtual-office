@@ -82,10 +82,12 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${scrolled
-        ? 'bg-white/95 shadow-xs border-b border-black/5'
-        : 'bg-white/80 border-b border-black/5'
+        ? 'shadow-xs'
+        : ''
         }`}
       style={{
+        backgroundColor: scrolled ? 'rgba(242,240,239,0.95)' : 'rgba(242,240,239,0.8)',
+        borderBottom: '1px solid rgba(36,95,115,0.08)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
       }}
@@ -101,7 +103,7 @@ const Navbar = () => {
           <img src={brandLogo} alt="Flow Bit logo" className="w-8 h-8 object-contain" />
           <span
             className="text-lg font-semibold tracking-tight"
-            style={{ color: '#111827' }}
+            style={{ color: '#245F73' }}
           >
             Flow Bit
           </span>
@@ -115,14 +117,14 @@ const Navbar = () => {
               onClick={(e) => scrollToSection(e, id)}
               className="text-sm transition-colors duration-200 outline-none focus:outline-none"
               style={{
-                color: activeSection === id ? '#070707ff' : '#6b7280',
+                color: activeSection === id ? '#245F73' : '#BBBDBC',
                 fontWeight: activeSection === id ? 600 : 400,
               }}
               onMouseEnter={(e) => {
-                if (activeSection !== id) e.target.style.color = '#070707ff';
+                if (activeSection !== id) e.target.style.color = '#245F73';
               }}
               onMouseLeave={(e) => {
-                if (activeSection !== id) e.target.style.color = '#6b7280';
+                if (activeSection !== id) e.target.style.color = '#BBBDBC';
               }}
             >
               {label}
@@ -135,11 +137,11 @@ const Navbar = () => {
             onClick={() => navigate("/sign-in")}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200 cursor-pointer"
             style={{
-              color: '#374151',
+              color: '#245F73',
               backgroundColor: 'transparent',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.04)';
+              e.currentTarget.style.backgroundColor = 'rgba(36,95,115,0.06)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent';
@@ -152,14 +154,14 @@ const Navbar = () => {
             onClick={() => navigate("/sign-up")}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer"
             style={{
-              backgroundColor: '#16a34a',
-              color: '#ffffff',
+              backgroundColor: '#245F73',
+              color: '#F2F0EF',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#15803d';
+              e.currentTarget.style.backgroundColor = '#1a4d5e';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#16a34a';
+              e.currentTarget.style.backgroundColor = '#245F73';
             }}
           >
             Get started
@@ -177,7 +179,7 @@ const Navbar = () => {
             <img src={brandLogo} alt="Flow Bit logo" className="w-7 h-7 object-contain" />
             <span
               className="text-base font-semibold tracking-tight"
-              style={{ color: '#111827' }}
+              style={{ color: '#245F73' }}
             >
               Flow Bit
             </span>
@@ -186,13 +188,13 @@ const Navbar = () => {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="w-10 h-10 flex items-center justify-center rounded-md cursor-pointer"
-            style={{ border: '1px solid rgba(0,0,0,0.1)' }}
+            style={{ border: '1px solid rgba(36,95,115,0.15)' }}
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
-              <X className="w-5 h-5" style={{ color: '#374151' }} />
+              <X className="w-5 h-5" style={{ color: '#245F73' }} />
             ) : (
-              <Menu className="w-5 h-5" style={{ color: '#374151' }} />
+              <Menu className="w-5 h-5" style={{ color: '#245F73' }} />
             )}
           </button>
         </div>
@@ -200,7 +202,7 @@ const Navbar = () => {
         {mobileMenuOpen && (
           <div
             className="px-4 pb-4 space-y-1"
-            style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}
+            style={{ borderTop: '1px solid rgba(36,95,115,0.08)' }}
           >
             {navLinks.map(({ id, label, icon: Icon }) => (
               <a
@@ -209,8 +211,8 @@ const Navbar = () => {
                 onClick={(e) => scrollToSection(e, id)}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all"
                 style={{
-                  color: activeSection === id ? '#111827' : '#6b7280',
-                  backgroundColor: activeSection === id ? 'rgba(22,163,74,0.06)' : 'transparent',
+                  color: activeSection === id ? '#245F73' : '#BBBDBC',
+                  backgroundColor: activeSection === id ? 'rgba(36,95,115,0.06)' : 'transparent',
                 }}
               >
                 <Icon className="w-4 h-4" />
@@ -221,7 +223,7 @@ const Navbar = () => {
               <button
                 onClick={() => { navigate("/sign-in"); setMobileMenuOpen(false); }}
                 className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-md cursor-pointer"
-                style={{ border: '1px solid rgba(0,0,0,0.12)', color: '#374151' }}
+                style={{ border: '1px solid rgba(36,95,115,0.15)', color: '#245F73' }}
               >
                 <LogIn className="w-3.5 h-3.5" />
                 Sign In
@@ -229,7 +231,7 @@ const Navbar = () => {
               <button
                 onClick={() => { navigate("/sign-up"); setMobileMenuOpen(false); }}
                 className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-md cursor-pointer"
-                style={{ backgroundColor: '#16a34a', color: '#ffffff' }}
+                style={{ backgroundColor: '#245F73', color: '#F2F0EF' }}
               >
                 Get started
                 <ArrowRight className="w-3.5 h-3.5" />

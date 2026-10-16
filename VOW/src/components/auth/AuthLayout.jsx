@@ -1,14 +1,13 @@
 import React from 'react';
-import { ArrowLeft, Sun, Moon, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useDarkMode } from '../../hooks/useDarkMode';
+
 import authLogo from '../../assets/image.png';
 
 const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/', showBrandImage = false }) => {
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useDarkMode();
-  const isDark = theme === 'dark';
+
 
   const handleBack = () => {
     if (backTo) {
@@ -47,39 +46,7 @@ const AuthLayout = ({ children, title, subtitle, showBack = true, backTo = '/', 
           </span>
         </Link>
 
-        <div className="flex items-center p-1 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-[0_2px_10px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.4)]">
-          <button
-            type="button"
-            onClick={() => {
-              if (isDark) toggleTheme();
-            }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
-              !isDark
-                ? 'bg-amber-500 text-white shadow-[0_2px_8px_rgba(245,158,11,0.35)] scale-100'
-                : 'text-zinc-400 hover:text-zinc-200'
-            }`}
-            aria-label="Bright theme"
-          >
-            <Sun className="w-3.5 h-3.5 stroke-[2.2]" />
-            <span>Bright</span>
-          </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              if (!isDark) toggleTheme();
-            }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
-              isDark
-                ? 'bg-zinc-800 text-white shadow-[0_2px_8px_rgba(0,0,0,0.4)] scale-100'
-                : 'text-slate-500 hover:text-slate-900'
-            }`}
-            aria-label="Dark theme"
-          >
-            <Moon className="w-3.5 h-3.5 stroke-[2.2]" />
-            <span>Dark</span>
-          </button>
-        </div>
       </header>
 
       <motion.main

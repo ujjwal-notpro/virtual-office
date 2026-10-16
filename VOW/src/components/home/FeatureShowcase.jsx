@@ -29,11 +29,11 @@ const FeatureShowcase = () => {
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <h2
             className="text-3xl font-bold tracking-tight sm:text-4xl"
-            style={{ color: '#111827' }}
+            style={{ color: '#245F73' }}
           >
             Included In Your Office Platform
           </h2>
-          <p className="mt-4" style={{ color: '#6b7280' }}>
+          <p className="mt-4" style={{ color: '#BBBDBC' }}>
             FlowBit streamlines your workflow from planning to execution. Manage projects,
             tasks, chats, meetings, documents, attendance, and performance — all inside one
             seamless and modern platform built to scale with your team.
@@ -47,28 +47,28 @@ const FeatureShowcase = () => {
               className="group rounded-2xl p-6 transition-all duration-300"
               style={{
                 backgroundColor: '#ffffff',
-                border: '1px solid rgba(0,0,0,0.05)',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                border: '1px solid rgba(36,95,115,0.08)',
+                boxShadow: '0 1px 3px rgba(36,95,115,0.06)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 12px 40px rgba(22,163,74,0.08)';
-                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.2)';
+                e.currentTarget.style.boxShadow = '0 12px 40px rgba(36,95,115,0.12)';
+                e.currentTarget.style.borderColor = 'rgba(36,95,115,0.25)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)';
-                e.currentTarget.style.borderColor = 'rgba(0,0,0,0.05)';
+                e.currentTarget.style.boxShadow = '0 1px 3px rgba(36,95,115,0.06)';
+                e.currentTarget.style.borderColor = 'rgba(36,95,115,0.08)';
               }}
             >
               <div
                 className="mb-4 inline-flex w-11 h-11 items-center justify-center rounded-xl transition-colors duration-300"
-                style={{ backgroundColor: 'rgba(22,163,74,0.1)', color: '#16a34a' }}
+                style={{ backgroundColor: 'rgba(36,95,115,0.1)', color: '#245F73' }}
               >
                 <Icon className="w-5 h-5" />
               </div>
-              <h3 className="mb-2 font-semibold" style={{ color: '#111827' }}>{title}</h3>
-              <p className="text-sm leading-relaxed" style={{ color: '#6b7280' }}>{text}</p>
+              <h3 className="mb-2 font-semibold" style={{ color: '#245F73' }}>{title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: '#BBBDBC' }}>{text}</p>
             </article>
           ))}
         </div>
@@ -77,11 +77,11 @@ const FeatureShowcase = () => {
           <div className="text-center mb-10 md:mb-12">
             <h3
               className="text-2xl font-bold tracking-tight sm:text-3xl"
-              style={{ color: '#111827' }}
+              style={{ color: '#245F73' }}
             >
               See Your Working Space
             </h3>
-            <p className="text-sm mt-2 max-w-lg mx-auto" style={{ color: '#6b7280' }}>
+            <p className="text-sm mt-2 max-w-lg mx-auto" style={{ color: '#BBBDBC' }}>
               Explore the core workspaces built to power day-to-day collaboration across teams.
             </p>
           </div>
@@ -93,19 +93,19 @@ const FeatureShowcase = () => {
                 className="group flex flex-col rounded-2xl p-4 sm:p-5 transition-all duration-300"
                 style={{
                   backgroundColor: '#ffffff',
-                  border: '1px solid rgba(0,0,0,0.05)',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                  border: '1px solid rgba(36,95,115,0.08)',
+                  boxShadow: '0 1px 3px rgba(36,95,115,0.06)',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.08)';
+                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(36,95,115,0.12)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)';
+                  e.currentTarget.style.boxShadow = '0 1px 3px rgba(36,95,115,0.06)';
                 }}
               >
-                <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-3.5" style={{ backgroundColor: '#f3f4f6' }}>
+                <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-3.5" style={{ backgroundColor: '#F2F0EF' }}>
                   <img
                     src={item.img}
                     alt={`FlowBit ${item.label} interface preview`}
@@ -114,10 +114,10 @@ const FeatureShowcase = () => {
                   />
                 </div>
                 <div className="w-full text-left pt-1">
-                  <h4 className="text-sm font-semibold" style={{ color: '#111827' }}>
+                  <h4 className="text-sm font-semibold" style={{ color: '#245F73' }}>
                     {item.label}
                   </h4>
-                  <p className="text-xs mt-1.5 leading-relaxed line-clamp-2" style={{ color: '#6b7280' }}>
+                  <p className="text-xs mt-1.5 leading-relaxed line-clamp-2" style={{ color: '#BBBDBC' }}>
                     {item.desc}
                   </p>
                 </div>
@@ -130,18 +130,18 @@ const FeatureShowcase = () => {
           <div
             className="rounded-3xl px-8 py-14 text-center relative overflow-hidden sm:px-12"
             style={{
-              background: 'linear-gradient(135deg, #16a34a, #10b981)',
+              background: 'linear-gradient(135deg, #245F73, #733E24)',
             }}
           >
             <h3
               className="text-3xl font-bold tracking-tight sm:text-4xl mb-4"
-              style={{ color: '#ffffff' }}
+              style={{ color: '#F2F0EF' }}
             >
               Ready To Try FlowBit?
             </h3>
             <p
               className="text-sm md:text-base leading-relaxed mb-8 max-w-md mx-auto"
-              style={{ color: 'rgba(255,255,255,0.85)' }}
+              style={{ color: 'rgba(242,240,239,0.8)' }}
             >
               Experience the full platform with your team. Seamless real-time meetings, chat, and AI tools built for productivity.
             </p>
@@ -150,11 +150,11 @@ const FeatureShowcase = () => {
                 href="/sign-up"
                 className="inline-flex items-center gap-2 px-8 h-12 rounded-md text-sm font-medium transition-all duration-200"
                 style={{
-                  backgroundColor: '#ffffff',
-                  color: '#16a34a',
+                  backgroundColor: '#F2F0EF',
+                  color: '#245F73',
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.9)'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(242,240,239,0.85)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#F2F0EF'}
               >
                 Get started free
               </a>

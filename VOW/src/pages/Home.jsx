@@ -8,7 +8,7 @@ import Footer from '../components/home/Footer';
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-white" style={{ backgroundColor: '#ffffff', color: '#1a1a2e' }}>
+    <div className="relative min-h-screen overflow-x-hidden" style={{ backgroundColor: '#F2F0EF', color: '#2c2c2c' }}>
       <Navbar />
       <Hero />
       <WorkflowSection />

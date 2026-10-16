@@ -11,12 +11,12 @@ const Hero = () => {
           <div className="space-y-4">
             <h1
               className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
-              style={{ lineHeight: 1.05, color: '#111827' }}
+              style={{ lineHeight: 1.05, color: '#245F73' }}
             >
               Your{' '}
               <span
                 style={{
-                  background: 'linear-gradient(to right, #16a34a, #10b981)',
+                  background: 'linear-gradient(to right, #245F73, #733E24)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -26,7 +26,7 @@ const Hero = () => {
               <br />
               <span
                 style={{
-                  background: 'linear-gradient(to right, #16a34a, #10b981)',
+                  background: 'linear-gradient(to right, #733E24, #245F73)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -39,7 +39,7 @@ const Hero = () => {
 
             <p
               className="max-w-xl text-lg leading-relaxed"
-              style={{ color: '#6b7280' }}
+              style={{ color: '#BBBDBC' }}
             >
               FlowBit brings your entire team into one seamless virtual workspace — with real-time collaboration, presence, and productivity tools built for the modern remote team.
             </p>
@@ -50,19 +50,25 @@ const Hero = () => {
               href="#showcase"
               className="inline-flex items-center justify-center gap-2 font-medium rounded-md h-12 px-8 text-base transition-all duration-200"
               style={{
-                border: '1px solid rgba(0,0,0,0.12)',
+                border: '1px solid rgba(36,95,115,0.2)',
                 backgroundColor: '#ffffff',
-                color: '#374151',
+                color: '#245F73',
                 boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#245F73';
+                e.currentTarget.style.color = '#F2F0EF';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#ffffff';
+                e.currentTarget.style.color = '#245F73';
+              }}
             >
               Explore Showcase
             </a>
           </div>
 
-          <div className="flex flex-wrap gap-6 text-sm" style={{ color: '#6b7280' }}>
+          <div className="flex flex-wrap gap-6 text-sm" style={{ color: '#BBBDBC' }}>
             <span>Real-time collaboration</span>
             <span>AI-powered tools</span>
             <span>Video meetings</span>
@@ -71,10 +77,11 @@ const Hero = () => {
 
         <div className="mx-auto w-full max-w-xl lg:max-w-none">
           <div
-            className="overflow-hidden rounded-2xl bg-white"
+            className="overflow-hidden rounded-2xl"
             style={{
-              border: '1px solid rgba(0,0,0,0.08)',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.08)',
+              backgroundColor: '#ffffff',
+              border: '1px solid rgba(36,95,115,0.1)',
+              boxShadow: '0 20px 50px rgba(36,95,115,0.1)',
             }}
           >
             <img

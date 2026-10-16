@@ -37,8 +37,8 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
       className="rounded-2xl overflow-hidden transition-all duration-300"
       style={{
         backgroundColor: '#ffffff',
-        border: `1px solid ${isOpen ? 'rgba(22,163,74,0.2)' : 'rgba(0,0,0,0.05)'}`,
-        boxShadow: isOpen ? '0 4px 20px rgba(22,163,74,0.06)' : '0 1px 3px rgba(0,0,0,0.04)',
+        border: `1px solid ${isOpen ? 'rgba(36,95,115,0.25)' : 'rgba(36,95,115,0.08)'}`,
+        boxShadow: isOpen ? '0 4px 20px rgba(36,95,115,0.08)' : '0 1px 3px rgba(36,95,115,0.04)',
       }}
     >
       <button
@@ -50,7 +50,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
       >
         <span
           className="text-sm md:text-base font-semibold pr-4 leading-relaxed"
-          style={{ color: '#111827' }}
+          style={{ color: '#245F73' }}
         >
           {faq.question}
         </span>
@@ -58,13 +58,13 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
         <div
           className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
           style={{
-            backgroundColor: isOpen ? 'rgba(22,163,74,0.1)' : 'rgba(0,0,0,0.04)',
+            backgroundColor: isOpen ? 'rgba(36,95,115,0.1)' : 'rgba(36,95,115,0.05)',
             transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
           }}
         >
           <ChevronDown
             size={16}
-            style={{ color: isOpen ? '#16a34a' : '#6b7280' }}
+            style={{ color: isOpen ? '#245F73' : '#BBBDBC' }}
           />
         </div>
       </button>
@@ -78,7 +78,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
         >
           <div
             className="text-sm leading-relaxed pb-5 px-5 md:px-6 pt-1"
-            style={{ color: '#6b7280' }}
+            style={{ color: '#8a8c8b' }}
           >
             {faq.answer}
           </div>
@@ -107,13 +107,13 @@ const FAQs = () => {
         <div className="text-center mb-12 md:mb-16">
           <h2
             className="text-3xl font-bold tracking-tight sm:text-4xl"
-            style={{ color: '#111827' }}
+            style={{ color: '#245F73' }}
           >
             Frequently Asked Questions
           </h2>
           <p
             className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto mt-4"
-            style={{ color: '#6b7280' }}
+            style={{ color: '#BBBDBC' }}
           >
             Everything you need to know about FlowBit. Can't find the answer you are looking for? Feel free to contact our support team.
           </p>

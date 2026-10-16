@@ -19,12 +19,12 @@ const WorkflowSection = () => {
         <div className="mb-14 text-center">
           <h2
             className="text-3xl font-bold tracking-tight sm:text-4xl"
-            style={{ color: '#111827' }}
+            style={{ color: '#245F73' }}
           >
             Work smarter,{' '}
-            <span style={{ color: '#6b7280' }}>collaborate faster.</span>
+            <span style={{ color: '#733E24' }}>collaborate faster.</span>
           </h2>
-          <p className="mt-4" style={{ color: '#6b7280' }}>
+          <p className="mt-4" style={{ color: '#BBBDBC' }}>
             From planning to execution, everything happens in one place.
           </p>
         </div>
@@ -33,10 +33,10 @@ const WorkflowSection = () => {
           <div className="space-y-6">
             <p
               className="text-base leading-relaxed max-w-lg"
-              style={{ color: '#6b7280' }}
+              style={{ color: '#BBBDBC' }}
             >
               No more switching between tools. No more lost messages.{' '}
-              <span className="font-semibold" style={{ color: '#111827' }}>
+              <span className="font-semibold" style={{ color: '#245F73' }}>
                 Just pure productivity.
               </span>
             </p>
@@ -45,8 +45,8 @@ const WorkflowSection = () => {
               className="rounded-2xl p-6 md:p-8 space-y-5"
               style={{
                 backgroundColor: '#ffffff',
-                border: '1px solid rgba(0,0,0,0.05)',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                border: '1px solid rgba(36,95,115,0.08)',
+                boxShadow: '0 1px 3px rgba(36,95,115,0.06)',
               }}
             >
               {checklistItems.map((item) => (
@@ -54,7 +54,7 @@ const WorkflowSection = () => {
                   key={item.key}
                   className="flex items-center gap-3"
                 >
-                  <CheckCircle2 size={18} style={{ color: '#000000', flexShrink: 0 }} />
+                  <CheckCircle2 size={18} style={{ color: '#245F73', flexShrink: 0 }} />
                   <span className="text-sm font-medium" style={{ color: '#374151' }}>
                     {item.text}
                   </span>
@@ -65,10 +65,11 @@ const WorkflowSection = () => {
 
           <div className="relative">
             <div
-              className="rounded-2xl overflow-hidden bg-white"
+              className="rounded-2xl overflow-hidden"
               style={{
-                border: '1px solid rgba(0,0,0,0.08)',
-                boxShadow: '0 20px 50px rgba(0,0,0,0.08)',
+                backgroundColor: '#ffffff',
+                border: '1px solid rgba(36,95,115,0.1)',
+                boxShadow: '0 20px 50px rgba(36,95,115,0.1)',
               }}
             >
               <img
