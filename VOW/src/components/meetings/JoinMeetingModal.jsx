@@ -145,20 +145,21 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="w-full max-w-lg bg-white dark:bg-[#121216] border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden text-zinc-900 dark:text-zinc-100 flex flex-col max-h-[90vh]">
-        <div className="px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
+      <div className="w-full max-w-lg rounded-2xl overflow-hidden flex flex-col max-h-[90vh]" style={{ backgroundColor: '#ffffff', border: '1px solid #e5e5e5', color: '#1a1a1a' }}>
+        <div className="px-5 py-3.5 flex items-center justify-between shrink-0" style={{ borderBottom: '1px solid #e5e5e5' }}>
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-800 text-white flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#174D38', color: '#ffffff' }}>
               <Video className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-zinc-900 dark:text-white">Join Meeting</h3>
-              <p className="text-[11px] text-zinc-500">Connect individual or all rooms together</p>
+              <h3 className="text-base font-bold" style={{ color: '#1a1a1a' }}>Join Meeting</h3>
+              <p className="text-[11px]" style={{ color: '#CBCBCB' }}>Connect individual or all rooms together</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-white rounded-lg cursor-pointer"
+            className="p-1.5 rounded-lg cursor-pointer"
+            style={{ color: '#CBCBCB' }}
           >
             <X className="w-4 h-4" />
           </button>
@@ -176,8 +177,8 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                 className="w-full h-full object-cover scale-x-[-1]"
               />
             ) : (
-              <div className="flex flex-col items-center gap-1.5 text-zinc-400">
-                <div className="w-10 h-10 rounded-full bg-emerald-800 text-white flex items-center justify-center font-bold text-sm">
+              <div className="flex flex-col items-center gap-1.5" style={{ color: '#CBCBCB' }}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#174D38', color: '#ffffff' }}>
                   {userName ? userName.charAt(0).toUpperCase() : 'U'}
                 </div>
                 <span className="text-xs">Camera is off</span>
@@ -188,7 +189,8 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
               <button
                 type="button"
                 onClick={() => setIsMicOn(!isMicOn)}
-                className={`p-1.5 rounded-lg text-white cursor-pointer ${isMicOn ? 'bg-emerald-800 hover:bg-emerald-900' : 'bg-red-500'}`}
+                className="p-1.5 rounded-lg text-white cursor-pointer"
+                style={{ backgroundColor: isMicOn ? '#174D38' : '#4D1717' }}
                 title={isMicOn ? 'Mute Mic' : 'Unmute Mic'}
               >
                 {isMicOn ? <Mic className="w-3.5 h-3.5" /> : <MicOff className="w-3.5 h-3.5" />}
@@ -196,7 +198,8 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
               <button
                 type="button"
                 onClick={() => setIsVideoOn(!isVideoOn)}
-                className={`p-1.5 rounded-lg text-white cursor-pointer ${isVideoOn ? 'bg-emerald-800 hover:bg-emerald-900' : 'bg-red-500'}`}
+                className="p-1.5 rounded-lg text-white cursor-pointer"
+                style={{ backgroundColor: isVideoOn ? '#174D38' : '#4D1717' }}
                 title={isVideoOn ? 'Turn off camera' : 'Turn on camera'}
               >
                 {isVideoOn ? <Video className="w-3.5 h-3.5" /> : <VideoOff className="w-3.5 h-3.5" />}
@@ -204,14 +207,15 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl">
+          <div className="flex items-center gap-1.5 p-1 rounded-xl" style={{ backgroundColor: '#F2F2F2' }}>
             <button
               type="button"
               onClick={() => setJoinMode('all-rooms')}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${joinMode === 'all-rooms'
-                ? 'bg-white dark:bg-zinc-800 text-emerald-800 dark:text-emerald-400 border border-zinc-200 dark:border-zinc-700 shadow-xs'
-                : 'text-zinc-500 hover:text-zinc-800'
-                }`}
+              className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all"
+              style={joinMode === 'all-rooms'
+                ? { backgroundColor: '#ffffff', color: '#174D38', border: '1px solid #e5e5e5', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }
+                : { color: '#CBCBCB', border: '1px solid transparent' }
+              }
             >
               <Layers className="w-3.5 h-3.5" />
               <span>Connect All Rooms</span>
@@ -219,10 +223,11 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
             <button
               type="button"
               onClick={() => setJoinMode('code')}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${joinMode === 'code'
-                ? 'bg-white dark:bg-zinc-800 text-emerald-800 dark:text-emerald-400 border border-zinc-200 dark:border-zinc-700 shadow-xs'
-                : 'text-zinc-500 hover:text-zinc-800'
-                }`}
+              className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all"
+              style={joinMode === 'code'
+                ? { backgroundColor: '#ffffff', color: '#174D38', border: '1px solid #e5e5e5', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }
+                : { color: '#CBCBCB', border: '1px solid transparent' }
+              }
             >
               <Hash className="w-3.5 h-3.5" />
               <span>Room Code</span>
@@ -232,13 +237,14 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
           {joinMode === 'all-rooms' ? (
             <div className="space-y-2.5">
               <div className="flex items-center justify-between px-1">
-                <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
+                <span className="text-xs font-semibold" style={{ color: '#1a1a1a' }}>
                   Select Rooms to Merge on Call ({selectedRoomIds.length}/{AVAILABLE_ROOMS.length})
                 </span>
                 <button
                   type="button"
                   onClick={handleSelectAllRooms}
-                  className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 hover:underline cursor-pointer"
+                  className="text-xs font-semibold hover:underline cursor-pointer"
+                  style={{ color: '#174D38' }}
                 >
                   {selectedRoomIds.length === AVAILABLE_ROOMS.length ? 'Deselect All' : 'Select All Rooms'}
                 </button>
@@ -251,27 +257,30 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                     <div
                       key={room.id}
                       onClick={() => toggleRoomSelect(room.id)}
-                      className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-colors ${isSelected
-                        ? 'bg-emerald-900/15 dark:bg-emerald-950/40 border-emerald-800/40 dark:border-emerald-700/60'
-                        : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800'
-                        }`}
+                      className="flex items-center justify-between p-2.5 rounded-xl cursor-pointer transition-colors"
+                      style={{
+                        backgroundColor: isSelected ? 'rgba(23,77,56,0.06)' : '#F2F2F2',
+                        border: `1px solid ${isSelected ? 'rgba(23,77,56,0.3)' : '#e5e5e5'}`,
+                      }}
                     >
                       <div className="flex items-center gap-2 overflow-hidden">
-                        <div className="w-7 h-7 rounded-full bg-emerald-800 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
+                        <div className="w-7 h-7 rounded-full font-bold text-xs flex items-center justify-center shrink-0 shadow-xs" style={{ backgroundColor: '#174D38', color: '#ffffff' }}>
                           {(room.name || 'R').charAt(0).toUpperCase()}
                         </div>
                         <div className="truncate">
-                          <h4 className="text-xs font-bold text-zinc-900 dark:text-white truncate">
+                          <h4 className="text-xs font-bold truncate" style={{ color: '#1a1a1a' }}>
                             {room.name}
                           </h4>
-                          <p className="text-[10px] text-zinc-500 truncate">{room.lead}</p>
+                          <p className="text-[10px] truncate" style={{ color: '#CBCBCB' }}>{room.lead}</p>
                         </div>
                       </div>
                       <div
-                        className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${isSelected
-                          ? 'bg-emerald-800 border-emerald-800 text-white'
-                          : 'border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800'
-                          }`}
+                        className="w-4 h-4 rounded flex items-center justify-center shrink-0"
+                        style={{
+                          backgroundColor: isSelected ? '#174D38' : '#ffffff',
+                          border: `1px solid ${isSelected ? '#174D38' : '#CBCBCB'}`,
+                          color: '#ffffff',
+                        }}
                       >
                         {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                       </div>
@@ -282,11 +291,11 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
             </div>
           ) : (
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+              <label className="block text-xs font-semibold mb-1" style={{ color: '#1a1a1a' }}>
                 Meeting Code or Link
               </label>
               <div className="relative">
-                <Hash className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
+                <Hash className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#CBCBCB' }} />
                 <input
                   type="text"
                   placeholder="e.g. meet-842"
@@ -296,41 +305,45 @@ export default function JoinMeetingModal({ isOpen, onClose, onJoin, initialUserN
                     if (error) setError('');
                   }}
                   autoFocus
-                  className="w-full pl-9 pr-3 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-emerald-800"
+                  className="w-full pl-9 pr-3 py-2 rounded-xl text-xs focus:outline-none"
+                  style={{ backgroundColor: '#F2F2F2', border: '1px solid #e5e5e5', color: '#1a1a1a' }}
                 />
               </div>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+            <label className="block text-xs font-semibold mb-1" style={{ color: '#1a1a1a' }}>
               Your Name
             </label>
             <div className="relative">
-              <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
+              <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#CBCBCB' }} />
               <input
                 type="text"
                 placeholder="Enter your name"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-emerald-800"
+                className="w-full pl-9 pr-3 py-2 rounded-xl text-xs focus:outline-none"
+                style={{ backgroundColor: '#F2F2F2', border: '1px solid #e5e5e5', color: '#1a1a1a' }}
               />
             </div>
           </div>
 
-          {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
+          {error && <p className="text-xs font-medium" style={{ color: '#4D1717' }}>{error}</p>}
 
           <div className="pt-2 flex items-center justify-end gap-2 shrink-0">
             <button
               type="button"
               onClick={onClose}
-              className="px-3.5 py-2 rounded-xl text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+              className="px-3.5 py-2 rounded-xl text-xs font-medium cursor-pointer"
+              style={{ color: '#CBCBCB' }}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-800 hover:bg-emerald-900 text-white flex items-center gap-1.5 cursor-pointer shadow-sm transition-colors"
+              className="px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-sm transition-colors"
+              style={{ backgroundColor: '#174D38', color: '#ffffff' }}
             >
               <Users className="w-3.5 h-3.5" />
               <span>

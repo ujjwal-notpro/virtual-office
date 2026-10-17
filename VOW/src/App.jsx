@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
@@ -7,6 +8,10 @@ import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/dashboard/DashboardPage';
 
 function App() {
+  useEffect(() => {
+    document.documentElement.classList.remove('dark');
+    localStorage.removeItem('theme');
+  }, []);
   return (
     <BrowserRouter>
       <Routes>

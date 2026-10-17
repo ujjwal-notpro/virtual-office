@@ -178,34 +178,34 @@ const AISummary = () => {
   };
 
   return (
-    <div className="min-h-full w-full bg-[#0a0c10] text-[#e2e8f0] p-6 md:p-10 font-sans select-none relative">
+    <div className="min-h-full w-full p-6 md:p-10 font-sans select-none relative" style={{ backgroundColor: '#F2F2F2', color: '#1a1a1a' }}>
 
       {toastMessage && (
-        <div className="fixed top-6 right-6 z-50 bg-emerald-600 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-lg border border-emerald-500/40 flex items-center gap-2 animate-fadeIn">
+        <div className="fixed top-6 right-6 z-50 text-xs font-semibold px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-2 animate-fadeIn" style={{ backgroundColor: '#174D38', color: '#ffffff', border: '1px solid rgba(23,77,56,0.4)' }}>
           <Check className="w-4 h-4" />
           <span>{toastMessage}</span>
         </div>
       )}
       <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white flex items-center gap-2.5">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-2.5" style={{ color: '#1a1a1a' }}>
             <span className="text-2xl md:text-3xl">🎙️</span>
             AI Meeting Notes Generator
           </h1>
-          <p className="text-xs md:text-sm text-zinc-400 mt-2 font-normal">
+          <p className="text-xs md:text-sm mt-2 font-normal" style={{ color: '#CBCBCB' }}>
             Record live audio or upload an MP3 file to transcribe and summarize using AI.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 text-zinc-400 text-sm">
+        <div className="flex items-center gap-3 text-sm" style={{ color: '#CBCBCB' }}>
           <button
             onClick={() => showToast('App ready for deployment!')}
-            className="hover:text-white transition-colors text-xs md:text-sm font-medium cursor-pointer"
+            className="hover:text-[#1a1a1a] transition-colors text-xs md:text-sm font-medium cursor-pointer"
           >
             Deploy
           </button>
           <button
-            className="p-1 hover:text-white hover:bg-zinc-800/60 rounded transition-colors cursor-pointer"
+            className="p-1 hover:text-[#1a1a1a] hover:bg-[#e5e5e5] rounded transition-colors cursor-pointer"
             title="Options"
           >
             <MoreVertical className="w-4 h-4" />
@@ -217,18 +217,19 @@ const AISummary = () => {
 
         <div className="flex flex-col justify-between">
           <div>
-            <h2 className="text-xl font-bold text-white mb-6 tracking-tight">1. Input Audio</h2>
+            <h2 className="text-xl font-bold mb-6 tracking-tight" style={{ color: '#1a1a1a' }}>1. Input Audio</h2>
 
-            <p className="text-xs md:text-sm text-zinc-300 font-medium mb-3">Choose option:</p>
+            <p className="text-xs md:text-sm font-medium mb-3" style={{ color: '#666' }}>Choose option:</p>
             <div className="flex items-center gap-6 mb-7">
               <label
                 onClick={() => setInputType('live')}
-                className="flex items-center gap-2.5 text-xs md:text-sm text-zinc-200 cursor-pointer select-none"
+                className="flex items-center gap-2.5 text-xs md:text-sm cursor-pointer select-none"
+                style={{ color: '#1a1a1a' }}
               >
                 <div className="relative flex items-center justify-center">
-                  <div className={`w-4 h-4 rounded-full border transition-all ${inputType === 'live' ? 'border-red-500 bg-red-500/10' : 'border-zinc-600 bg-transparent'}`} />
+                  <div className="w-4 h-4 rounded-full transition-all" style={{ border: `2px solid ${inputType === 'live' ? '#4D1717' : '#CBCBCB'}`, backgroundColor: inputType === 'live' ? 'rgba(77,23,23,0.1)' : 'transparent' }} />
                   {inputType === 'live' && (
-                    <div className="w-2 h-2 rounded-full bg-red-500 absolute" />
+                    <div className="w-2 h-2 rounded-full absolute" style={{ backgroundColor: '#4D1717' }} />
                   )}
                 </div>
                 <span>Live Recording</span>
@@ -236,12 +237,13 @@ const AISummary = () => {
 
               <label
                 onClick={() => setInputType('upload')}
-                className="flex items-center gap-2.5 text-xs md:text-sm text-zinc-200 cursor-pointer select-none"
+                className="flex items-center gap-2.5 text-xs md:text-sm cursor-pointer select-none"
+                style={{ color: '#1a1a1a' }}
               >
                 <div className="relative flex items-center justify-center">
-                  <div className={`w-4 h-4 rounded-full border transition-all ${inputType === 'upload' ? 'border-red-500 bg-red-500/10' : 'border-zinc-600 bg-transparent'}`} />
+                  <div className="w-4 h-4 rounded-full transition-all" style={{ border: `2px solid ${inputType === 'upload' ? '#4D1717' : '#CBCBCB'}`, backgroundColor: inputType === 'upload' ? 'rgba(77,23,23,0.1)' : 'transparent' }} />
                   {inputType === 'upload' && (
-                    <div className="w-2 h-2 rounded-full bg-red-500 absolute" />
+                    <div className="w-2 h-2 rounded-full absolute" style={{ backgroundColor: '#4D1717' }} />
                   )}
                 </div>
                 <span>Upload MP3</span>
@@ -249,18 +251,19 @@ const AISummary = () => {
             </div>
             {inputType === 'live' ? (
               <div className="space-y-3">
-                <p className="text-xs md:text-sm text-zinc-400">Click to record:</p>
+                <p className="text-xs md:text-sm" style={{ color: '#CBCBCB' }}>Click to record:</p>
                 <div className="flex items-center gap-3">
                   <button
                     onClick={toggleRecording}
-                    className={`px-4 py-2 rounded-md border text-xs md:text-sm font-medium transition-all duration-200 cursor-pointer flex items-center gap-2 ${isRecording
-                      ? 'bg-red-950/40 border-red-500/80 text-red-400 hover:bg-red-900/50 shadow-sm'
-                      : 'bg-[#181b22] border-zinc-700/80 text-white hover:bg-[#20242e] hover:border-zinc-500'
-                      }`}
+                    className="px-4 py-2 rounded-md text-xs md:text-sm font-medium transition-all duration-200 cursor-pointer flex items-center gap-2"
+                    style={isRecording
+                      ? { backgroundColor: 'rgba(77,23,23,0.1)', border: '1px solid rgba(77,23,23,0.5)', color: '#4D1717' }
+                      : { backgroundColor: '#ffffff', border: '1px solid #e5e5e5', color: '#1a1a1a' }
+                    }
                   >
                     {isRecording ? (
                       <>
-                        <Square className="w-3.5 h-3.5 fill-red-400 text-red-400" />
+                        <Square className="w-3.5 h-3.5" style={{ fill: '#4D1717', color: '#4D1717' }} />
                         Stop Recording ({formatTime(recordingTime)})
                       </>
                     ) : (
@@ -269,7 +272,7 @@ const AISummary = () => {
                   </button>
 
                   {recordedAudioUrl && !isRecording && (
-                    <span className="text-xs text-emerald-400 flex items-center gap-1 font-medium bg-emerald-950/40 border border-emerald-800/40 px-2.5 py-1 rounded">
+                    <span className="text-xs flex items-center gap-1 font-medium px-2.5 py-1 rounded" style={{ color: '#174D38', backgroundColor: 'rgba(23,77,56,0.1)', border: '1px solid rgba(23,77,56,0.3)' }}>
                       <Check className="w-3.5 h-3.5" /> Audio Ready ({formatTime(recordingTime)})
                     </span>
                   )}
@@ -277,7 +280,7 @@ const AISummary = () => {
               </div>
             ) : (
               <div className="space-y-3">
-                <p className="text-xs md:text-sm text-zinc-400">Select MP3 file:</p>
+                <p className="text-xs md:text-sm" style={{ color: '#CBCBCB' }}>Select MP3 file:</p>
                 <input
                   type="file"
                   accept="audio/*,.mp3,.wav,.m4a"
@@ -287,26 +290,28 @@ const AISummary = () => {
                 />
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-4 py-2 rounded-md bg-[#181b22] border border-zinc-700/80 text-xs md:text-sm text-zinc-200 hover:text-white hover:border-zinc-500 transition-all cursor-pointer font-medium flex items-center gap-2"
+                  className="px-4 py-2 rounded-md text-xs md:text-sm font-medium transition-all cursor-pointer flex items-center gap-2"
+                  style={{ backgroundColor: '#ffffff', border: '1px solid #e5e5e5', color: '#1a1a1a' }}
                 >
-                  <Upload className="w-4 h-4 text-zinc-400" />
+                  <Upload className="w-4 h-4" style={{ color: '#CBCBCB' }} />
                   {uploadedFile ? uploadedFile.name : 'Choose Audio File (.mp3, .wav)'}
                 </button>
               </div>
             )}
           </div>
-          <div className="pt-8 border-t border-zinc-800/80 mt-8 mb-2">
+          <div className="pt-8 mt-8 mb-2" style={{ borderTop: '1px solid #e5e5e5' }}>
             <button
               onClick={handleGenerateSummary}
               disabled={!canGenerate || isGenerating}
-              className={`px-4 py-2 rounded-md border text-xs md:text-sm font-medium transition-all duration-200 flex items-center gap-2 ${canGenerate && !isGenerating
-                ? 'bg-[#181b22] border-zinc-700/80 text-white hover:bg-[#222632] hover:border-zinc-500 cursor-pointer shadow-sm'
-                : 'bg-[#13151b] border-zinc-800/70 text-zinc-600 cursor-not-allowed'
-                }`}
+              className="px-4 py-2 rounded-md text-xs md:text-sm font-medium transition-all duration-200 flex items-center gap-2"
+              style={canGenerate && !isGenerating
+                ? { backgroundColor: '#174D38', border: '1px solid #174D38', color: '#ffffff', cursor: 'pointer' }
+                : { backgroundColor: '#F2F2F2', border: '1px solid #e5e5e5', color: '#CBCBCB', cursor: 'not-allowed' }
+              }
             >
               {isGenerating ? (
                 <>
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-red-400" />
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" style={{ color: '#4D1717' }} />
                   Generating Summary...
                 </>
               ) : (
@@ -316,53 +321,55 @@ const AISummary = () => {
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-bold text-white mb-6 tracking-tight">2. Results</h2>
+          <h2 className="text-xl font-bold mb-6 tracking-tight" style={{ color: '#1a1a1a' }}>2. Results</h2>
 
-          <div className="flex items-center gap-6 border-b border-zinc-800/90 mb-5 pb-0">
+          <div className="flex items-center gap-6 mb-5 pb-0" style={{ borderBottom: '1px solid #e5e5e5' }}>
             <button
               onClick={() => setActiveTab('notes')}
-              className={`pb-2 text-xs md:text-sm font-medium transition-all relative cursor-pointer ${activeTab === 'notes'
-                ? 'text-red-500 font-semibold border-b-2 border-red-500'
-                : 'text-zinc-400 hover:text-zinc-200'
-                }`}
+              className="pb-2 text-xs md:text-sm font-medium transition-all relative cursor-pointer"
+              style={activeTab === 'notes'
+                ? { color: '#174D38', fontWeight: 600, borderBottom: '2px solid #174D38' }
+                : { color: '#CBCBCB' }
+              }
             >
               Meeting Notes
             </button>
             <button
               onClick={() => setActiveTab('transcript')}
-              className={`pb-2 text-xs md:text-sm font-medium transition-all relative cursor-pointer ${activeTab === 'transcript'
-                ? 'text-red-500 font-semibold border-b-2 border-red-500'
-                : 'text-zinc-400 hover:text-zinc-200'
-                }`}
+              className="pb-2 text-xs md:text-sm font-medium transition-all relative cursor-pointer"
+              style={activeTab === 'transcript'
+                ? { color: '#174D38', fontWeight: 600, borderBottom: '2px solid #174D38' }
+                : { color: '#CBCBCB' }
+              }
             >
               Raw Transcript
             </button>
           </div>
 
-          <div className="bg-[#0b172a] border border-[#1a2b47] rounded-lg p-5 min-h-[160px] flex flex-col justify-center transition-all duration-300">
+          <div className="rounded-lg p-5 min-h-[160px] flex flex-col justify-center transition-all duration-300" style={{ backgroundColor: '#ffffff', border: '1px solid #e5e5e5' }}>
             {!hasGenerated ? (
-              <p className="text-[#3b82f6] text-xs md:text-sm font-normal leading-relaxed">
+              <p className="text-xs md:text-sm font-normal leading-relaxed" style={{ color: '#CBCBCB' }}>
                 Your AI meeting notes will appear here after processing
               </p>
             ) : (
-              <div className="text-zinc-200 text-xs md:text-sm space-y-4 animate-fadeIn">
+              <div className="text-xs md:text-sm space-y-4 animate-fadeIn" style={{ color: '#1a1a1a' }}>
                 {activeTab === 'notes' ? (
                   <div className="space-y-4">
                     <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-red-400 mb-1">Executive Summary</h4>
-                      <p className="text-zinc-300 leading-relaxed">{sampleNotes.summary}</p>
+                      <h4 className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: '#4D1717' }}>Executive Summary</h4>
+                      <p className="leading-relaxed" style={{ color: '#666' }}>{sampleNotes.summary}</p>
                     </div>
                     <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">Key Takeaways</h4>
-                      <ul className="list-disc list-inside space-y-1 text-zinc-300">
+                      <h4 className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: '#174D38' }}>Key Takeaways</h4>
+                      <ul className="list-disc list-inside space-y-1" style={{ color: '#666' }}>
                         {sampleNotes.keyTakeaways.map((item, idx) => (
                           <li key={idx}>{item}</li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-sky-400 mb-1">Action Items</h4>
-                      <ul className="list-disc list-inside space-y-1 text-zinc-300">
+                      <h4 className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: '#174D38' }}>Action Items</h4>
+                      <ul className="list-disc list-inside space-y-1" style={{ color: '#666' }}>
                         {sampleNotes.actionItems.map((item, idx) => (
                           <li key={idx}>{item}</li>
                         ))}
@@ -370,7 +377,7 @@ const AISummary = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="font-mono text-xs text-zinc-300 whitespace-pre-wrap leading-relaxed">
+                  <div className="font-mono text-xs whitespace-pre-wrap leading-relaxed" style={{ color: '#666' }}>
                     {sampleTranscript}
                   </div>
                 )}
@@ -380,27 +387,30 @@ const AISummary = () => {
         </div>
       </div>
 
-      <div className="pt-6 border-t border-zinc-800/70">
-        <h2 className="text-xl font-bold text-white mb-6 tracking-tight">3. Download</h2>
+      <div className="pt-6" style={{ borderTop: '1px solid #e5e5e5' }}>
+        <h2 className="text-xl font-bold mb-6 tracking-tight" style={{ color: '#1a1a1a' }}>3. Download</h2>
 
         <div className="flex flex-wrap items-center gap-4">
           <button
             onClick={() => handleDownload('audio')}
-            className="px-4 py-2 rounded-md bg-[#181b22] border border-zinc-700/80 text-xs md:text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-all cursor-pointer font-medium shadow-xs"
+            className="px-4 py-2 rounded-md text-xs md:text-sm font-medium transition-all cursor-pointer shadow-xs"
+            style={{ backgroundColor: '#ffffff', border: '1px solid #e5e5e5', color: '#1a1a1a' }}
           >
             Save Audio (.wav)
           </button>
 
           <button
             onClick={() => handleDownload('transcript')}
-            className="px-4 py-2 rounded-md bg-[#181b22] border border-zinc-700/80 text-xs md:text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-all cursor-pointer font-medium shadow-xs"
+            className="px-4 py-2 rounded-md text-xs md:text-sm font-medium transition-all cursor-pointer shadow-xs"
+            style={{ backgroundColor: '#ffffff', border: '1px solid #e5e5e5', color: '#1a1a1a' }}
           >
             Save Transcript (.txt)
           </button>
 
           <button
             onClick={() => handleDownload('notes')}
-            className="px-4 py-2 rounded-md bg-[#181b22] border border-zinc-700/80 text-xs md:text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-all cursor-pointer font-medium shadow-xs"
+            className="px-4 py-2 rounded-md text-xs md:text-sm font-medium transition-all cursor-pointer shadow-xs"
+            style={{ backgroundColor: '#ffffff', border: '1px solid #e5e5e5', color: '#1a1a1a' }}
           >
             Save Notes (.md)
           </button>

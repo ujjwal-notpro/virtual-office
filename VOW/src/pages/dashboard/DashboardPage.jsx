@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   MessageSquare, User, Settings, LogOut,
-  Sun, Moon, Video, X, Menu, ChevronRight,
+  Video, X, Menu, ChevronRight,
   PanelLeftClose, BotMessageSquare
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useDarkMode } from '../../hooks/useDarkMode';
 import { getStoredUser } from '../../services/api';
 import { connectSocket, getSocket, joinRoom, leaveRoom } from '../../services/socket';
 import CallModal from '../../components/chat/CallModal';
@@ -23,7 +22,6 @@ import AISummary from './sections/aisummary';
 export default function Dashboard() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { theme, toggleTheme } = useDarkMode();
 
   const [activeTab, setActiveTab] = useState('meetings');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -209,17 +207,17 @@ export default function Dashboard() {
 
   const navBtnClass = (id) => `w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3.5 px-3.5'} py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === id
     ? id === 'meetings'
-      ? 'bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 shadow-xs border border-emerald-500/20 dark:border-emerald-500/30 font-semibold'
-      : 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
+      ? 'bg-[#174D38]/10 text-[#174D38] shadow-xs border border-[#174D38]/20 font-semibold'
+      : 'bg-[#F2F2F2] text-[#1a1a1a] shadow-xs border border-[#CBCBCB] font-semibold'
     : id === 'meetings'
-      ? 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20'
-      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
+      ? 'text-[#CBCBCB] hover:text-[#174D38] hover:bg-[#174D38]/5'
+      : 'text-[#CBCBCB] hover:text-[#1a1a1a] hover:bg-[#F2F2F2]'
     }`;
 
-  const iconClass = (id) => `w-4 h-4 shrink-0 ${activeTab === id ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`;
+  const iconClass = (id) => `w-4 h-4 shrink-0 ${activeTab === id ? 'text-[#174D38]' : 'text-[#CBCBCB]'}`;
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-zinc-100 dark:bg-[#0a0a0c] text-zinc-900 dark:text-zinc-100 font-sans select-none antialiased transition-colors duration-300">
+    <div className="flex h-screen w-full overflow-hidden font-sans select-none antialiased transition-colors duration-300" style={{ backgroundColor: '#F2F2F2', color: '#1a1a1a' }}>
 
       {isMobileSidebarOpen && (
         <div
@@ -228,7 +226,7 @@ export default function Dashboard() {
         />
       )}
 
-      <aside className={`hidden md:flex relative inset-y-0 left-0 z-30 shrink-0 bg-white dark:bg-[#0d0d10] border-r border-zinc-200 dark:border-[#1e1e24] flex-col justify-between py-5 transition-all duration-300 shadow-sm dark:shadow-none ${isSidebarCollapsed ? 'w-16 px-2' : 'w-56 px-3'}`}>
+      <aside className={`hidden md:flex relative inset-y-0 left-0 z-30 shrink-0 flex-col justify-between py-5 transition-all duration-300 shadow-sm ${isSidebarCollapsed ? 'w-16 px-2' : 'w-56 px-3'}`} style={{ backgroundColor: '#ffffff', borderRight: '1px solid #e5e5e5' }}>
         <div>
 
           <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'justify-between px-3'} mb-8`}>
@@ -238,8 +236,8 @@ export default function Dashboard() {
               <div className="flex items-center gap-3">
                 <img src={brandLogo} alt="Flow Bit logo" className="w-9 h-9 object-contain" />
                 <div>
-                  <h1 className="text-base font-bold tracking-tight text-zinc-900 dark:text-white leading-none">Flow Bit</h1>
-                  <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Virtual Office</span>
+                  <h1 className="text-base font-bold tracking-tight leading-none" style={{ color: '#174D38' }}>Flow Bit</h1>
+                  <span className="text-[11px] font-medium" style={{ color: '#CBCBCB' }}>Virtual Office</span>
                 </div>
               </div>
             )}
@@ -251,46 +249,48 @@ export default function Dashboard() {
                 <Icon className={iconClass(id)} />
                 {!isSidebarCollapsed && <span>{label}</span>}
                 {!isSidebarCollapsed && badge > 0 && (
-                  <span className="ml-auto bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 text-[11px] font-bold px-2 py-0.5 rounded-full">{badge}</span>
+                  <span className="ml-auto text-[11px] font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: 'rgba(23,77,56,0.15)', color: '#174D38', border: '1px solid rgba(23,77,56,0.3)' }}>{badge}</span>
                 )}
                 {isSidebarCollapsed && badge > 0 && (
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full" />
+                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full" style={{ backgroundColor: '#174D38' }} />
                 )}
               </button>
             ))}
           </nav>
         </div>
 
-        <div className="pt-4 border-t border-zinc-200 dark:border-[#1e1e24] px-1 space-y-1.5">
+        <div className="pt-4 px-1 space-y-1.5" style={{ borderTop: '1px solid #e5e5e5' }}>
           <button
             onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-            className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-3'} py-2.5 rounded-xl text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer`}
+            className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-3'} py-2.5 rounded-xl text-sm font-medium transition-colors cursor-pointer`}
+            style={{ color: '#CBCBCB' }}
             title={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {isSidebarCollapsed ? <ChevronRight className="w-4 h-4 shrink-0" /> : <PanelLeftClose className="w-4 h-4 shrink-0" />}
           </button>
           <button
             onClick={handleLogout}
-            className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-3'} py-2.5 rounded-xl text-sm font-semibold text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors cursor-pointer`}
+            className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-3'} py-2.5 rounded-xl text-sm font-semibold transition-colors cursor-pointer`}
+            style={{ color: '#4D1717' }}
             title={isSidebarCollapsed ? 'Log Out' : undefined}
           >
-            <LogOut className="w-4 h-4 text-red-600 dark:text-red-500 rotate-180 shrink-0" />
+            <LogOut className="w-4 h-4 rotate-180 shrink-0" style={{ color: '#4D1717' }} />
             {!isSidebarCollapsed && <span>Log Out</span>}
           </button>
         </div>
       </aside>
 
-      <aside className={`fixed md:hidden inset-y-0 left-0 z-50 w-64 bg-white dark:bg-[#0d0d10] border-r border-zinc-200 dark:border-[#1e1e24] flex flex-col justify-between py-5 px-3 transition-transform duration-300 shadow-2xl ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed md:hidden inset-y-0 left-0 z-50 w-64 flex flex-col justify-between py-5 px-3 transition-transform duration-300 shadow-2xl ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`} style={{ backgroundColor: '#ffffff', borderRight: '1px solid #e5e5e5' }}>
         <div>
           <div className="flex items-center justify-between px-3 mb-8">
             <div className="flex items-center gap-3">
               <img src={brandLogo} alt="Flow Bit logo" className="w-9 h-9 object-contain" />
               <div>
-                <h1 className="text-base font-bold tracking-tight text-zinc-900 dark:text-white leading-none">Flow Bit</h1>
-                <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Virtual Office</span>
+                <h1 className="text-base font-bold tracking-tight leading-none" style={{ color: '#174D38' }}>Flow Bit</h1>
+                <span className="text-[11px] font-medium" style={{ color: '#CBCBCB' }}>Virtual Office</span>
               </div>
             </div>
-            <button onClick={() => setIsMobileSidebarOpen(false)} className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer" title="Close menu">
+            <button onClick={() => setIsMobileSidebarOpen(false)} className="p-1.5 rounded-lg cursor-pointer" style={{ color: '#CBCBCB' }} title="Close menu">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -301,35 +301,36 @@ export default function Dashboard() {
                 onClick={() => { setActiveTab(id); setIsMobileSidebarOpen(false); }}
                 className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${activeTab === id
                   ? id === 'meetings'
-                    ? 'bg-emerald-900/15 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 shadow-xs border border-emerald-800/30 dark:border-emerald-700/40 font-semibold'
-                    : 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-950 dark:text-white shadow-xs border border-zinc-300 dark:border-zinc-700/60 font-semibold'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
+                    ? 'bg-[#174D38]/10 text-[#174D38] shadow-xs border border-[#174D38]/30 font-semibold'
+                    : 'bg-[#F2F2F2] text-[#1a1a1a] shadow-xs border border-[#CBCBCB] font-semibold'
+                  : 'text-[#CBCBCB] hover:text-[#1a1a1a] hover:bg-[#F2F2F2] border border-transparent'
                   }`}
               >
-                <Icon className={`w-4 h-4 ${activeTab === id ? (id === 'meetings' ? 'text-emerald-800 dark:text-emerald-400' : 'text-emerald-600 dark:text-emerald-400') : 'text-zinc-500 dark:text-zinc-400'}`} />
+                <Icon className={`w-4 h-4 ${activeTab === id ? 'text-[#174D38]' : 'text-[#CBCBCB]'}`} />
                 <span>{label}</span>
                 {badge > 0 && (
-                  <span className="ml-auto bg-emerald-900/20 text-emerald-900 dark:text-emerald-300 border border-emerald-800/30 text-[11px] font-bold px-2 py-0.5 rounded-full">{badge}</span>
+                  <span className="ml-auto text-[11px] font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: 'rgba(23,77,56,0.15)', color: '#174D38', border: '1px solid rgba(23,77,56,0.3)' }}>{badge}</span>
                 )}
               </button>
             ))}
           </nav>
         </div>
-        <div className="pt-4 border-t border-zinc-200 dark:border-[#1e1e24] px-1">
-          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors cursor-pointer">
-            <LogOut className="w-4 h-4 text-red-600 dark:text-red-500 rotate-180" />
+        <div className="pt-4 px-1" style={{ borderTop: '1px solid #e5e5e5' }}>
+          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors cursor-pointer" style={{ color: '#4D1717' }}>
+            <LogOut className="w-4 h-4 rotate-180" style={{ color: '#4D1717' }} />
             <span>Log Out</span>
           </button>
         </div>
       </aside>
 
-      <div className="flex-1 flex flex-col h-full overflow-hidden pb-14 md:pb-0 bg-zinc-50 dark:bg-[#060608] transition-colors duration-300">
+      <div className="flex-1 flex flex-col h-full overflow-hidden pb-14 md:pb-0 transition-colors duration-300" style={{ backgroundColor: '#F2F2F2' }}>
 
-        <header className="h-16 shrink-0 border-b border-zinc-200 dark:border-[#1a1a20] bg-white dark:bg-[#0c0c0f] px-3.5 md:px-6 flex items-center justify-between z-10 transition-colors duration-300">
+        <header className="h-16 shrink-0 px-3.5 md:px-6 flex items-center justify-between z-10 transition-colors duration-300" style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e5e5e5' }}>
           <div className="flex items-center gap-2.5 md:gap-3.5">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="p-2 -ml-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl md:hidden cursor-pointer"
+              className="p-2 -ml-1 hover:bg-[#F2F2F2] rounded-xl md:hidden cursor-pointer"
+              style={{ color: '#CBCBCB' }}
               title="Open menu"
             >
               <Menu className="w-5 h-5" />
@@ -338,27 +339,18 @@ export default function Dashboard() {
               {getAvatarInitial(profile.name)}
             </div>
             <div>
-              <div className="flex items-center gap-1.5 text-xs md:text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              <div className="flex items-center gap-1.5 text-xs md:text-sm font-medium" style={{ color: '#666' }}>
                 <span>Hello!</span>
-                <span className="font-bold text-zinc-950 dark:text-white truncate max-w-[120px] sm:max-w-[200px]">{profile.name}</span>
+                <span className="font-bold truncate max-w-[120px] sm:max-w-[200px]" style={{ color: '#1a1a1a' }}>{profile.name}</span>
               </div>
-              <span className="text-[11px] md:text-xs text-zinc-500 dark:text-zinc-400 font-medium">User</span>
+              <span className="text-[11px] md:text-xs font-medium" style={{ color: '#CBCBCB' }}>User</span>
             </div>
           </div>
 
           <div className="flex items-center gap-3 sm:gap-5">
-            <span className="hidden sm:inline-block text-xs font-semibold text-zinc-600 dark:text-zinc-300 tracking-wide">
+            <span className="text-xs font-semibold tracking-wide" style={{ color: '#666' }}>
               {currentDateFormatted || 'Saturday | Oct 03, 2026'}
             </span>
-            <button
-              onClick={toggleTheme}
-              title={theme === 'dark' ? 'Switch to Bright Light Mode' : 'Switch to Dark Mode'}
-              className="w-12 h-6 rounded-full bg-emerald-500 p-0.5 flex items-center transition-all cursor-pointer shadow-sm relative focus:outline-none ring-2 ring-emerald-500/20"
-            >
-              <div className={`w-5 h-5 rounded-full bg-white shadow-md flex items-center justify-center transition-transform duration-200 ${theme === 'dark' ? 'translate-x-6' : 'translate-x-0'}`}>
-                {theme === 'dark' ? <Moon className="w-3 h-3 text-emerald-800" /> : <Sun className="w-3 h-3 text-amber-500" />}
-              </div>
-            </button>
           </div>
         </header>
 
@@ -394,7 +386,7 @@ export default function Dashboard() {
           )}
 
           {activeTab === 'settings' && (
-            <SettingsSection theme={theme} toggleTheme={toggleTheme} />
+            <SettingsSection />
           )}
 
           {activeTab === 'chatbot' && (
@@ -405,16 +397,17 @@ export default function Dashboard() {
         </main>
       </div>
 
-      <nav className="fixed md:hidden bottom-0 left-0 right-0 z-40 h-14 bg-white/95 dark:bg-[#0c0c0f]/95 backdrop-blur-md border-t border-zinc-200 dark:border-[#1a1a20] flex items-center justify-around px-2">
+      <nav className="fixed md:hidden bottom-0 left-0 right-0 z-40 h-14 backdrop-blur-md flex items-center justify-around px-2" style={{ backgroundColor: 'rgba(255,255,255,0.95)', borderTop: '1px solid #e5e5e5' }}>
         {NAV_ITEMS.map(({ id, label, Icon, badge }) => (
           <button
             key={id}
             onClick={() => setActiveTab(id)}
-            className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-colors cursor-pointer ${activeTab === id ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`}
+            className="flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-colors cursor-pointer"
+            style={{ color: activeTab === id ? '#174D38' : '#CBCBCB' }}
           >
             <Icon className="w-5 h-5" />
             <span className="text-[10px] font-semibold">{label}</span>
-            {badge > 0 && <span className="absolute top-1 right-1/4 w-2 h-2 bg-emerald-500 rounded-full" />}
+            {badge > 0 && <span className="absolute top-1 right-1/4 w-2 h-2 rounded-full" style={{ backgroundColor: '#174D38' }} />}
           </button>
         ))}
       </nav>
